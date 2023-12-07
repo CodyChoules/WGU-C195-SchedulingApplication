@@ -1,5 +1,7 @@
 package controller;
 
+import devTools.DevToolC;
+import devTools.DevToolC.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +35,8 @@ public class LoginMenu {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             // Only execute the following code when the Enter key is pressed
             System.out.println("Enter key pressed. Perform specific action here.");
-
+            DevToolC.println("Enter key pressed. Perform specific action here.");
+            DevToolC.toolsOff();
         }
     }
 
