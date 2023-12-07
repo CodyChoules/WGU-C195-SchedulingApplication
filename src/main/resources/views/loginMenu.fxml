@@ -13,12 +13,12 @@
     <children>
 <!--        Reminder buy lord heron tickets for holly-->
 
-        <!-- TITLE BAR -->
-        <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="530.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: #303139;" >
-<!--            <Button fx:id="minimizeButton" onAction="#minimize" styleClass="title-bar-button" text="_" />-->
-<!--            <Button fx:id="maximizeRestoreButton" onAction="#maximizeRestore" styleClass="title-bar-button" text="□" />-->
-<!--            <Button fx:id="closeButton" onAction="#close" styleClass="title-bar-button" text="X" />-->
-        </HBox>
+<!--        &lt;!&ndash; TITLE BAR &ndash;&gt;-->
+<!--        <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="530.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: #303139;" >-->
+<!--&lt;!&ndash;            <Button fx:id="minimizeButton" onAction="#minimize" styleClass="title-bar-button" text="_" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <Button fx:id="maximizeRestoreButton" onAction="#maximizeRestore" styleClass="title-bar-button" text="□" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <Button fx:id="closeButton" onAction="#close" styleClass="title-bar-button" text="X" />&ndash;&gt;-->
+<!--        </HBox>-->
 
         <!-- LOGIN SECTION  -->
         <Label layoutX="14.0" layoutY="27.0" prefHeight="273.0" prefWidth="311.0" style="-fx-border-color: black; -fx-padding: 10; -fx-border-radius: 5;" />

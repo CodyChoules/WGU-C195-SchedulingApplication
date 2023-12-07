@@ -84,23 +84,26 @@ public class DevToolC {
 
     //Test for undecorated stage
     public static void redecorateStage(Stage primaryStage){
-        //remove window decoration
-        primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        BorderPane borderPane = new BorderPane();
-        borderPane.setStyle("-fx-background-color: green;");
+        if (devToolsOn) {
+            //remove window decoration
+            primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        ToolBar toolBar = new ToolBar();
+            BorderPane borderPane = new BorderPane();
+            borderPane.setStyle("-fx-background-color: green;");
 
-        int height = 25;
-        toolBar.setPrefHeight(height);
-        toolBar.setMinHeight(height);
-        toolBar.setMaxHeight(height);
+            ToolBar toolBar = new ToolBar();
+
+            int height = 25;
+            toolBar.setPrefHeight(height);
+            toolBar.setMinHeight(height);
+            toolBar.setMaxHeight(height);
 //        toolBar.getItems().add(new WindowButtons());
 
-        borderPane.setTop(toolBar);
+            borderPane.setTop(toolBar);
 
-        primaryStage.setScene(new Scene(borderPane, 300, 250));
-        primaryStage.show();
+            primaryStage.setScene(new Scene(borderPane, 300, 250));
+            primaryStage.show();
+        }
     }
 }
