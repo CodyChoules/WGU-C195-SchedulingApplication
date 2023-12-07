@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //Set Parent root of scene then title & size
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/test.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/loginMenu.fxml")));
 
         primaryStage.setTitle("Main Menu");
         Scene scene = new Scene(root, 1000, 600);
