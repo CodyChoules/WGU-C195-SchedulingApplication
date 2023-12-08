@@ -28,7 +28,8 @@ public class LoginMenu {
     @FXML public Button exitButton;
 
     public void loginClick(ActionEvent actionEvent) {
-        System.out.println("Executing loginClick method: Handles the actionEvent when the login button is clicked.");
+        System.out.println("Executing loginClick method: ");
+
     }
 
     public void loginEnter(KeyEvent keyEvent) {
