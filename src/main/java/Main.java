@@ -1,4 +1,5 @@
 import devTools.DevToolC;
+import devTools.JDBTools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +14,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         DevToolC.toolsOn();
 
-        //Set Parent root of scene then title & size
+        //Sets Parent root of scene then title & size
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/loginMenu.fxml")));
-
         primaryStage.setTitle("Main Menu");
 
         //TODO Test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
@@ -33,8 +33,16 @@ public class Main extends Application {
 
         DevToolC.println("Stage & Scene Set");
 
+        //TODO [c] test DB connection using JBDTools -completed
+        JDBTools.openConnection();
+        DevToolC.println("Launching Arguments");
+        JDBTools.closeConnection();
 
     }
 
-    public static void main(String[] args) {launch();}
+    public static void main(String[] args) {
+
+        launch();
+
+    }
 }
