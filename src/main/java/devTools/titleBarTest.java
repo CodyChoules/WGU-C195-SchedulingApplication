@@ -9,7 +9,10 @@ import javafx.scene.layout.HBox;
 
 public class titleBarTest {
 
-//    @FXML
+
+    //TODO [] start of custom-title-bar feature branch. Implement feature at the E.O.D. tomorrow.
+
+    //    @FXML
 //    private AnchorPane anchorPane; // Assuming you have an AnchorPane in your FXML file
 
     public void createTitleBar(AnchorPane anchorPane) {

@@ -1,4 +1,6 @@
 import devTools.DevToolC;
+import appSettings.styleSetter;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +20,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("Main Menu");
 
-        //TODO Test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
-        //DevToolC.redecorateStage(primaryStage);
-
+        // TODO [] Test to decorate stage(remove if no solution found){Good chance to use git to add this feature TODO}
+            // this is active in branch "title-bar-feature-trial"
         Scene scene = new Scene(root,530,315);
 
         DevToolC.setWindowCenteredOnCursor(scene,primaryStage);
@@ -29,7 +30,9 @@ public class Main extends Application {
 
         primaryStage.show();
 
-        DevToolC.applyDevStyleToScene(scene);
+//        styleSetter.darkModeOn();
+        styleSetter.applyStyleToScene(scene);
+        //DevToolC.applyDevStyleToScene(scene);
 
         DevToolC.println("Stage & Scene Set");
 
