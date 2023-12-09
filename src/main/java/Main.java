@@ -18,7 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/loginMenu.fxml")));
         primaryStage.setTitle("Main Menu");
 
-        //TODO Test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
+        //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
         //DevToolC.redecorateStage(primaryStage);
 
         Scene scene = new Scene(root,530,315);
