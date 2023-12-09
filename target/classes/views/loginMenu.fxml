@@ -9,7 +9,7 @@
 
 
 
-<AnchorPane prefHeight="315.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginMenu">
+<AnchorPane prefHeight="315.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
     <children>
 <!--        Reminder buy lord heron tickets for holly-->
 
@@ -29,7 +29,7 @@
         <Label fx:id="usernameLabel" layoutX="45.0" layoutY="118.0" text="Username" />
         <TextField fx:id="loginScreenUsernameInput" layoutX="103.0" layoutY="114.0" onKeyPressed="#loginEnter" prefHeight="25.0" prefWidth="176.0" />
         <Label fx:id="passwordLabel" layoutX="49.0" layoutY="151.0" text="Password" />
-        <TextField fx:id="loginScreenPassword" layoutX="102.0" layoutY="147.0" onKeyPressed="#loginEnter" prefHeight="25.0" prefWidth="176.0" />
+        <TextField fx:id="loginScreenPasswordInput" layoutX="102.0" layoutY="147.0" onKeyPressed="#loginEnter" prefHeight="25.0" prefWidth="176.0" />
         <Label fx:id="locationLabel" layoutX="53.0" layoutY="184.0" text="Location" />
         <TextField fx:id="loginScreenLocationField" editable="false" layoutX="103.0" layoutY="179.0" onKeyPressed="#loginEnter" prefHeight="26.0" prefWidth="176.0" />
         <Button fx:id="loginButton" layoutX="167.0" layoutY="215.0" mnemonicParsing="false" onAction="#loginClick" onKeyReleased="#loginEnter" text="Login" />
