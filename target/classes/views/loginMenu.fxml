@@ -9,7 +9,7 @@
 
 
 
-<AnchorPane prefHeight="315.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane prefHeight="315.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Login">
     <children>
 <!--        Reminder buy lord heron tickets for holly-->
 

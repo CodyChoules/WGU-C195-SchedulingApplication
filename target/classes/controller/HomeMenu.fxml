@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="777.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Home">
+    <children>
+
+      
+              <SplitPane dividerPositions="0.1785" layoutX="14.0" layoutY="14.0" prefHeight="491.0" prefWidth="381.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="11.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="555.0" SplitPane.resizableWithParent="false">
+               <children>
+                    <Label layoutX="-340.0" layoutY="-6.0" style="-fx-border-color: black; -fx-padding: 10; -fx-border-radius: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox alignment="TOP_CENTER" layoutX="2.0" layoutY="14.0" prefHeight="203.0" prefWidth="187.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                          <Label alignment="TOP_CENTER" contentDisplay="CENTER" text="Home">
+                              <font>
+                                  <Font size="36.0" />
+                              </font>
+                          </Label>
+                          <Button fx:id="homeAppointmentsButton" mnemonicParsing="false" onAction="#homeAppointmentClick" prefHeight="25.0" prefWidth="111.0" text="Appointments" />
+                          <Button fx:id="homeCustomersButton" mnemonicParsing="false" onAction="#homeCustomerClick" prefHeight="25.0" prefWidth="111.0" text="Customers" />
+                          <Button fx:id="homeReportsButton" mnemonicParsing="false" onAction="#homeReportsClick" prefHeight="25.0" prefWidth="111.0" text="Reports" />
+                        <Button fx:id="homeLogOutButton" mnemonicParsing="false" onAction="#logOutClick" prefHeight="25.0" prefWidth="66.0" text="Log Out" />
+                          <Button fx:id="homeExitButton" mnemonicParsing="false" onAction="#homeExitClick" prefHeight="25.0" prefWidth="66.0" text="Exit" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="636.0" prefWidth="542.0">
+               <children>
+                  <Label layoutY="139.0" prefHeight="753.0" prefWidth="890.0" style="-fx-border-color: black; -fx-padding: 10; -fx-border-radius: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+    </children>
+</AnchorPane>

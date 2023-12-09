@@ -1,5 +1,7 @@
 package controller;
 
+import controller.Home;
+
 import dataAccessObject.userDAO;
 
 import devTools.DevToolC;
@@ -8,13 +10,18 @@ import devTools.JDBTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
-public class LoginController {
+import java.io.IOException;
+import java.util.Objects;
+
+public class Login {
 
 
     @FXML public Label loginTitle;
@@ -29,7 +36,9 @@ public class LoginController {
     @FXML public Button darkModeButton; //FXML fx:id References
     @FXML public Button exitButton;
 
-    private void loginMethod() {
+    Stage stage;
+
+    private void loginMethod() throws IOException {
 
         JDBTools.openConnection();
 
@@ -48,20 +57,53 @@ public class LoginController {
 
         //TODO [c] create a DAO to access user date inside the SQL DB
         //Validates user input
-        boolean validated = userDAO.validateUserLogin(nameInput,passInput);
-        if (validated){ DevToolC.println("User input Validated, Logging in."); }
+        boolean loginValidated = userDAO.validateUserLogin(nameInput,passInput);
+        if (loginValidated){ DevToolC.println("User input Validated, Logging in."); }
 
-        //End of data-base-connection initial tasks. -committing & pushing branch
-        //TODO [] create main menu fxml
-        //TODO [] create load main menu on validation logic
+
+        //TODO [cu] create home menu fxml
+        //TODO [cu] create load home menu on validation logic //Committing
+        if (loginValidated) {
+            Home.testMethod();
+            //TODO [Extra] Complete dark mode pass through from this scene to home
+            Home.loadHomeFXML(stage, loginButton, getClass());
+        }
+
+
         //TODO [] create a incorrect password popup
+//        else
+//        {
+//            showIncorrectPasswordPopup();
+//        }
+
         //TODO [] review rubric
 
 
 
     }
 
-    public void loginClick(ActionEvent actionEvent) {
+    private void showIncorrectPasswordPopup() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Incorrect Password");
+        alert.setHeaderText(null);
+        alert.setContentText("The password you entered is incorrect. Please try again.");
+
+        // Customizing the alert dialog
+        //alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("custom-dialog");
+
+        // Adding an OK button
+        alert.getButtonTypes().setAll(ButtonType.OK);
+
+//        // Handling the OK button action
+//        alert.showAndWait().ifPresent(response -> {
+//            if (response == ButtonType.OK) {
+//                System.out.println("OK button clicked");
+//            }
+//        });
+    }
+
+    public void loginClick(ActionEvent actionEvent) throws IOException {
         System.out.println("Executing loginClick method: ");
         loginMethod();
 

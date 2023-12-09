@@ -1,13 +1,12 @@
 package devTools;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
-public class titleBarTest {
+public class TitleBarTest {
 
 //    @FXML
 //    private AnchorPane anchorPane; // Assuming you have an AnchorPane in your FXML file
@@ -22,19 +21,19 @@ public class titleBarTest {
         Button minimizeButton = createButton("_", new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                titleBarTest.this.minimize(event);
+                TitleBarTest.this.minimize(event);
             }
         });
         Button maximizeRestoreButton = createButton("□", new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                titleBarTest.this.maximizeRestore(event);
+                TitleBarTest.this.maximizeRestore(event);
             }
         });
         Button closeButton = createButton("X", new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                titleBarTest.this.close(event);
+                TitleBarTest.this.close(event);
             }
         });
 

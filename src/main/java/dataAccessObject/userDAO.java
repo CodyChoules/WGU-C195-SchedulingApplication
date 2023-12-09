@@ -46,11 +46,12 @@ public class userDAO {
 
         } catch (SQLException exception) {
             exception.printStackTrace();
+            return false;
         }
 
         return false;
 
     }
-    //TODO [c] Test this method in LoginController
+    //TODO [c] Test this method in Login
 
 }
