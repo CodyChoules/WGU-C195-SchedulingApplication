@@ -1,7 +1,5 @@
 package controller;
 
-import controller.Home;
-
 import dataAccessObject.userDAO;
 
 import devTools.DevToolC;
@@ -10,25 +8,25 @@ import devTools.JDBTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+
+
+
 import java.io.IOException;
-import java.util.Objects;
+
 
 public class Login {
 
 
     @FXML public Label loginTitle;
     @FXML public Label usernameLabel;
-    @FXML private TextField loginScreenUsernameInput;
+    @FXML private TextField usernameInput;
     @FXML public Label passwordLabel;
-    @FXML private TextField loginScreenPasswordInput;
+    @FXML private TextField passwordInput;
     @FXML public Label locationLabel;
     @FXML private TextField loginScreenLocationField;
     @FXML public Button loginButton;
@@ -38,13 +36,19 @@ public class Login {
 
     Stage stage;
 
-    private void loginMethod() throws IOException {
+    private void loginMethod() throws IOException, InterruptedException {
+
+        // TODO [c] Get login info from input.
+        String nameInput = usernameInput.getText();
+        String passInput = passwordInput.getText();
+
+        // TODO [cu] solve login on no input error.
+        if (nameInput.isEmpty() || passInput.isEmpty()) {
+            DevToolC.println("Input Values Found Empty, login attempt abandoned.");
+            return;
+        }
 
         JDBTools.openConnection();
-
-        //TODO [c] Get login info from input.
-        String nameInput = loginScreenUsernameInput.getText();
-        String passInput = loginScreenPasswordInput.getText();
 
         //Missing Skill,
         //Skill Found: DAO Use Case:
@@ -53,57 +57,45 @@ public class Login {
         //such as Data Bases. Focused often on CRUD (Create, Read,
         // Update, Delete) operations on data entities.
 
-        //TODO [c] create a dataAccessObject package
+        // TODO [c] create a dataAccessObject package
 
-        //TODO [c] create a DAO to access user date inside the SQL DB
+        // TODO [c] create a DAO to access user date inside the SQL DB
         //Validates user input
         boolean loginValidated = userDAO.validateUserLogin(nameInput,passInput);
+
+        // TODO [cu] create a incorrect password popup
+        if (! loginValidated) {
+            DevToolC.println("Input on Password or Username not found. Login attempt abandoned");
+            // TODO [cu] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
+            // TODO [cu] create an class to store popups settings for this application -SchedulingApplicationPrompt
+            //showIncorrectPasswordPopup();
+            SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+            popup.loginFailedPopup();
+
+
+//
+
+            DevToolC.println("SchedulingApplicationPrompt Now!");
+        }
+
+
         if (loginValidated){ DevToolC.println("User input Validated, Logging in."); }
 
 
-        //TODO [cu] create home menu fxml
-        //TODO [cu] create load home menu on validation logic //Committing
+        //TODO [c] create home menu fxml
+        //TODO [c] create load home menu on validation logic //Committing
         if (loginValidated) {
             Home.testMethod();
             //TODO [Extra] Complete dark mode pass through from this scene to home
             Home.loadHomeFXML(stage, loginButton, getClass());
         }
 
-
-        //TODO [] create a incorrect password popup
-//        else
-//        {
-//            showIncorrectPasswordPopup();
-//        }
-
-        //TODO [] review rubric
-
+        //showIncorrectPasswordPopup();
 
 
     }
 
-    private void showIncorrectPasswordPopup() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Incorrect Password");
-        alert.setHeaderText(null);
-        alert.setContentText("The password you entered is incorrect. Please try again.");
-
-        // Customizing the alert dialog
-        //alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-        alert.getDialogPane().getStyleClass().add("custom-dialog");
-
-        // Adding an OK button
-        alert.getButtonTypes().setAll(ButtonType.OK);
-
-//        // Handling the OK button action
-//        alert.showAndWait().ifPresent(response -> {
-//            if (response == ButtonType.OK) {
-//                System.out.println("OK button clicked");
-//            }
-//        });
-    }
-
-    public void loginClick(ActionEvent actionEvent) throws IOException {
+    public void loginClick(ActionEvent actionEvent) throws IOException, InterruptedException {
         System.out.println("Executing loginClick method: ");
         loginMethod();
 
