@@ -19,7 +19,7 @@ public class Main extends Application {
     // String, a class, is capitalized and other data types are not.} Conversely,
     // variable names & method names usually use camelCase meaning they use a
     // lowercase for letter for the first word then uppercase for the following.
-    // TODO [cu] updated the naming convention throughout the project.
+    // TODO [c] updated the naming convention throughout the project.
 
     public void start(Stage primaryStage) throws Exception {
         DevToolC.toolsOn();

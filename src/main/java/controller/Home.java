@@ -12,6 +12,18 @@ import java.io.IOException;
 
 public class Home {
 
+    //TODO [ip] review rubric
+    // Missing a focus on the following competencies:
+    // Lambda expressions
+    // Collections w/ streams & filters
+    // Localization API & Date/Time API
+
+    // TODO [] Scaffold all scenes/controller here with fxml layout done
+    // TODO [] logout button
+    // TODO [] exit button -remember to close connection
+    // TODO [] clean up Login class
+    // TODO [] Complete appointment controller
+
     public Button homeAppointmentsButton;
     public Button homeCustomersButton;
     public Button homeReportsButton;
@@ -33,7 +45,7 @@ public class Home {
     public void homeExitClick(ActionEvent actionEvent) {
     }
 
-    //TODO [cu] Create a method to set open this controller's scene.
+    //TODO [c] Create a method to set open this controller's scene.
     public static void loadHomeFXML(Stage stage, Button buttonBringingUsHome, Class passGetClassMethod) throws IOException {
 
         Home.testMethod();
