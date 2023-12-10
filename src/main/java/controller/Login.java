@@ -4,10 +4,12 @@ import dataAccessObject.userDAO;
 
 import devTools.DevToolC;
 
+import devTools.FxToolsC;
 import devTools.JDBTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,9 +19,11 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-
-public class Login {
+//TODO [] Implement initialized t quick test w/ DevToolC on
+public class Login implements Initializable {
 
 
     @FXML public Label loginTitle;
@@ -36,13 +40,17 @@ public class Login {
 
     Stage stage;
 
+
+
     private void loginMethod() throws IOException, InterruptedException {
 
+        // TODO [] create or find a method to sanitize user input remember to implement this into
+        //  any account creation as well.
         // TODO [c] Get login info from input.
-        String nameInput = usernameInput.getText();
-        String passInput = passwordInput.getText();
+        String nameInput = FxToolsC.sanitizeInput( usernameInput.getText() );
+        String passInput = FxToolsC.sanitizeInput( passwordInput.getText() );
 
-        // TODO [cu] solve login on no input error.
+        // TODO [c] solve login on no input error.
         if (nameInput.isEmpty() || passInput.isEmpty()) {
             DevToolC.println("Input Values Found Empty, login attempt abandoned.");
             return;
@@ -63,11 +71,11 @@ public class Login {
         //Validates user input
         boolean loginValidated = userDAO.validateUserLogin(nameInput,passInput);
 
-        // TODO [cu] create a incorrect password popup
+        // TODO [c] create a incorrect password popup
         if (! loginValidated) {
             DevToolC.println("Input on Password or Username not found. Login attempt abandoned");
-            // TODO [cu] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
-            // TODO [cu] create an class to store popups settings for this application -SchedulingApplicationPrompt
+            // TODO [c] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
+            // TODO [c] create an class to store popups settings for this application -SchedulingApplicationPrompt
             //showIncorrectPasswordPopup();
             SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
             popup.loginFailedPopup();
@@ -101,10 +109,12 @@ public class Login {
 
     }
 
-    public void loginEnter(KeyEvent keyEvent) {
+    public void loginEnter(KeyEvent keyEvent) throws IOException, InterruptedException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
 
             DevToolC.println("Enter key pressed. Preforming Login Action.");
+
+            loginMethod();
 
         }
     }
@@ -117,4 +127,12 @@ public class Login {
         System.out.println("Executing exitClick");
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if (DevToolC.toolsState()) {
+            passwordInput.setText("test");
+            usernameInput.setText("test");
+        }
+    }
 }

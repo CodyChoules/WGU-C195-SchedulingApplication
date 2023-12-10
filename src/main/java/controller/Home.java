@@ -18,11 +18,14 @@ public class Home {
     // Collections w/ streams & filters
     // Localization API & Date/Time API
 
-    // TODO [] Scaffold all scenes/controller here with fxml layout done
-    // TODO [] logout button
-    // TODO [] exit button -remember to close connection
-    // TODO [] clean up Login class
-    // TODO [] Complete appointment controller
+    // TODO [cu] learn how to sanitize and validate user inputs for sql.
+    // answer - https://www.codecademy.com/learn/seasp-defending-node-applications-from-sql-injection-xss-csrf-attacks/modules/seasp-preventing-sql-injection-attacks/cheatsheet - This shows our parameter solution is good enough for the scope of this project , but just in case we will sanitize user input for SQL queries as well.
+    // TODO [] Scaffold all scenes/controller here with fxml layout done.
+    // TODO [] logout button.
+    // TODO [] exit button -remember to close connection.
+    // TODO [] Clean up Login class.
+    // TODO [] Complete appointment controller.
+    //
 
     public Button homeAppointmentsButton;
     public Button homeCustomersButton;
@@ -55,7 +58,7 @@ public class Home {
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(passGetClassMethod.getResource("/controller/HomeMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(passGetClassMethod.getResource("/views/HomeMenu.fxml"));
 
         Parent root = loader.load();
 

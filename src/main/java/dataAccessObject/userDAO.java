@@ -24,14 +24,14 @@ public class userDAO {
     public static boolean validateUserLogin(String username,String password){
         try {
 
-            //TODO [cu] Vulnerable to SQL injection attack using string directly, correct this.
+            //TODO [c] Vulnerable to SQL injection attack using string directly, correct this.
             //This is the query string that is vulnerable.
             //String sqlQuery = "SELECT * FROM users WHERE user_name = '" + username + "' AND password = '" + password +"'";
             //Missing Skill:
             //Skill found: SQL parameters
             //SQL parameters are indicated with ? inside SQL query strings. According to my
             //source the SQL engine handles parameters properly preventing SQL injection.
-            //In addition, TODO [] we should validate and sanitize user inputs throughout the project.
+            //In addition, TODO [Extra] we should validate and sanitize user inputs throughout the project.
             //Attempt to correct:
             String sqlQuery = "SELECT * FROM users WHERE user_name = ? AND password = ?";
 
@@ -53,7 +53,7 @@ public class userDAO {
             }
 
 
-            //TODO [] create logic to check for duplicate accounts
+            //TODO [Extra] create logic to check for duplicate accounts
 //            int rowCount = 0;
 //
 //            while (resultSet.next()) {
