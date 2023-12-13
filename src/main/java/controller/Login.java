@@ -44,7 +44,7 @@ public class Login implements Initializable {
     Stage stage;
 
 
-
+    //todo [] transferred this method to MainWindow
     private void loginMethod() throws IOException, InterruptedException {
 
         // TODO [] create or find a method to sanitize user input remember to implement this into
@@ -132,7 +132,8 @@ public class Login implements Initializable {
 
     public void loginClick(ActionEvent actionEvent) throws IOException, InterruptedException {
         System.out.println("Executing loginClick method: ");
-        loginMethod();
+        MainWindow newWindow = new MainWindow();
+        newWindow.loginMethod(usernameInput.getText(),passwordInput.getText(),loginButton);
 
     }
 

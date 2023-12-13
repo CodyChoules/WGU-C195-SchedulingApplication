@@ -13,9 +13,20 @@
             <tabs>
                 <Tab text="Untitled Tab 1">
                     <content>
-                        <fx:include source="/views/home.fxml">
+                        <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+                            <children>
+                                <Label alignment="CENTER" text="Home" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <Button fx:id="openAppointmentsButton" mnemonicParsing="false" onAction="#openAppointments" text="Appointments" />
+                                        <Button fx:id="openCustomersButton" mnemonicParsing="false" onAction="#openCustomer" text="Customers" />
+                                        <Button fx:id="openReportsButton" mnemonicParsing="false" onAction="#openReports" text="Reports" />
+                                    </children>
+                                </VBox>
+                            </children>
 
-                        </fx:include>
+
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
