@@ -14,7 +14,7 @@
                 <Tab text="Untitled Tab 1">
                     <content>
                         <fx:include source="/views/home.fxml">
-                            
+
                         </fx:include>
                     </content>
                 </Tab>
