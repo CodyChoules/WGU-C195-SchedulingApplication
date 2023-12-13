@@ -23,16 +23,16 @@ public class JDBTools {
      * @return connection
      */
     public static Connection openConnection() {
-        DevToolC.println("Connecting to data base using " + ipAddress + " ...");
+        CChoulesDevTools.println("Connecting to data base using " + ipAddress + " ...");
         try {
             Class.forName(MYSQLJDBToolsDriver);
             connection = DriverManager.getConnection(jdbToolsURL, username, password);
-            DevToolC.println("Now connected to: \n " + connection.getClientInfo()
+            CChoulesDevTools.println("Now connected to: \n " + connection.getClientInfo()
                                                 + "\n" + connection.getCatalog()
                                                 + "\n" + connection.getSchema()
                                                 + "\n" + connection.toString());
         } catch (Exception e) {
-            DevToolC.println("Connection to Data Base failed.");
+            CChoulesDevTools.println("Connection to Data Base failed.");
         }
         return connection;
         //TODO [c] how does this open and close connections as needed?
@@ -55,10 +55,10 @@ public class JDBTools {
         try {
             connection.close();
 
-            DevToolC.println("Connection Closed");
+            CChoulesDevTools.println("Connection Closed");
 
         } catch (SQLException exception) {
-            DevToolC.println("Error: " + exception.getMessage());
+            CChoulesDevTools.println("Error: " + exception.getMessage());
             //TODO [c] check the difference between these two option ^v
             //Both are useful so include both. PrintStack shows more info.
             exception.printStackTrace();

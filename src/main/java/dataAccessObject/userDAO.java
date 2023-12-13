@@ -1,6 +1,6 @@
 package dataAccessObject;
 
-import devTools.DevToolC;
+import devTools.CChoulesDevTools;
 import devTools.JDBTools;
 
 import java.sql.PreparedStatement;
@@ -48,7 +48,7 @@ public class userDAO {
 
             //checks to see if any results were stored in result set.
             if (! resultSet.next()) {
-                DevToolC.println("No results found in Data Base using user input.");
+                CChoulesDevTools.println("No results found in Data Base using user input.");
                 return false;
             }
 
@@ -70,14 +70,14 @@ public class userDAO {
 
             if (resultSet.getString("User_Name").equals(username)){
                 if (resultSet.getInt("User_ID") > -1){
-                        DevToolC.println("validateUserLogin -> found and validated login input");
+                        CChoulesDevTools.println("validateUserLogin -> found and validated login input");
                         return true;
                 }
             }
 
         } catch (SQLException exception) {
-            DevToolC.println("Failed to validate login Input due to connection or error.");
-            DevToolC.println(exception.toString());
+            CChoulesDevTools.println("Failed to validate login Input due to connection or error.");
+            CChoulesDevTools.println(exception.toString());
             return false;
         }
 

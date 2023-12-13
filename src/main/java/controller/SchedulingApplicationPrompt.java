@@ -1,6 +1,6 @@
 package controller;
 
-import devTools.DevToolC;
+import devTools.CChoulesDevTools;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -14,7 +14,7 @@ public class SchedulingApplicationPrompt {
         prompt.setHeaderText("Login Failed");
         prompt.setContentText("The username or password is incorrect. Please try again.");
         prompt.setTitle("Login Failed");
-        DevToolC.println(prompt.getTitle().toString());
+        CChoulesDevTools.println(prompt.getTitle().toString());
 
         prompt.show();
     }

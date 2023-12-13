@@ -21,7 +21,7 @@ import javafx.stage.StageStyle;
 /**
  * Developer tools authored by Cody Choules, commonly used tools for ease of use during development that can be easily turned off for non-development environments.
  */
-public class DevToolC {
+public class CChoulesDevTools {
 
     /**
      * Boolean to turn off or on DevTool functions

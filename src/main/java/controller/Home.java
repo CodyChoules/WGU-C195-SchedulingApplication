@@ -1,6 +1,6 @@
 package controller;
 
-import devTools.DevToolC;
+import devTools.CChoulesDevTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,14 +18,31 @@ public class Home {
     // Collections w/ streams & filters
     // Localization API & Date/Time API
 
-    // TODO [cu] learn how to sanitize and validate user inputs for sql.
+    // TODO [c] learn how to sanitize and validate user inputs for sql.
     // answer - https://www.codecademy.com/learn/seasp-defending-node-applications-from-sql-injection-xss-csrf-attacks/modules/seasp-preventing-sql-injection-attacks/cheatsheet - This shows our parameter solution is good enough for the scope of this project , but just in case we will sanitize user input for SQL queries as well.
-    // TODO [] Scaffold all scenes/controller here with fxml layout done.
-    // TODO [] logout button.
-    // TODO [] exit button -remember to close connection.
-    // TODO [] Clean up Login class.
-    // TODO [] Complete appointment controller.
-    //
+    /*
+     TODO [] Scaffold all scenes/controllers here with fxml layout done.
+      --create a test scaffold then prepare actions & structure below
+      --structure
+            login -c-> mainWindow { tabs:
+            -->Appointments {add brings up split pane}
+            -->Customer (Edit,Delete,Add New) -->Save
+            -->Reports {subTabs:
+                -->Contact Schedule
+                -->Appointment Totals
+                -->Customer by Country
+            -->Exit
+
+            -optional-> Logout
+     TODO [] had difficulty bringing multiple controllers to interact
+      with mainWindow. Test to see in including all needed code inside
+      1 controller. This was mainly around the tabs pain interaction.
+
+     TODO [Extra] logout button.
+     TODO [] exit button -remember to close connection.
+     TODO [] Clean up Login class.
+     TODO [] Complete appointment controller.
+    */
 
     public Button homeAppointmentsButton;
     public Button homeCustomersButton;
@@ -54,7 +71,35 @@ public class Home {
         Home.testMethod();
         //Home.loadHomeFXML(loginButton, getClass());
 
-        DevToolC.println("Loading HomeMenu.fxml");
+        CChoulesDevTools.println("Loading HomeMenu.fxml");
+
+        //Note: this is incorrect I keep doing this bellow:
+        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+        FXMLLoader loader = new FXMLLoader(passGetClassMethod.getResource("/views/HomeMenu.fxml"));
+
+        Parent root = loader.load();
+
+        controller.Home mp = loader.getController();
+
+//        //passing the css settings
+//        mp.passCss(cssPath, darkModeOn);
+
+        stage = (Stage) buttonBringingUsHome.getScene().getWindow();
+        Scene scene = new Scene(root);
+
+        CChoulesDevTools.applyDevStyleToScene(scene);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    //TODO [] create a method to load subview or load
+    public static void loadHomeFxmlWithSubView(Stage stage, Button buttonBringingUsHome, Class passGetClassMethod) throws IOException {
+
+        Home.testMethod();
+        //Home.loadHomeFXML(loginButton, getClass());
+
+        CChoulesDevTools.println("Loading HomeMenu.fxml");
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
@@ -74,7 +119,7 @@ public class Home {
     }
 
     public static void testMethod(){
-        DevToolC.println("This is a test indicating a successful method call.");
+        CChoulesDevTools.println("This is a test indicating a successful method call.");
     }
 
 }

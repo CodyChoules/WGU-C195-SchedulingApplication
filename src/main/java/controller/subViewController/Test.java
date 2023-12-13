@@ -1,39 +1,43 @@
+package controller.subViewController;
+
+import controller.MainWindow;
 import devTools.CChoulesDevTools;
 import devTools.JDBTools;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class Main extends Application {
+public class Test extends Application {
 
-    // Missing Skill:
-    // Skill Found: Java Community Naming Conventions:
-    // In Java, the convention is to use PascalCase (also known as CamelCase
-    // w/ an uppercase C in Camel as opposed to camelCase for lower case first)
-    // for class names. This means that the first letter of each word in the
-    // class name is capitalized INCLUDING THE FIRST WORD. {Note: This is why
-    // String, a class, is capitalized and other data types are not.} Conversely,
-    // variable names & method names usually use camelCase meaning they use a
-    // lowercase for letter for the first word then uppercase for the following.
-    // TODO [c] updated the naming convention throughout the project.
+    @FXML public Button theButton;
+    public Label theButtonLabel;
+
+    controller.Test test=new controller.Test();
+    public void handleButtonClick(ActionEvent actionEvent) {
+
+    }
 
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();
 
         //Sets Parent root of scene then title & size
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/login.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Test.class.getResource("/views/subViews/subTest.fxml")));
         primaryStage.setTitle("Main Menu");
 
         //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
         //CChoulesDevTools.redecorateStage(primaryStage);
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,530,315);
 
-        //CChoulesDevTools.setWindowCenteredOnCursor(scene,primaryStage);
+        CChoulesDevTools.setWindowCenteredOnCursor(scene,primaryStage);
 
         primaryStage.setScene(scene);
 

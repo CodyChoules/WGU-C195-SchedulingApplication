@@ -2,14 +2,17 @@ package controller;
 
 import dataAccessObject.userDAO;
 
-import devTools.DevToolC;
+import devTools.CChoulesDevTools;
 
-import devTools.FxToolsC;
+import devTools.CChoulesJTools;
 import devTools.JDBTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,7 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//TODO [] Implement initialized t quick test w/ DevToolC on
+
 public class Login implements Initializable {
 
 
@@ -47,12 +50,12 @@ public class Login implements Initializable {
         // TODO [] create or find a method to sanitize user input remember to implement this into
         //  any account creation as well.
         // TODO [c] Get login info from input.
-        String nameInput = FxToolsC.sanitizeInput( usernameInput.getText() );
-        String passInput = FxToolsC.sanitizeInput( passwordInput.getText() );
+        String nameInput = CChoulesJTools.sanitizeInput( usernameInput.getText() );
+        String passInput = CChoulesJTools.sanitizeInput( passwordInput.getText() );
 
         // TODO [c] solve login on no input error.
         if (nameInput.isEmpty() || passInput.isEmpty()) {
-            DevToolC.println("Input Values Found Empty, login attempt abandoned.");
+            CChoulesDevTools.println("Input Values Found Empty, login attempt abandoned.");
             return;
         }
 
@@ -73,7 +76,7 @@ public class Login implements Initializable {
 
         // TODO [c] create a incorrect password popup
         if (! loginValidated) {
-            DevToolC.println("Input on Password or Username not found. Login attempt abandoned");
+            CChoulesDevTools.println("Input on Password or Username not found. Login attempt abandoned");
             // TODO [c] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
             // TODO [c] create an class to store popups settings for this application -SchedulingApplicationPrompt
             //showIncorrectPasswordPopup();
@@ -83,19 +86,43 @@ public class Login implements Initializable {
 
 //
 
-            DevToolC.println("SchedulingApplicationPrompt Now!");
+            CChoulesDevTools.println("SchedulingApplicationPrompt Now!");
         }
 
 
-        if (loginValidated){ DevToolC.println("User input Validated, Logging in."); }
+        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in."); }
 
 
         //TODO [c] create home menu fxml
         //TODO [c] create load home menu on validation logic //Committing
         if (loginValidated) {
-            Home.testMethod();
+
+
+            //Home.loadHomeFXML(stage, loginButton, getClass());
+
+            //TODO [Extra] was attempting to make a a clean method for loading scenes shown below, did not work properly but may revit the idea.
+            //Home.loadHomeFXML(loginButton, getClass());
+
+            CChoulesDevTools.println("Loading mainWindow.fxml");
+
+            //Note: this is incorrect I keep doing this bellow:
+            //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/windows/mainWindow.fxml"));
+
+            Parent root = loader.load();
+
             //TODO [Extra] Complete dark mode pass through from this scene to home
-            Home.loadHomeFXML(stage, loginButton, getClass());
+//            controller.Home mp = loader.getController();
+//        //passing the css settings
+//        mp.passCss(cssPath, darkModeOn);
+
+            stage = (Stage) loginButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            CChoulesDevTools.applyDevStyleToScene(scene);
+
+            stage.setScene(scene);
+            stage.show();
         }
 
         //showIncorrectPasswordPopup();
@@ -112,7 +139,7 @@ public class Login implements Initializable {
     public void loginEnter(KeyEvent keyEvent) throws IOException, InterruptedException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
 
-            DevToolC.println("Enter key pressed. Preforming Login Action.");
+            CChoulesDevTools.println("Enter key pressed. Preforming Login Action.");
 
             loginMethod();
 
@@ -130,7 +157,7 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (DevToolC.toolsState()) {
+        if (CChoulesDevTools.toolsState()) {
             passwordInput.setText("test");
             usernameInput.setText("test");
         }

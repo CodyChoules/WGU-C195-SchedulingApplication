@@ -1,8 +1,9 @@
-import devTools.DevToolC;
+import devTools.CChoulesDevTools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -11,28 +12,30 @@ public class TestMain extends Application {
 
 
     public void start(Stage primaryStage) throws Exception {
-        DevToolC.toolsOn();
+        CChoulesDevTools.toolsOn();
 
         //Set Parent root of scene then title & size
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/Test.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/windows/mainWindow.fxml")));
 
         primaryStage.setTitle("Main Menu");
 
-        DevToolC.redecorateStage(primaryStage);
+        CChoulesDevTools.redecorateStage(primaryStage);
 
         Scene scene = new Scene(root,530,315);
 
 
-        DevToolC.setWindowCenteredOnCursor(scene,primaryStage);
+        CChoulesDevTools.setWindowCenteredOnCursor(scene,primaryStage);
 
         primaryStage.setScene(scene);
 
 
         primaryStage.show();
 
-        DevToolC.applyDevStyleToScene(scene);
+        CChoulesDevTools.applyDevStyleToScene(scene);
 
-        DevToolC.println("Stage & Scene Set");
+        CChoulesDevTools.println("Stage & Scene Set");
+
+
 
 
     }
