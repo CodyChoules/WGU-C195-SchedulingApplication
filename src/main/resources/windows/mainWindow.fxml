@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindow">
     <AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="1081.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="1081.0" tabClosingPolicy="SELECTED_TAB" tabMaxHeight="25.0" tabMinHeight="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab closable="false" text="Home">
                     <content>
@@ -57,30 +57,19 @@
                                        </AnchorPane>
                     </content>
                 </Tab>
-            <Tab text="Appointments">
+<!--                APPOINTMENTS TAB                   -->
+            <Tab text="Appointments" >
                <content>
-                  <AnchorPane prefHeight="400.0" prefWidth="600.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="102.0" prefHeight="971.0" prefWidth="1398.0" text="Home" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="771.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Button fx:id="openAppointmentsButton1" mnemonicParsing="false" onAction="#openAppointments" text="Appointments" />
-                              <Button fx:id="openCustomersButton1" mnemonicParsing="false" onAction="#openCustomer" prefHeight="25.0" prefWidth="82.0" text="Customers" />
-                              <Button fx:id="openReportsButton1" mnemonicParsing="false" onAction="#openReports" text="Reports" />
-                           </children>
-                        </VBox>
-                        <AnchorPane layoutX="680.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane prefHeight="400.0" prefWidth="600.0" />
                </content>
             </Tab>
             </tabs>
         </TabPane>
 
                 </AnchorPane>
-   <HBox alignment="CENTER" layoutX="1296.0" layoutY="-148.0" spacing="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <HBox alignment="CENTER" layoutX="1296.0" layoutY="-148.0" spacing="3.0" visible="false" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
       <children>
-         <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0">
+         <Button fx:id="MinimizeButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: white; -fx-border-color: black;">
             <font>
                <Font name="Ebrima" size="12.0" />
             </font>
@@ -100,7 +89,7 @@
                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="15.0" stroke="BLACK" strokeType="INSIDE" width="14.0" />
             </graphic>
          </Button>
-         <Button mnemonicParsing="false">
+         <Button fx:id="MaximizeButton" maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: white; -fx-border-color: black;">
             <font>
                <Font name="Ebrima" size="12.0" />
             </font>
@@ -109,13 +98,14 @@
                   <children>
                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="11.0" layoutX="93.0" layoutY="69.0" stroke="BLACK" strokeType="INSIDE" width="11.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0" />
                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dadada" height="11.0" layoutX="86.0" layoutY="77.0" stroke="BLACK" strokeType="INSIDE" width="11.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                     <Rectangle fx:id="MaximizedImage" arcHeight="5.0" arcWidth="5.0" fill="#dadada" height="16.0" layoutX="96.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" width="16.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   </children>
                </AnchorPane>
             </graphic>
          </Button>
-         <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="X">
+         <Button fx:id="XButton" maxHeight="20.0" maxWidth="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: white; -fx-border-color: black;" text="X">
             <font>
-               <Font name="Ebrima" size="12.0" />
+               <Font name="Ebrima" size="11.0" />
             </font>
          </Button>
       </children>
@@ -123,5 +113,7 @@
          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
       </padding>
    </HBox>
+
+    
 
 </AnchorPane>
