@@ -1,13 +1,13 @@
 package dataAccessObject;
 
-import devTools.CChoulesDevTools;
-import devTools.JDBTools;
+import applicationTools.CChoulesDevTools;
+import applicationTools.JDBTools;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class userDAO {
+public class UserDAO {
 
 
     //Missing Skill,

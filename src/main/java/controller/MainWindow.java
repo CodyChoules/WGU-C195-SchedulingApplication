@@ -1,10 +1,10 @@
 package controller;
 
 
-import dataAccessObject.userDAO;
-import devTools.CChoulesDevTools;
-import devTools.CChoulesJTools;
-import devTools.JDBTools;
+import dataAccessObject.UserDAO;
+import applicationTools.CChoulesDevTools;
+import applicationTools.CChoulesJTools;
+import applicationTools.JDBTools;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -163,7 +163,7 @@ public class MainWindow extends Application {
 
         // TODO [c] create a DAO to access user date inside the SQL DB
         //Validates user input
-        boolean loginValidated = userDAO.validateUserLogin(nameInput,passInput);
+        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput);
 
         // TODO [c] create a incorrect password popup
         if (! loginValidated) {

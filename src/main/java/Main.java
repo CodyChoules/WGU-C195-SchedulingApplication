@@ -1,5 +1,5 @@
-import devTools.CChoulesDevTools;
-import devTools.JDBTools;
+import applicationTools.CChoulesDevTools;
+import applicationTools.JDBTools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

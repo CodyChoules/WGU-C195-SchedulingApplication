@@ -1,8 +1,13 @@
 package controller;
 
+import dataAccessObject.AppointmentDAO;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.SQLException;
 
 public class Appointments {
 
@@ -15,7 +20,7 @@ public class Appointments {
     }
 
     // TABLE //
-     public TableView primaryTableAppointments;
+     public TableView<applicationObject.Appointment> primaryTableAppointments;
     @FXML public TableColumn apTitle;
     @FXML public TableColumn apType;
     @FXML public TableColumn apLocation;
@@ -98,6 +103,25 @@ public class Appointments {
     public void deleteAppointment(ActionEvent actionEvent) {
     }
     @FXML public Button deleteAppointment;
-    
+
+
+    //SCENE INITIALIZATION//
+    public void initialize() throws SQLException {
+
+        ObservableList<applicationObject.Appointment> allAppointmentsList = AppointmentDAO.getAllAppointments();
+
+        apID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        apTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+        apDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
+        apLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+        apType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        apStart.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        apContactID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        apUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        primaryTableAppointments.setItems(allAppointmentsList);
+    }
     
 }

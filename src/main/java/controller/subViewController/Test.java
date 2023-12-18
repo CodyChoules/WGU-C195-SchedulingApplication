@@ -1,8 +1,7 @@
 package controller.subViewController;
 
-import controller.MainWindow;
-import devTools.CChoulesDevTools;
-import devTools.JDBTools;
+import applicationTools.CChoulesDevTools;
+import applicationTools.JDBTools;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

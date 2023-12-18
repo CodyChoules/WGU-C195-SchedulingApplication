@@ -1,6 +1,6 @@
 package controller;
 
-import devTools.CChoulesDevTools;
+import applicationTools.CChoulesDevTools;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;

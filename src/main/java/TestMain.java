@@ -1,9 +1,8 @@
-import devTools.CChoulesDevTools;
+import applicationTools.CChoulesDevTools;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 import java.util.Objects;

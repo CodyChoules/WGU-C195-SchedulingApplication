@@ -1,11 +1,11 @@
 package controller;
 
-import dataAccessObject.userDAO;
+import dataAccessObject.UserDAO;
 
-import devTools.CChoulesDevTools;
+import applicationTools.CChoulesDevTools;
 
-import devTools.CChoulesJTools;
-import devTools.JDBTools;
+import applicationTools.CChoulesJTools;
+import applicationTools.JDBTools;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -72,7 +72,7 @@ public class Login implements Initializable {
 
         // TODO [c] create a DAO to access user date inside the SQL DB
         //Validates user input
-        boolean loginValidated = userDAO.validateUserLogin(nameInput,passInput);
+        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput);
 
         // TODO [c] create a incorrect password popup
         if (! loginValidated) {
