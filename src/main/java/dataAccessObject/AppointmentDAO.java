@@ -1,6 +1,7 @@
 package dataAccessObject;
 
 import applicationObject.Appointment;
+import applicationTools.JDBTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,13 +20,15 @@ public class AppointmentDAO {
      */
     public static ObservableList<applicationObject.Appointment> getAllAppointments() throws SQLException {
 
-        String sqlQuery = "SELECT * from appointments";
+        String sqlQuery = "SELECT * from client_schedule.appointments";
 
         ObservableList<Appointment> appointmentsObservableList = FXCollections.observableArrayList();
 
+        JDBTools.openConnection();
 
         PreparedStatement preparedStatement = applicationTools.JDBTools.getConnection().prepareStatement(sqlQuery);
         ResultSet resultSet = preparedStatement.executeQuery();
+
         while (resultSet.next()) {
 
             //Note: This order is not the same as front end but consistent with data base
@@ -39,6 +42,9 @@ public class AppointmentDAO {
             int customerID = resultSet.getInt("Customer_ID");
             int userID = resultSet.getInt("User_ID");
             int contactID = resultSet.getInt("Contact_ID");
+
+
+
 
             //Note: appointment now follows front end order
             Appointment appointment = new Appointment(apTitle, apType, apLocation, apID, apDescription, apStart, apEnd, customerID, contactID, userID);

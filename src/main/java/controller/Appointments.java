@@ -1,13 +1,25 @@
 package controller;
 
+import applicationObject.Appointment;
+import applicationTools.CChoulesDevTools;
 import dataAccessObject.AppointmentDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class Appointments {
 
@@ -21,17 +33,17 @@ public class Appointments {
 
     // TABLE //
      public TableView<applicationObject.Appointment> primaryTableAppointments;
-    @FXML public TableColumn apTitle;
-    @FXML public TableColumn apType;
-    @FXML public TableColumn apLocation;
-    @FXML public TableColumn apID;
-    @FXML public TableColumn apDescription;
-    @FXML public TableColumn apStart;
-    @FXML public TableColumn apEnd;
-    @FXML public TableColumn apCustomerID;
-    @FXML public TableColumn apContact;
-    @FXML public TableColumn apContactID;
-    @FXML public TableColumn apUserID;
+    @FXML public TableColumn<?, ?> apTitle;
+    @FXML public TableColumn<?, ?> apType;
+    @FXML public TableColumn<?, ?> apLocation;
+    @FXML public TableColumn<?, ?> apID;
+    @FXML public TableColumn<?, ?> apDescription;
+    @FXML public TableColumn<?, ?> apStart;
+    @FXML public TableColumn<?, ?> apEnd;
+    @FXML public TableColumn<?, ?> apCustomerID;
+    @FXML public TableColumn<?, ?> apContact;
+    @FXML public TableColumn<?, ?> apContactID;
+    @FXML public TableColumn<?, ?> apUserID;
 
     // SEARCH BAR //
         //Radio Buttons//
@@ -54,11 +66,11 @@ public class Appointments {
     @FXML public TextField apLocationUpdate;
     @FXML public TextField apIdUpdate;
     @FXML public DatePicker apStartDateUpdate;
-    @FXML public ComboBox apStartTimeUpdate;
+    @FXML public ComboBox<String> apStartTimeUpdate;
     @FXML public DatePicker apEndDateUpdate;
-    @FXML public ComboBox apEndTimeUpdate;
+    @FXML public ComboBox<String> apEndTimeUpdate;
     @FXML public TextField apCustomerIdUpdate;
-    @FXML public ComboBox apContactUpdate;
+    @FXML public ComboBox<String> apContactUpdate;
     @FXML public TextField apContactUserIdUpdate;
     @FXML public Button apMakeUpdateButton;
     @FXML public void MakeApUpdate(ActionEvent actionEvent) {
@@ -71,11 +83,11 @@ public class Appointments {
     @FXML public TextField apLocationAdd;
     @FXML public TextField apIdAdd;
     @FXML public DatePicker apStartDateAdd;
-    @FXML public ComboBox apStartTimeAdd;
+    @FXML public ComboBox<String> apStartTimeAdd;
     @FXML public DatePicker apEndDateAdd;
-    @FXML public ComboBox apEndTimeAdd;
+    @FXML public ComboBox<String> apEndTimeAdd;
     @FXML public TextField apCustomerIdAdd;
-    @FXML public ComboBox apContactAdd;
+    @FXML public ComboBox<String> apContactAdd;
     @FXML public TextField apContactUserIdAdd;
     @FXML public Button apMakeAdd;
     @FXML public void commitAdd(ActionEvent actionEvent) {
@@ -87,18 +99,18 @@ public class Appointments {
     }
 
     //DELETE APPOINTMENT TAB//
-    @FXML public TableView mainAppointmentsTable1;
-    @FXML public TableColumn appointmentTitle2;
-    @FXML public TableColumn appointmentType2;
-    @FXML public TableColumn appointmentLocation2;
-    @FXML public TableColumn appointmentID2;
-    @FXML public TableColumn appointmentDescription2;
-    @FXML public TableColumn appointmentStart2;
-    @FXML public TableColumn appointmentEnd2;
-    @FXML public TableColumn appointmentCustomerID2;
-    @FXML public TableColumn tableContactID21;
-    @FXML public TableColumn tableContactID2;
-    @FXML public TableColumn tableUserID2;
+    @FXML public TableView<applicationObject.Appointment> mainAppointmentsTable1;
+    @FXML public TableColumn<?, ?> appointmentTitle2;
+    @FXML public TableColumn<?, ?> appointmentType2;
+    @FXML public TableColumn<?, ?> appointmentLocation2;
+    @FXML public TableColumn<?, ?> appointmentID2;
+    @FXML public TableColumn<?, ?> appointmentDescription2;
+    @FXML public TableColumn<?, ?> appointmentStart2;
+    @FXML public TableColumn<?, ?> appointmentEnd2;
+    @FXML public TableColumn<?, ?> appointmentCustomerID2;
+    @FXML public TableColumn<?, ?> tableContactID21;
+    @FXML public TableColumn<?, ?> tableContactID2;
+    @FXML public TableColumn<?, ?> tableUserID2;
     @FXML public Button addApToDelete;
     public void deleteAppointment(ActionEvent actionEvent) {
     }
@@ -106,22 +118,63 @@ public class Appointments {
 
 
     //SCENE INITIALIZATION//
-    public void initialize() throws SQLException {
+//    public void initialize() throws SQLException {
+//
+//Appointments
+//    }
+    public void initialize() throws SQLException{
 
-        ObservableList<applicationObject.Appointment> allAppointmentsList = AppointmentDAO.getAllAppointments();
+        ObservableList<applicationObject.Appointment> appointmentList = AppointmentDAO.getAllAppointments();
 
-        apID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
-        apTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
-        apDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        apLocation.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        apType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        apStart.setCellValueFactory(new PropertyValueFactory<>("start"));
-        apEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        //TODO [] After you complete the applicationObject & DAO for Client Name include access to it here
+        // In addition change the contactName to Customer Name (Customer Name is important for meetings)
+
+//        String sqlQueryForContact = "SELECT * FROM client_schedule.appointments WHERE Contact_ID = ?";
+//
+//        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//            preparedStatement.setInt(1, contactIdParameter);
+
+        apID.setCellValueFactory(new PropertyValueFactory<>("apID"));
+        apTitle.setCellValueFactory(new PropertyValueFactory<>("apTitle"));
+        apDescription.setCellValueFactory(new PropertyValueFactory<>("apDescription"));
+        apLocation.setCellValueFactory(new PropertyValueFactory<>("apLocation"));
+        apType.setCellValueFactory(new PropertyValueFactory<>("apType"));
+        apStart.setCellValueFactory(new PropertyValueFactory<>("apStart"));
+        apEnd.setCellValueFactory(new PropertyValueFactory<>("apEnd"));
         apCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        //ToDo include Contact ID to Name
         apContactID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         apUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
-        primaryTableAppointments.setItems(allAppointmentsList);
+        primaryTableAppointments.setItems(appointmentList);
     }
-    
+
+
+    //FXML LOADER METHOD//
+    public static void loadThisFXML(Stage stage) throws IOException {
+
+        Home.testMethod();
+        //Home.loadHomeFXML(loginButton, getClass());
+
+        CChoulesDevTools.println("Loading HomeMenu.fxml");
+
+        //Note: this is incorrect I keep doing this bellow:
+        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+        FXMLLoader loader = new FXMLLoader(controller.Appointments.class.getResource("/views/appointments.fxml"));
+
+
+        Parent root = loader.load();
+
+        controller.Appointments mp = loader.getController();
+
+//        //passing the css settings
+//        mp.passCss(cssPath, darkModeOn);
+
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
 }

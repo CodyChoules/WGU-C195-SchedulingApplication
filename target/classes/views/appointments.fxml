@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="999.0" prefWidth="1371.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindow">
+<AnchorPane prefHeight="999.0" prefWidth="1371.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Appointments">
    <children>
       <AnchorPane prefHeight="672.0" prefWidth="1257.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
@@ -31,7 +31,7 @@
                <children>
                   <AnchorPane prefHeight="32.0" prefWidth="212.0">
                      <children>
-                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="backToHomeAction" prefHeight="26.0" prefWidth="103.0" text="Back To Home" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
+                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToHomeAction" prefHeight="26.0" prefWidth="103.0" text="Back To Home" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
                         <Label layoutX="-21.0" layoutY="-1.0" text="APPOINTMENTS" underline="true" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>
                               <Font name="System Bold" size="22.0" />
@@ -39,6 +39,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
+<!--                  TABLE PRIMARY       -->
                     <TableView fx:id="primaryTableAppointments" prefHeight="2000.0" prefWidth="1371.0" tableMenuButtonVisible="true">
                         <columns>
                             <TableColumn fx:id="apTitle" prefWidth="76.0" resizable="false" text="Title" />
@@ -57,6 +58,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                     </TableView>
+<!--                  SEARCH BAR       -->
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="24.0" prefWidth="1371.0" spacing="6.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search By:" />
@@ -82,8 +84,10 @@
                         <Insets left="11.0" />
                      </padding>
                   </HBox>
+<!--              APPOINTMENT EDITOR        -->
                   <TabPane minHeight="240.0" minWidth="978.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
+<!--                   UPDATE APPOINTMENT TAB      -->
                       <Tab text="Update Appointments {alt 1}">
                         <content>
                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
@@ -144,7 +148,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCostomerIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -270,6 +274,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
+<!--                  ADD APPOINTMENT TAB       -->
                       <Tab text="Add Appointments {alt 2}">
                         <content>
                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
@@ -441,6 +446,7 @@
                                  </children>
                               </AnchorPane>
                         </content>
+<!--                  DELETE APPOINTMENT TAB     -->
                       </Tab>
                         <Tab text="Delete Appointments {alt 3}">
                            <content>
@@ -466,7 +472,7 @@
                                     </TableView>
                                     <HBox alignment="TOP_CENTER" layoutX="386.0" layoutY="180.0" prefHeight="26.0" prefWidth="465.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <children>
-                                          <Button fx:id="deleteAppointment1" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" text="Add Selected Appointment to be Deleted {Right Click}" />
+                                          <Button fx:id="addApToDelete" mnemonicParsing="false" onAction="#addSelectionToDeletion" prefHeight="25.0" text="Add Selected Appointment to be Deleted {Right Click}" />
                                             <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointment {alt + D, alt +Del}" />
                                        </children>
                                     </HBox>
