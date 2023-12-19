@@ -148,7 +148,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="addAppointmentCustomerID11" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
