@@ -44,11 +44,10 @@ public class Login implements Initializable {
     Stage stage;
 
 
-    //todo [] transferred this method to MainWindow
+    //todo [c] transferred this method to MainWindow
     private void loginMethod() throws IOException, InterruptedException {
 
-        // TODO [] create or find a method to sanitize user input remember to implement this into
-        //  any account creation as well.
+        // TODO [c] create or find a method to sanitize user input remember to implement this into any account creation as well.
         // TODO [c] Get login info from input.
         String nameInput = CChoulesJTools.sanitizeInput( usernameInput.getText() );
         String passInput = CChoulesJTools.sanitizeInput( passwordInput.getText() );

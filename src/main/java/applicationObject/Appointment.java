@@ -1,5 +1,6 @@
 package applicationObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -11,9 +12,9 @@ public class Appointment {
     private String apDescription;
     private LocalDateTime apStart;
     private LocalDateTime apEnd;
-    public int customerID;
-    public int contactID;
-    public int userID;
+    public int apCustomerID;
+    public int apContactID;
+    public int apUserID;
 
     public Appointment(
                        String apTitle,
@@ -23,9 +24,9 @@ public class Appointment {
                        String apDescription,
                        LocalDateTime apStart,
                        LocalDateTime apEnd,
-                       int customerID,
-                       int contactID,
-                       int userID
+                       int apCustomerID,
+                       int apContactID,
+                       int apUserID
     ) {
         this.apTitle = apTitle;
         this.apType = apType;
@@ -34,9 +35,9 @@ public class Appointment {
         this.apDescription = apDescription;
         this.apStart = apStart;
         this.apEnd = apEnd;
-        this.customerID = customerID;
-        this.contactID = contactID;
-        this.userID = userID;
+        this.apCustomerID = apCustomerID;
+        this.apContactID = apContactID;
+        this.apUserID = apUserID;
     }
 
     //Getter and Setter methods for apTitle
@@ -96,27 +97,25 @@ public class Appointment {
     }
 
     //Getter and Setter methods for customerID
-    public int getCustomerID() {
-        return customerID;
-    }
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public int getApCustomerID() { return apCustomerID; }
+    public void setApCustomerID(int customerID) {
+        this.apCustomerID = customerID;
     }
 
     //Getter and Setter methods for contactID
-    public int getContactID() {
-        return contactID;
+    public int getApContactID() {
+        return apContactID;
     }
-    public void setContactID(int contactID) {
-        this.contactID = contactID;
+    public void setApContactID(int contactID) {
+        this.apContactID = contactID;
     }
 
     //Getter and Setter methods for userID
-    public int getUserID() {
-        return userID;
+    public int getApUserID() {
+        return apUserID;
     }
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setApUserID(int userID) {
+        this.apUserID = userID;
     }
 
 

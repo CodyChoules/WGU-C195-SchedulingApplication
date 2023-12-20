@@ -19,10 +19,6 @@ public class Test extends Application {
     @FXML public Button theButton;
     public Label theButtonLabel;
 
-    controller.Test test=new controller.Test();
-    public void handleButtonClick(ActionEvent actionEvent) {
-
-    }
 
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();

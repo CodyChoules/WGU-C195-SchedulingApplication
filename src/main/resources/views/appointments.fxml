@@ -40,7 +40,7 @@
                      </children>
                   </AnchorPane>
 <!--                  TABLE PRIMARY       -->
-                    <TableView fx:id="primaryTableAppointments" prefHeight="2000.0" prefWidth="1371.0" tableMenuButtonVisible="true">
+                    <TableView fx:id="primaryApTable" onMouseClicked="#handleTableDoubleClick" prefHeight="2000.0" prefWidth="1371.0" tableMenuButtonVisible="true">
                         <columns>
                             <TableColumn fx:id="apTitle" prefWidth="76.0" resizable="false" text="Title" />
                             <TableColumn fx:id="apType" minWidth="6.0" prefWidth="70.0" text="Type" />
@@ -148,7 +148,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="addAppointmentCustomerID11" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -163,7 +163,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                            <Button fx:id="apMakeUpdateButton" mnemonicParsing="false" onAction="#MakeApUpdate" prefHeight="13.0" prefWidth="158.0" style="-fx-border-color: orange;" text="Update Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                            <Button fx:id="apMakeUpdateButton" mnemonicParsing="false" onAction="#makeApUpdate" prefHeight="13.0" prefWidth="158.0" style="-fx-border-color: orange;" text="Update Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                                           <Label text="Appointment Title:" GridPane.halignment="RIGHT">
                                              <padding>
                                                 <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />

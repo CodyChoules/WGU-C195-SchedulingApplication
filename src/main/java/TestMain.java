@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class TestMain extends Application {
@@ -35,9 +36,11 @@ public class TestMain extends Application {
 //
 //        CChoulesDevTools.println("Stage & Scene Set");
 
-
-        Appointments.loadThisFXML(primaryStage);
-
+        try {
+            Appointments.loadThisFXML(primaryStage);
+        } catch (IOException e) {
+            CChoulesDevTools.println(e.toString());
+        }
 
 
 

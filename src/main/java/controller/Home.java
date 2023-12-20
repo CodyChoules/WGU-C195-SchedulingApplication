@@ -21,7 +21,7 @@ public class Home {
     // TODO [c] learn how to sanitize and validate user inputs for sql.
     // answer - https://www.codecademy.com/learn/seasp-defending-node-applications-from-sql-injection-xss-csrf-attacks/modules/seasp-preventing-sql-injection-attacks/cheatsheet - This shows our parameter solution is good enough for the scope of this project , but just in case we will sanitize user input for SQL queries as well.
     /*
-     TODO [] Scaffold all scenes/controllers here with fxml layout done.
+     TODO [ip] Scaffold all scenes/controllers here with fxml layout done.
       --create a test scaffold then prepare actions & structure below
       --structure
             login -c-> mainWindow { tabs:
@@ -34,14 +34,16 @@ public class Home {
             -->Exit
 
             -optional-> Logout
-     TODO [] had difficulty bringing multiple controllers to interact
-      with mainWindow. Test to see in including all needed code inside
+     TODO [cu] had difficulty bringing multiple controllers to interact
+      with mainWindow. Test to see including all needed code inside
       1 controller. This was mainly around the tabs pain interaction.
+      FOUND: Unfortunately using the "include fxml" feature does allow a clear way for the controller to communicat with the parent fxml elements & controller. We will have to revert to a unified FXML & Controller to utilize tabs in fxml.
+      SOLUTION: Setting up a new Window controller that will contain all controllers once they are tested and functioning.
 
      TODO [Extra] logout button.
-     TODO [] exit button -remember to close connection.
-     TODO [] Clean up Login class.
-     TODO [] Complete appointment controller.
+     TODO [l] exit button -remember to close connection.
+     TODO [l] Clean up Login class.
+     TODO [ip] Complete appointment controller.
     */
 
     public Button homeAppointmentsButton;
@@ -93,7 +95,7 @@ public class Home {
         stage.show();
     }
 
-    //TODO [] create a method to load subview or load
+    //TODO [l] create a method to load subview or load FAILED DELETE THIS
     public static void loadHomeFxmlWithSubView(Stage stage, Button buttonBringingUsHome, Class passGetClassMethod) throws IOException {
 
         Home.testMethod();
