@@ -34,7 +34,7 @@ public class Home {
             -->Exit
 
             -optional-> Logout
-     TODO [cu] had difficulty bringing multiple controllers to interact
+     TODO [c] had difficulty bringing multiple controllers to interact
       with mainWindow. Test to see including all needed code inside
       1 controller. This was mainly around the tabs pain interaction.
       FOUND: Unfortunately using the "include fxml" feature does allow a clear way for the controller to communicat with the parent fxml elements & controller. We will have to revert to a unified FXML & Controller to utilize tabs in fxml.
@@ -43,7 +43,7 @@ public class Home {
      TODO [Extra] logout button.
      TODO [l] exit button -remember to close connection.
      TODO [l] Clean up Login class.
-     TODO [ip] Complete appointment controller.
+     TODO [c] Complete appointment controller.
     */
 
     public Button homeAppointmentsButton;
@@ -95,7 +95,7 @@ public class Home {
         stage.show();
     }
 
-    //TODO [l] create a method to load subview or load FAILED DELETE THIS
+    //TODO [l] create a method to load subview or load FAILED DELETE THIS entire class and organize the notes.
     public static void loadHomeFxmlWithSubView(Stage stage, Button buttonBringingUsHome, Class passGetClassMethod) throws IOException {
 
         Home.testMethod();

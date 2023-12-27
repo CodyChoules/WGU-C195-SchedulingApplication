@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class TestMain extends Application {
 
+    public Stage mainStage = new Stage();
 
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();
@@ -35,9 +36,10 @@ public class TestMain extends Application {
 //        CChoulesDevTools.applyDevStyleToScene(scene);
 //
 //        CChoulesDevTools.println("Stage & Scene Set");
+        mainStage = primaryStage;
 
         try {
-            Appointments.loadThisFXML(primaryStage);
+            Appointments.loadThisFXML(mainStage);
         } catch (IOException e) {
             CChoulesDevTools.println(e.toString());
         }

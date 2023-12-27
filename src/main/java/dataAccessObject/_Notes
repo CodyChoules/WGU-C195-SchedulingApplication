@@ -1,0 +1,13 @@
+
+This package is to hold DAOs (Data Access Obj) that will communicate with the DB.
+
+# TODO [c] Create the following DAOs
+        [c]  AppointmentDAO
+        [c]  UserDAO
+        [c]  ReportDAO -potentially multiple
+        [c]  FirstLvlDivisionDAO
+        [c]  CustomerDAO
+        [c]  CountryDAO
+        [c]  ContactDAO
+
+//NOTES, MISTAKES, & THINGS I FORGOT//

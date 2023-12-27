@@ -16,7 +16,7 @@ public class LocalDateTimeApplicationTool {
 
     public static LocalDateTime parseToLocalDateTime(String dateString, String timeString) {
         dateString = replaceSlash(dateString);
-        //TODO [cu] create an if statement to call adjustDateFormat
+        //TODO [c] create an if statement to call adjustDateFormat
         // Found: we can use String.matches to check string format \\d{x,y} means string decimal of length x or y.
         if (dateString.matches("\\d{1,2}-\\d{1,2}-\\d{4}")) {
             dateString = adjustDateFormat(dateString);
@@ -30,7 +30,7 @@ public class LocalDateTimeApplicationTool {
     }
 
     private static String adjustDateFormat(String dateString) {
-        //TODO [cu] find a way to format strings into date format
+        //TODO [c] find a way to format strings into date format
         // -Found: Works but am unsure how this regex works research further to solidify understanding.
         // -Research: "%02d" is a format specifier for an integer (d stands for decimal). It means that the integer should be formatted with at least 2 digits, and if it has fewer than 2 digits, leading zeros should be added. "%s" is any length string.
         String[] parts = dateString.split("-");
