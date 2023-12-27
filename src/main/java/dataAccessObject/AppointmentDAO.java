@@ -62,26 +62,51 @@ public class AppointmentDAO {
 
     public static int updateAppointment(Appointment updatedAppointment, Connection connection) throws SQLException {
         String query = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID=?";
-        PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-        ps.setString(1, updatedAppointment.getApTitle());
-        ps.setString(2, updatedAppointment.getApDescription());
-        ps.setString(3, updatedAppointment.getApLocation());
-        ps.setString(4, updatedAppointment.getApType());
-        ps.setTimestamp(5, Timestamp.valueOf(updatedAppointment.getApStart()));
-        ps.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
-        ps.setInt(7, updatedAppointment.getApCustomerID());
-        ps.setInt(8, updatedAppointment.getApUserID());
-        ps.setInt(9, updatedAppointment.getApContactID());
+        preparedStatement.setString(1, updatedAppointment.getApTitle());
+        preparedStatement.setString(2, updatedAppointment.getApDescription());
+        preparedStatement.setString(3, updatedAppointment.getApLocation());
+        preparedStatement.setString(4, updatedAppointment.getApType());
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(updatedAppointment.getApStart()));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
+        preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
+        preparedStatement.setInt(8, updatedAppointment.getApUserId());
+        preparedStatement.setInt(9, updatedAppointment.getApContactId());
+        preparedStatement.setInt(10, updatedAppointment.getApId());
 
-        //Set the last parameter for WHERE clause (Appointment_ID)
-        ps.setInt(10, updatedAppointment.getApID());
-
-        int result = ps.executeUpdate();
+        int result = preparedStatement.executeUpdate();
 
         //Closing to not tie up DB Resources
-        ps.close();
+        preparedStatement.close();
         return result;
+    }
+
+    public static int addAppointment(Appointment updatedAppointment, Connection connection) throws SQLException {
+        String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setString(1, updatedAppointment.getApTitle());
+        preparedStatement.setString(2, updatedAppointment.getApDescription());
+        preparedStatement.setString(3, updatedAppointment.getApLocation());
+        preparedStatement.setString(4, updatedAppointment.getApType());
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(updatedAppointment.getApStart()));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
+        preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
+        preparedStatement.setInt(8, updatedAppointment.getApUserId());
+        preparedStatement.setInt(9, updatedAppointment.getApContactId());
+
+
+        int result = preparedStatement.executeUpdate();
+
+        //Closing to not tie up DB Resources
+        preparedStatement.close();
+        return result;
+    }
+
+    public static int generateUniqueId() {
+
+        return 1;
     }
 
 

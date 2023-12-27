@@ -1,0 +1,30 @@
+
+This package is to create Java objects that are designed to be used within the scope of the application.
+
+# TODO [cu] Create the following objects
+    [c]  Appointment
+    [cu]  Contact
+    [cu]  Country
+    [cu]  FirstLvlDivision 'First-Level Division'
+    [cu]  Customer
+    [cu]  Report -ap by month -ap by type -[c] customer by Country volume
+    [cu]  User
+    -> now move to data access objects
+
+
+
+
+
+
+//NOTES, MISTAKES, & THINGS I FORGOT//
+    Forgot: messed up the naming conventions for obj, objRef, & class
+            Refresher:
+                Object: An instance of a class, representing a real-world entity in a program.
+                Object References: Variables that store memory addresses pointing to objects.
+                Classes: Blueprints or templates for creating objects, defining their structure and behavior.
+            Naming Conventions:
+                Objects: Named using camelCase (e.g., myObject).
+                Object References: Also camelCase (e.g., objRef).
+                Classes: Named using PascalCase (e.g., MyClass).
+
+    Mistake: It may not have been wise to abbreviate appointment with ap. May have been faster but has mad things difficult to refactor and less readable. Now the project has less consistent naming conventions as well.

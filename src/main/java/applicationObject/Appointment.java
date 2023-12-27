@@ -1,5 +1,9 @@
 package applicationObject;
 
+import applicationTools.CChoulesDevTools;
+import dataAccessObject.ContactDAO;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -65,7 +69,7 @@ public class Appointment {
     }
 
     //Getter and Setter methods for apID
-    public int getApID() {
+    public int getApId() {
         return apID;
     }
     public void setApID(int apID) {
@@ -97,25 +101,38 @@ public class Appointment {
     }
 
     //Getter and Setter methods for customerID
-    public int getApCustomerID() { return apCustomerID; }
+    public int getApCustomerId() { return apCustomerID; }
     public void setApCustomerID(int customerID) {
         this.apCustomerID = customerID;
     }
 
     //Getter and Setter methods for contactID
-    public int getApContactID() {
+    public int getApContactId() {
         return apContactID;
     }
     public void setApContactID(int contactID) {
         this.apContactID = contactID;
     }
 
-    //Getter and Setter methods for userID
-    public int getApUserID() {
+    //Getter and Setter methods for userId
+    public int getApUserId() {
         return apUserID;
     }
     public void setApUserID(int userID) {
         this.apUserID = userID;
+    }
+
+    //Getter method for contact name accessed from ContactDAO
+    public String getApContactName() throws SQLException {
+        Contact contact = ContactDAO.findNameOfContactFromId(apContactID);
+        //TODO [] Be handle null  here.
+        assert contact != null;
+        String nameOfContact = contact.getContactName();
+        if (nameOfContact == null) {
+            return "Name Not Found";
+        }
+        CChoulesDevTools.println("Found name of Contact: " + nameOfContact);
+        return nameOfContact;
     }
 
 

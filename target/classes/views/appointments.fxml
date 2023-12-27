@@ -153,12 +153,12 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <ComboBox fx:id="apContactUpdate" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                          <ComboBox fx:id="apContactUpdate" editable="true" onAction="#apContactUpdateSelect" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdUpdate" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                          <TextField fx:id="apContactUserIdUpdate" editable="false" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
