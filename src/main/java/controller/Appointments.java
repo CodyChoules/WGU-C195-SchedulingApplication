@@ -202,7 +202,7 @@ public class Appointments {
             apDescriptionUpdate.setText(String.valueOf(selectedAp.getApUserId()));
         }
         else if (addApTab.isSelected()) {
-            //TODO [cu] Logic for add tab repeated from update tab
+            //TODO [c] Logic for add tab repeated from update tab
             Appointment selectedAp = primaryApTable.getSelectionModel().getSelectedItem();
             if (selectedAp == null) {
                 return;
@@ -360,8 +360,8 @@ public class Appointments {
     @FXML
     public void commitAdd(ActionEvent actionEvent) throws SQLException {
         //Question [] another example of repeating code how do I not extend the functionality of 'makeApUpdate' to this method replacing the object references & adding a few adjustments.
-        //TODO [cu] Create a commit add method that add ap to db
-        //TODO [cu] bug on add ap appointment added then bugged. Bug fixed.
+        //TODO [c] Create a commit add method that add ap to db
+        //TODO [c] bug on add ap appointment added then bugged. Bug fixed.
         CChoulesDevTools.println("Adding Appointment.");
 
         LocalDateTime apStartEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apStartDateAdd.getEditor().getText(), apStartTimeAdd.getValue());
@@ -388,10 +388,10 @@ public class Appointments {
         );
 
         try {
-            //TODO [cu] create a an addAppointment method to AppointmentDAO
+            //TODO [c] create a an addAppointment method to AppointmentDAO
             AppointmentDAO.addAppointment(userAddedAp, JDBTools.getConnection());
             tableLoadFromDB();
-            //TODO [cu] try to create a table load method outside of initialize to deal with bug a1
+            //TODO [c] try to create a table load method outside of initialize to deal with bug a1
         } catch (SQLException e) {
             CChoulesDevTools.println(e.toString());
         }
@@ -424,7 +424,7 @@ public class Appointments {
     @FXML public TableColumn<?, ?> delApContactId;
     @FXML public TableColumn<?, ?> delApUserId;
     @FXML public Button addApToDelete;
-    //TODO [cu] add to delete method -> on double click while delete tab to add to delete table.
+    //TODO [c] add to delete method -> on double click while delete tab to add to delete table.
     @FXML public void deleteAppointments(ActionEvent actionEvent) throws SQLException {
         for (Appointment appointment:toBeDeletedApList){
             AppointmentDAO.deleteAppointment(appointment.getApId(), JDBTools.getConnection());
