@@ -45,23 +45,23 @@
                             <TableColumn fx:id="apTitle" prefWidth="76.0" resizable="false" text="Title" />
                             <TableColumn fx:id="apType" minWidth="6.0" prefWidth="70.0" text="Type" />
                             <TableColumn fx:id="apLocation" prefWidth="93.0" text="Location" />
-                            <TableColumn fx:id="apID" prefWidth="59.0" text="ID" />
+                            <TableColumn fx:id="apId" prefWidth="59.0" text="ID" />
                             <TableColumn fx:id="apDescription" prefWidth="399.0" text="Description" />
                             <TableColumn fx:id="apStart" prefWidth="150.0" text="Start Time &amp; Date" />
                             <TableColumn fx:id="apEnd" prefWidth="150.0" text="End Time &amp; Date" />
                         <TableColumn prefWidth="175.0" text="Customer">
                            <columns>
                               <TableColumn fx:id="apCustomerName" prefWidth="125.0" text="apCustomerID" />
-                                  <TableColumn fx:id="apCustomerID" prefWidth="50.0" text="ID" />
+                                  <TableColumn fx:id="apCustomerId" prefWidth="50.0" text="ID" />
                            </columns>
                         </TableColumn>
                         <TableColumn maxWidth="-1.0" minWidth="8.0" prefWidth="175.0" text="Contact">
                            <columns>
                                   <TableColumn fx:id="apContact" prefWidth="125.0" text="Name" />
-                                  <TableColumn fx:id="apContactID" minWidth="0.0" prefWidth="50.0" text=" ID" />
+                                  <TableColumn fx:id="apContactId" minWidth="0.0" prefWidth="50.0" text=" ID" />
                            </columns>
                         </TableColumn>
-                            <TableColumn fx:id="apUserID" prefWidth="60.0" resizable="false" text="User ID" />
+                            <TableColumn fx:id="apUserId" prefWidth="60.0" resizable="false" text="User ID" />
                         <TableColumn prefWidth="180.0" text="Column X" />
                         </columns>
                      <columnResizePolicy>
@@ -462,19 +462,19 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TableView fx:id="mainAppointmentsTable1" layoutX="10.0" layoutY="10.0" prefHeight="2000.0" prefWidth="1371.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="delApTable" layoutX="10.0" layoutY="10.0" prefHeight="2000.0" prefWidth="1371.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                          <TableColumn fx:id="appointmentTitle2" prefWidth="76.0" resizable="false" text="Title" />
-                                          <TableColumn fx:id="appointmentType2" minWidth="6.0" prefWidth="70.0" text="Type" />
-                                          <TableColumn fx:id="appointmentLocation2" prefWidth="93.0" text="Location" />
-                                          <TableColumn fx:id="appointmentID2" prefWidth="59.0" text="ID" />
-                                          <TableColumn fx:id="appointmentDescription2" prefWidth="399.0" text="Description" />
-                                          <TableColumn fx:id="appointmentStart2" prefWidth="129.0" text="Start Time &amp; Date" />
-                                          <TableColumn fx:id="appointmentEnd2" prefWidth="107.0" text="End Time &amp; Date" />
-                                          <TableColumn fx:id="appointmentCustomerID2" prefWidth="90.0" text="CustomerID" />
-                                          <TableColumn fx:id="tableContactID21" prefWidth="63.0" text="Contact" />
+                                          <TableColumn fx:id="delApTitle" prefWidth="76.0" resizable="false" text="Title" />
+                                          <TableColumn fx:id="delApType" minWidth="6.0" prefWidth="70.0" text="Type" />
+                                          <TableColumn fx:id="delApLocation" prefWidth="93.0" text="Location" />
+                                          <TableColumn fx:id="delApId" prefWidth="59.0" text="ID" />
+                                          <TableColumn fx:id="delApDescription" prefWidth="399.0" text="Description" />
+                                          <TableColumn fx:id="delApStart" prefWidth="129.0" text="Start Time &amp; Date" />
+                                          <TableColumn fx:id="delApEnd" prefWidth="107.0" text="End Time &amp; Date" />
+                                          <TableColumn fx:id="delApCustomerId" prefWidth="90.0" text="CustomerID" />
+                                          <TableColumn fx:id="delApContactName" prefWidth="63.0" text="Contact" />
                                           <TableColumn fx:id="tableContactID2" prefWidth="73.0" text="Contact ID" />
-                                          <TableColumn fx:id="tableUserID2" prefWidth="86.0" resizable="false" text="User ID" />
+                                          <TableColumn fx:id="delApUserId" prefWidth="86.0" resizable="false" text="User ID" />
                                        </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -483,7 +483,7 @@
                                     <HBox alignment="TOP_CENTER" layoutX="386.0" layoutY="180.0" prefHeight="26.0" prefWidth="465.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <children>
                                           <Button fx:id="addApToDelete" mnemonicParsing="false" onAction="#addSelectionToDeletion" prefHeight="25.0" text="Add Selected Appointment to be Deleted {Right Click}" />
-                                            <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointment {alt + D, alt +Del}" />
+                                            <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointments" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointment {alt + D, alt +Del}" />
                                        </children>
                                     </HBox>
                                  </children>

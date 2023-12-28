@@ -51,12 +51,12 @@ public class AppointmentDAO {
         return appointmentsObservableList;
     }
 
-    public static int deleteAppointment(int customer, Connection connection) throws SQLException {
+    public static int deleteAppointment(int appointmentId, Connection connection) throws SQLException {
         String query = "DELETE FROM appointments WHERE Appointment_ID=?";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, customer);
-        int result = ps.executeUpdate();
-        ps.close();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, appointmentId);
+        int result = preparedStatement.executeUpdate();
+        preparedStatement.close();
         return result;
     }
 

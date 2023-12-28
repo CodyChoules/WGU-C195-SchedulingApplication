@@ -18,5 +18,5 @@ public class Users {
 
     public String getUserPassword() { return userPassword; }
 
-    //TODO [L] Ask if there are any security concerns with this code. We are technically containing the passwords on local application and it could be retrieved.
+    //Question [] Ask if there are any security concerns with this code. We are technically containing the passwords on local application and it could be retrieved.
 }

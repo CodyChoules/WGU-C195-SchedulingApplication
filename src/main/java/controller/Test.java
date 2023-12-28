@@ -1,5 +1,6 @@
 package controller;
 
+import applicationObject.guiObject.Searcher;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +50,7 @@ public class Test extends Application {
 //
 //        cb.setItems(filteredItems);
         //^^^^^^^^
-        applicationObject.guiObject.comboBoxSearcher.nameListener(cb,items);
+        Searcher.nameListener(cb,items);
 
         root.getChildren().add(cb);
 

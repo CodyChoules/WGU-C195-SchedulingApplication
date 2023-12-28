@@ -21,7 +21,7 @@ public class Home {
     // TODO [c] learn how to sanitize and validate user inputs for sql.
     // answer - https://www.codecademy.com/learn/seasp-defending-node-applications-from-sql-injection-xss-csrf-attacks/modules/seasp-preventing-sql-injection-attacks/cheatsheet - This shows our parameter solution is good enough for the scope of this project , but just in case we will sanitize user input for SQL queries as well.
     /*
-     TODO [ip] Scaffold all scenes/controllers here with fxml layout done.
+     TODO [c] Scaffold all scenes/controllers here with fxml layout done.
       --create a test scaffold then prepare actions & structure below
       --structure
             login -c-> mainWindow { tabs:

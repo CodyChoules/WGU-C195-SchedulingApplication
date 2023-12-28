@@ -68,7 +68,7 @@ public class Appointment {
         this.apLocation = apLocation;
     }
 
-    //Getter and Setter methods for apID
+    //Getter and Setter methods for apId
     public int getApId() {
         return apID;
     }
@@ -125,7 +125,7 @@ public class Appointment {
     //Getter method for contact name accessed from ContactDAO
     public String getApContactName() throws SQLException {
         Contact contact = ContactDAO.findNameOfContactFromId(apContactID);
-        //TODO [] Be handle null  here.
+        //TODO [Extra] Be handle null  here.
         assert contact != null;
         String nameOfContact = contact.getContactName();
         if (nameOfContact == null) {

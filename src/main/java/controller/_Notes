@@ -1,0 +1,10 @@
+This package contains all of the controllers.
+
+
+
+//NOTES, MISTAKES, & THINGS I FORGOT//
+  Question [] how do I properly utilize multiple fx controllers
+    For example when I have multiple elements in a fx scene that are reusable for other scenes or can simply be partitioned to make more readable and manageable code how do i get them to communicate together?
+    When i tried this using tabs (the controller now called MainWindow) I could not get the 'child' controller to properly function because it could not communicate with the parent scene: for example a button that is meant to close this tab that is in this tab cannot contact the parent scene to close the tab because it cannot access the fxml.
+    Note I am using fxml include functionality to implement this.
+    Untried solution: can i extend the parent controller to gain access to the fx:ids still the controller is not referenced in the fxml so i dont see how it would communicate.

@@ -1,34 +1,39 @@
 package applicationObject.guiObject;
 
+import applicationObject.Appointment;
 import applicationTools.CChoulesDevTools;
+import com.mysql.cj.xdevapi.Table;
+import dataAccessObject.AppointmentDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class comboBoxSearcher {
+public class Searcher {
 
-    //TODO [] organize this code
+    //TODO [l] organize this code
     public static void nameListener(ComboBox<String> comboBox, ObservableList<String> items){
         //TODO [c] create a listener to add to all combo boxes for application GUI
         comboBox.setEditable(true);
         comboBox.setVisibleRowCount(5);
-        FilteredList<String> filteredItems = new FilteredList<String>(items, p -> true);
+        FilteredList<String> filteredList = new FilteredList<String>(items, p -> true);
         FilteredList<String> unFilteredItems = new FilteredList<String>(items, p -> false);
         comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = comboBox.getEditor();
             final String selected = comboBox.getSelectionModel().getSelectedItem();
             Platform.runLater(() -> {
                 if (selected == null || !selected.equals(editor.getText())) {
-                    filteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
+                    filteredList.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
                     unFilteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
-                    comboBox.setItems(filteredItems);
+                    comboBox.setItems(filteredList);
                     comboBox.show();
                     //TODO [l] bug trying to get dropdown to show all options
                 }
@@ -55,8 +60,45 @@ public class comboBoxSearcher {
 
 
 
-        comboBox.setItems(filteredItems);
+        comboBox.setItems(filteredList);
 
+    }
+
+    public static void updateFromSearch(TextField searchBar,
+                                TableView<Appointment> resultTable)
+            throws SQLException {
+        CChoulesDevTools.println("Searching in " + resultTable.getId());
+
+        String searchFieldValue = searchBar.getText();
+        //Creating a new parts list to display & replacing the table items with selected items
+        ObservableList<Appointment> displayedAp = lookupAppointmentNameId(searchFieldValue);
+        resultTable.setItems(displayedAp);
+
+    }
+    private static ObservableList<Appointment> lookupAppointmentNameId (String partialName) throws SQLException {
+        ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
+        partialName = partialName.toLowerCase();
+        if (partialName.length() == 0){CChoulesDevTools.println("Search empty, Displaying " + "All Appointments");
+            return allAppointments;
+        }
+        Integer partialInteger = null;
+        try {
+            partialInteger = Integer.parseInt(partialName);
+            CChoulesDevTools.println("Was able to parse integer for search = " +partialInteger);
+        } catch (NumberFormatException e) {
+            CChoulesDevTools.println("Unable to parse integer for search on: " + partialName);
+        }
+        for (Appointment ap: allAppointments) {
+            Integer ID = ap.getApId();
+            if (ap.getApTitle().toLowerCase().contains(partialName)
+                    || ID.equals(partialInteger)) {
+                foundAppointments.add(ap);
+            }
+        }
+        if (foundAppointments.size() == 0){CChoulesDevTools.println("No ID or Name found for " +
+                partialName);}
+        return foundAppointments;
     }
 
     public static void timeListener(ComboBox<String> comboBox, ObservableList<String> items){

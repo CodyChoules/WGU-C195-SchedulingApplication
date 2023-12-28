@@ -24,7 +24,7 @@ public class CustomerDAO {
 
         ObservableList<Customer> customersObservableList = FXCollections.observableArrayList();
 
-        //TODO []TRY Lambda expression here
+        //TODO [l]TRY Lambda expression here
         while (resultSet.next()) {
             int customerId = resultSet.getInt("Customer_ID");
             int divisionId = resultSet.getInt("Division_ID");
