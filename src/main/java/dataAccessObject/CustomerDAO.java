@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 public class CustomerDAO {
 
-    public static ObservableList<Customer> getAllCustomers(Connection connection) throws SQLException {
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
 
         String query = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division from customers INNER JOIN  first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
 

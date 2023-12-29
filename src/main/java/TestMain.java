@@ -1,5 +1,7 @@
 import applicationTools.CChoulesDevTools;
+import applicationTools.JDBTools;
 import controller.Appointments;
+import controller.Customers;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,9 +41,11 @@ public class TestMain extends Application {
         mainStage = primaryStage;
 
         try {
-            Appointments.loadThisFXML(mainStage);
+            JDBTools.openConnection();
+            Customers.loadThisFXML(mainStage);
         } catch (IOException e) {
             CChoulesDevTools.println(e.toString());
+            e.printStackTrace();
         }
 
 
