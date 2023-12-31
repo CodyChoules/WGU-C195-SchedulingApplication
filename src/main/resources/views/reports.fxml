@@ -10,10 +10,11 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="597.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainWindow">
+<AnchorPane prefHeight="597.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Reports">
     <children>
         <Label layoutY="-3.0" prefHeight="26.0" prefWidth="146.0" text="REPORTS" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="-3.0">
             <font>
@@ -56,7 +57,7 @@
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments by contact:" />
                                               <ComboBox fx:id="contactScheduleContactBox" onAction="#apDataByContact" prefWidth="150.0" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments by #Tag:" />
-                                    <ComboBox fx:id="contactScheduleContactBox1" onAction="#apDataByContact" prefWidth="150.0" promptText="To be added soon." />
+                                    <ComboBox fx:id="apHashTagSelection" onAction="#addTagToSearch" prefWidth="150.0" promptText="To be added soon." />
                                  </children>
                                  <opaqueInsets>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -70,20 +71,69 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="rpCustomerByCountry" onSelectionChanged="#customerByCountry" text="Country Totals">
+                <Tab fx:id="rpCustomerByCountry" onSelectionChanged="#customerByCountry" text="Customers Totals">
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                            <children>
-                                  <TableView fx:id="customerByCountry" layoutX="128.0" layoutY="24.0" prefHeight="313.0" prefWidth="674.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columns>
-                                          <TableColumn fx:id="countryName" prefWidth="270.0" text="Country Name" />
-                                          <TableColumn fx:id="countryCounter" prefWidth="179.0" text="Total " />
-                                      </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                                  </TableView>
-                            </children>
+                     <children>
+                        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Customers by Country" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                        <TableView fx:id="customersByCountry" prefHeight="1.11111111111E11" prefWidth="400.0">
+                                       <columns>
+                                          <TableColumn fx:id="customerByCountryName" prefWidth="222.0" text="Country Name" />
+                                          <TableColumn fx:id="customerByCountryNumber" prefWidth="222.0" text="Total " />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Customers by  Contact" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="customersByContact" prefHeight="1.11111111111E11" prefWidth="400.0">
+                                       <columns>
+                                          <TableColumn fx:id="apTotalsApTypeCol1" prefWidth="222.0" text="Appointment Type" />
+                                          <TableColumn fx:id="apTotalsTypeTotalCol1" prefWidth="222.0" text="Total" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Customers Gained by Month" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView prefHeight="1.11111111111E11" prefWidth="400.0">
+                                       <columns>
+                                          <TableColumn fx:id="apTotalsByMonth1" prefWidth="222.0" text="Appointments By Month" />
+                                          <TableColumn fx:id="apTotalsMonthTotal1" prefWidth="222.0" text="Total" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
                         </AnchorPane>
                     </content>
                 </Tab>
@@ -91,26 +141,62 @@
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                        <HBox layoutX="870.0" layoutY="195.0" prefHeight="538.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox layoutX="870.0" layoutY="195.0" prefHeight="538.0" prefWidth="11111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                                        <TableView fx:id="apTotalsApType" prefWidth="400.0">
-                                            <columns>
-                                                <TableColumn fx:id="apTotalsApTypeCol" prefWidth="111.0" text="Appointment Type" />
-                                                <TableColumn fx:id="apTotalsTypeTotalCol" prefWidth="111.0" text="Total" />
-                                            </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                                        </TableView>
-                              <TableView prefWidth="400.0">
-                                <columns>
-                                                <TableColumn fx:id="apTotalsByMonth" prefWidth="111.0" text="Appointments By Month" />
-                                                <TableColumn fx:id="apTotalsMonthTotal" prefWidth="111.0" text="Total" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Appointments by Country" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                              <TableView fx:id="AppointmentsByCountry" prefHeight="1.11111111111E11" prefWidth="400.0">
+                                                  <columns>
+                                                      <TableColumn fx:id="countryName" prefWidth="222.0" text="Country Name" />
+                                                      <TableColumn fx:id="countryCounter" prefWidth="222.0" text="Total " />
+                                                  </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                              </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Appointments by  Type" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                              <TableView fx:id="apTotalsApType" prefHeight="1.11111111111E11" prefWidth="400.0">
+                                                  <columns>
+                                                      <TableColumn fx:id="apTotalsApTypeCol" prefWidth="222.0" text="Appointment Type" />
+                                                      <TableColumn fx:id="apTotalsTypeTotalCol" prefWidth="222.0" text="Total" />
+                                                  </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                              </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="400.0" text="Appointments by Month" underline="true">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView prefHeight="1.11111111111E11" prefWidth="400.0">
+                                      <columns>
+                                                      <TableColumn fx:id="apTotalsByMonth" prefWidth="222.0" text="Appointments By Month" />
+                                                      <TableColumn fx:id="apTotalsMonthTotal" prefWidth="222.0" text="Total" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                             </children></AnchorPane>

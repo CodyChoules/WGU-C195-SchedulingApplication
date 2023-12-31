@@ -1,9 +1,11 @@
 package applicationObject.guiObject;
 
 import applicationObject.Appointment;
+import applicationObject.Country;
 import applicationTools.CChoulesDevTools;
 import com.mysql.cj.xdevapi.Table;
 import dataAccessObject.AppointmentDAO;
+import dataAccessObject.CountryDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,10 +24,13 @@ public class Searcher {
     //TODO [l] organize this code
     public static void nameListener(ComboBox<String> comboBox, ObservableList<String> items){
         //TODO [c] create a listener to add to all combo boxes for application GUI
+
+
         comboBox.setEditable(true);
         comboBox.setVisibleRowCount(5);
         FilteredList<String> filteredList = new FilteredList<String>(items, p -> true);
         FilteredList<String> unFilteredItems = new FilteredList<String>(items, p -> false);
+
         comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = comboBox.getEditor();
             final String selected = comboBox.getSelectionModel().getSelectedItem();
@@ -35,7 +40,7 @@ public class Searcher {
                     unFilteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
                     comboBox.setItems(filteredList);
                     comboBox.show();
-                    //TODO [l] bug trying to get dropdown to show all options
+                    //TODO [l] bug trying to get dropdown to show all options (only shows one)
                 }
             });
         });
@@ -61,6 +66,33 @@ public class Searcher {
 
 
         comboBox.setItems(filteredList);
+
+    }
+
+    public static void exclusiveFDLOutputListUsingNameListener(ComboBox<String> comboBox, ObservableList<String> fdlItems, ComboBox<String> parentComboBoxCountry){
+
+
+        comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+            final TextField editor = comboBox.getEditor();
+            final String selectedCountry = parentComboBoxCountry.getSelectionModel().getSelectedItem();
+            try {
+                final Country country = CountryDAO.getCountryByName(selectedCountry);
+                Platform.runLater(() -> {
+                    if (selectedCountry == null || !selectedCountry.equals(editor.getText())) {
+                        final ObservableList<String> filteredList = country.getChildFDLNames();
+                        comboBox.setItems(filteredList);
+                    }
+                });
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
+        nameListener(comboBox, comboBox.getItems());
+
+        //Question [] it would be nice to have the ability to input types and classes raw into methods so that it can be used with compatible. How do i do this without using if else on value input or direct code injection/manipulation(like set value factory)
+        //we need this to limit the FLD list for combo boxes so that the selection of a country only allows for corresponding FLDs
+
 
     }
 
@@ -115,5 +147,7 @@ public class Searcher {
         CChoulesDevTools.println(intervalsList.toString());
         return intervalsList;
     }
+
+
 
 }

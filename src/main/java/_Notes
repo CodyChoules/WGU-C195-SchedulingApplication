@@ -9,3 +9,7 @@
             [] state & provence editor
             [] fxml is almost identical to ap tab
             [] check on available tutoring time
+
+
+ Naming Convention Notes
+    When Acronyms are capitalized in methods an _ is used

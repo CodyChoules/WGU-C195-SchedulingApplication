@@ -1,8 +1,11 @@
 package applicationObject;
 
+import javafx.collections.ObservableList;
+
 public class Country {
     private int countryId;
     private String countryName;
+    private ObservableList<String> childFDLNames;
 
 
     public Country(int countryID, String countryName) {
@@ -17,4 +20,15 @@ public class Country {
     //Getter and Setter methods for countryName
     public String getCountryName() { return countryName; }
     public void setCountryName(int countryID) {  this.countryId = countryID; }
+
+    // Getter & setter methods for getting Child FDL to display in things like combo boxes
+    public ObservableList<String> getChildFDLNames() {
+        return childFDLNames;
+    }
+    public void setChildFDLNames(ObservableList<String> childFDLNames) {
+        this.childFDLNames = childFDLNames;
+    }
+
+
+
 }

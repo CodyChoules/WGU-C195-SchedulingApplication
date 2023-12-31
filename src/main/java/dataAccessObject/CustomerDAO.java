@@ -1,6 +1,7 @@
 package dataAccessObject;
 
 import applicationObject.Customer;
+import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +16,12 @@ public class CustomerDAO {
 
         String query = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division from customers INNER JOIN  first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
 
-        String query2 = "SELECT cu.Customer_ID, cu.Customer_Name, cu.Address, cu.Postal_Code, "
-                + "cu.Phone, cu.Division_ID, fld.Division FROM customers cu "
-                + "INNER JOIN first_level_divisions fld ON cu.Division_ID = fld.Division_ID";
+
+
+        String queryForCountryName = "SELECT Country FROM countries WHERE Country_ID = (SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?)";
 
         PreparedStatement preparedStatement = JDBTools.getConnection().prepareStatement(query);
+        PreparedStatement preparedStatementForCountryName = JDBTools.getConnection().prepareStatement(queryForCountryName);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         ObservableList<Customer> customersObservableList = FXCollections.observableArrayList();
@@ -33,6 +35,14 @@ public class CustomerDAO {
             String customerPostalCode = resultSet.getString("Postal_Code");
             String customerPhone = resultSet.getString("Phone");
             String divisionName = resultSet.getString("Division");
+            preparedStatementForCountryName.setString(1, String.valueOf(divisionId));
+            ResultSet resultSetCountry = preparedStatementForCountryName.executeQuery();
+
+            String countryName = "No Country Found";
+            while (resultSetCountry.next()) {
+                countryName = resultSetCountry.getString("Country");
+                //TODO [Extra] set a marker to check for multiple values in case of a bug
+            }
 
             Customer customer = new Customer(
                             customerId,
@@ -41,7 +51,8 @@ public class CustomerDAO {
                             customerPostalCode,
                             customerPhone,
                             divisionId,
-                            divisionName
+                            divisionName,
+                            countryName
             );
 
             customersObservableList.add(customer);

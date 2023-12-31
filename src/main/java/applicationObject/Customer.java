@@ -8,6 +8,7 @@ public class Customer {
     private String customerPostalCode;
     private String customerPhoneNumber;
     private String customerDivisionName;
+    private String customerCountryName;
 
     private int divisionId;
 
@@ -17,7 +18,8 @@ public class Customer {
                     String customerPostalCode,
                     String customerPhoneNumber,
                     int divisionId,
-                    String customerDivisionName) {
+                    String customerDivisionName,
+                    String customerCountryName) {
 
         this.customerId = customerId;
         this.customerName = customerName;
@@ -26,6 +28,7 @@ public class Customer {
         this.customerPhoneNumber = customerPhoneNumber;
         this.divisionId = divisionId;
         this.customerDivisionName = customerDivisionName;
+        this.customerCountryName = customerCountryName;
     }
 
 
@@ -49,5 +52,8 @@ public class Customer {
 
     public String getCustomerDivisionName() { return customerDivisionName; }
     public void setCustomerDivisionName(String customerDivisionName) { this.customerDivisionName = customerDivisionName; }
+
+    public String getCustomerCountryName() { return customerCountryName; }
+    public void setCustomerCountryName(String customerDivisionName) { this.customerCountryName = customerDivisionName; }
 
 }

@@ -2,10 +2,14 @@ package controller;
 
 import applicationObject.Appointment;
 import applicationObject.Contact;
+import applicationObject.Country;
 import applicationObject.Customer;
+import applicationObject.guiObject.Searcher;
 import applicationTools.CChoulesDevTools;
 import dataAccessObject.ContactDAO;
+import dataAccessObject.CountryDAO;
 import dataAccessObject.CustomerDAO;
+import dataAccessObject.FirstLvlDivisionDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +24,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Customers {
@@ -31,6 +37,7 @@ public class Customers {
     @FXML public TableColumn<?, ?> CRTableAddress;
     @FXML public TableColumn<?, ?> CRTablePostalCode;
     @FXML public TableColumn<?, ?> CRTablePhone;
+    @FXML public TableColumn<?, ?> CRTableCountry;
     @FXML public TableColumn<?, ?> CRTableState;
     @FXML public Button CRSelectCustomerButton;
     @FXML public Button CRCancel;
@@ -78,27 +85,30 @@ public class Customers {
             CRAddressField.setText(selectedObj.getCustomerAddress());
             CRPostalCodeField.setText(selectedObj.getCustomerPostalCode());
             CRPhoneNumberField.setText(selectedObj.getCustomerPhoneNumber());
-            //CRCountryDropDown.setValue(selectedObj.());
+            CRCountryDropDown.setValue(selectedObj.getCustomerCountryName());
             CRStateDropDown.setValue(selectedObj.getCustomerDivisionName());
         }
     }
 
-    public void CRSaveCustomer(ActionEvent actionEvent) {
+    @FXML public void CRSaveCustomer(ActionEvent actionEvent) {
     }
 
-    public void CRSelectCustomerButton(ActionEvent actionEvent) {
+    @FXML public void CRSelectCustomerButton(ActionEvent actionEvent) {
     }
 
-    public void CRCancel(ActionEvent actionEvent) {
+    @FXML public void CRCancel(ActionEvent actionEvent) {
     }
 
-    public void CRDelete(ActionEvent actionEvent) {
+    @FXML public void CRDelete(ActionEvent actionEvent) {
     }
 
-    public void CRAddCustomer(ActionEvent actionEvent) {
+    @FXML public void CRAddCustomer(ActionEvent actionEvent) {
     }
 
-    public void CRCountryDropDown(ActionEvent actionEvent) {
+    @FXML public void CRCountryDropDownEnter(ActionEvent actionEvent) throws SQLException {
+
+        CRStateDropDown.setItems(setFLD_ByCountry());
+//        Searcher.nameListener(CRStateDropDown, setFLD_ByCountry());
     }
 
     //FXML LOADER METHOD//
@@ -132,8 +142,77 @@ public class Customers {
     public void initialize() throws SQLException{
 
         tableLoadFromDB();
+        initialComboBoxLoadFromDB();
 
     }
+
+    public ObservableList<String> setFLD_ByCountry() throws SQLException {
+
+        //Get Country by name returns NO COUNTRY FOUND ON ID 0
+        Country country = CountryDAO.getCountryByName(CRCountryDropDown.getValue());
+        CChoulesDevTools.println(CRCountryDropDown.getValue());
+        ObservableList<String> fdlAvailable = FXCollections.observableArrayList();
+
+
+
+        if (country.getCountryId() == 0) {
+            CChoulesDevTools.println("No country found");
+            CChoulesDevTools.println("complete fdlAvailable");
+            FirstLvlDivisionDAO.getFLD_Names();
+        } else {
+
+
+            CChoulesDevTools.println(country.getCountryName());
+            CChoulesDevTools.println("limiting fdlAvailable");
+            fdlAvailable = country.getChildFDLNames();
+        }
+
+        CChoulesDevTools.println("fdlAvailable" + fdlAvailable.toString());
+        return fdlAvailable;
+    }
+
+    public void initialComboBoxLoadFromDB() throws SQLException {
+
+        CRCountryDropDown.setItems(CountryDAO.getCountryNames());
+        CRStateDropDown.setItems(FirstLvlDivisionDAO.getFLD_Names());
+
+
+//        Searcher.nameListener(CRStateDropDown, FirstLvlDivisionDAO.getFLD_Names());
+
+//        CRCountryDropDown.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+//
+//            Country country;
+//            try {
+//
+//
+//                //Get Country by name returns NO COUNTRY FOUND ON ID 0
+//                country = CountryDAO.getCountryByName(CRCountryDropDown.getValue());
+//                CChoulesDevTools.println(CRCountryDropDown.getValue());
+//
+//                ObservableList<String> fdlAvailable = FXCollections.observableArrayList();
+//                if (country.getCountryId() == 0) {
+//                    CChoulesDevTools.println("No country found");
+//                    CChoulesDevTools.println("complete fdlAvailable");
+//                    FirstLvlDivisionDAO.getFLD_Names();
+//                } else {
+//
+//
+//                    CChoulesDevTools.println(country.getCountryName());
+//                    CChoulesDevTools.println("limiting fdlAvailable");
+//                    fdlAvailable = country.getChildFDLNames();
+//                }
+//                Searcher.nameListener(CRStateDropDown, fdlAvailable);
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        });
+
+
+    }
+
+
+
+
 
     public void tableLoadFromDB() throws SQLException {
         ObservableList<applicationObject.Customer> customerList = CustomerDAO.getAllCustomers();
@@ -143,8 +222,11 @@ public class Customers {
         CRTableAddress.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
         CRTablePostalCode.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
         CRTablePhone.setCellValueFactory(new PropertyValueFactory<>("customerPhoneNumber"));
+        CRTableCountry.setCellValueFactory(new PropertyValueFactory<>("customerCountryName"));
         CRTableState.setCellValueFactory(new PropertyValueFactory<>("customerDivisionName"));
 
         CRTable.setItems(customerList);//In the middle of setting up customers table
     }
+
+
 }
