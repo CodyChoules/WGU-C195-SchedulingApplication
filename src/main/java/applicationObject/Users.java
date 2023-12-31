@@ -1,6 +1,6 @@
 package applicationObject;
 
-public class Users {
+public class Users extends ApplicationObject{
 
     private int userId;
     private String userName;

@@ -1,9 +1,8 @@
-package controller.subViewController;
+package controller.trash.subViewController;
 
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +23,7 @@ public class Test extends Application {
         CChoulesDevTools.toolsOn();
 
         //Sets Parent root of scene then title & size
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Test.class.getResource("/views/subViews/subTest.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Test.class.getResource("/views/trash/subTest.fxml")));
         primaryStage.setTitle("Main Menu");
 
         //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}

@@ -13,7 +13,9 @@ import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -25,11 +27,21 @@ public class Searcher {
     public static void nameListener(ComboBox<String> comboBox, ObservableList<String> items){
         //TODO [c] create a listener to add to all combo boxes for application GUI
 
+        //Fundamental JavaFX Bug Fix\\
+        ComboBoxListViewSkin<String> comboBoxListViewSkin = new ComboBoxListViewSkin<>(comboBox);
+        comboBoxListViewSkin.getPopupContent().addEventFilter(KeyEvent.ANY, (event) -> {
+            if( event.getCode() == KeyCode.SPACE ) {
+                event.consume();
+            }
+        });
+        comboBox.setSkin(comboBoxListViewSkin);
+        //TODO [Extra] Take note of java 
+
 
         comboBox.setEditable(true);
         comboBox.setVisibleRowCount(5);
         FilteredList<String> filteredList = new FilteredList<String>(items, p -> true);
-        FilteredList<String> unFilteredItems = new FilteredList<String>(items, p -> false);
+        //FilteredList<String> unFilteredItems = new FilteredList<String>(items, p -> false);
 
         comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = comboBox.getEditor();
@@ -37,7 +49,7 @@ public class Searcher {
             Platform.runLater(() -> {
                 if (selected == null || !selected.equals(editor.getText())) {
                     filteredList.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
-                    unFilteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
+                    //unFilteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
                     comboBox.setItems(filteredList);
                     comboBox.show();
                     //TODO [l] bug trying to get dropdown to show all options (only shows one)
@@ -57,15 +69,16 @@ public class Searcher {
         );
 
         // Close the popup when Enter is pressed
-        comboBox.getEditor().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                comboBox.hide();
-            }
-        });
+//        comboBox.getEditor().setOnKeyPressed(event -> {//bre ak
+////            if (event.getCode() == KeyCode.ENTER) {
+////                comboBox.hide();
+////            }
+//        });
 
 
 
         comboBox.setItems(filteredList);
+//        comboBox.setItems(items);
 
     }
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Appointment {
+public class Appointment extends ApplicationObject{
     //Note: appointment = ap for naming
     private String apTitle;
     private String apType;

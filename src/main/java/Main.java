@@ -20,7 +20,9 @@ public class Main extends Application {
     // variable names & method names usually use camelCase meaning they use a
     // lowercase for letter for the first word then uppercase for the following.
     // TODO [c] updated the naming convention throughout the project.
-
+    
+    
+    
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();
 

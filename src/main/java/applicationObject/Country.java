@@ -2,7 +2,7 @@ package applicationObject;
 
 import javafx.collections.ObservableList;
 
-public class Country {
+public class Country extends ApplicationObject{
     private int countryId;
     private String countryName;
     private ObservableList<String> childFDLNames;

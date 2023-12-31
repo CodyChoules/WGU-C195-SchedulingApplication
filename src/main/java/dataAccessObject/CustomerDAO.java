@@ -3,6 +3,7 @@ package dataAccessObject;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.Connection;
@@ -62,7 +63,8 @@ public class CustomerDAO {
         return customersObservableList;
 
     }
-
+    
+    
 
 }
 

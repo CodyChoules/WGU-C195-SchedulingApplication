@@ -1,6 +1,6 @@
 package applicationObject;
 
-public class FirstLvlDivision {
+public class FirstLvlDivision extends ApplicationObject{
     //This represents State or provence
     private int divisionId;
     private String divisionName;

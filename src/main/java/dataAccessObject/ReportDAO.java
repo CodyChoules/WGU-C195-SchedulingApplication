@@ -1,6 +1,6 @@
 package dataAccessObject;
 
-import applicationObject.CountryCustomerVolumeReport;
+import applicationObject.trash.CountryCustomerVolumeReport;
 import applicationTools.JDBTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

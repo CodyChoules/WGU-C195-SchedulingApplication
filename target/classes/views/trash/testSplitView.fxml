@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="1032.0" prefWidth="1234.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.subViewController.Test">
+<AnchorPane prefHeight="1032.0" prefWidth="1234.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.trash.subViewController.Test">
    <children>
       <ScrollPane layoutY="-7.0" prefHeight="841.0" prefWidth="745.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0">
         <content>

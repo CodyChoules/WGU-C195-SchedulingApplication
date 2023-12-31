@@ -33,7 +33,7 @@ public class MainWindow extends Application {
     //home>
     @FXML public Button openAppointmentsButton;
     public void openAppointments(ActionEvent actionEvent) {
-        //TODO [c] tabPain is not working (NullPointerException) possibly due to implementing "<Include>" into my fxml. If I wish to continue the intended project structure I may have combined all fxml & controllers into 1 controller & 1 fxml. Really do not like this and am frustrated that FXML does not appear to have an intuitive way to reverence fx:id values from parent fxml object when using include. If this was the can i could open tabs, windows, or any other fxml object using purpose built fxml files to set up more versatile scenes.
+        //TODO [c] tabPain is not working (NullPointerException) possibly due to implementing "<Include>" into my fxml. If I wish to continue the intended project structure I may have combined all fxml & controllers into 1 controller & 1 fxml. Really do not like this and am frustrated that FXML does not appear to have an intuitive way to reverence fx:id values from parent fxml object when using include. If this was the case can i could open tabs, windows, or any other fxml object using purpose built fxml files to set up more versatile scenes.
         // - Solution - sure enough after hours of research and trial the only solution appears to be removing the <include> fxml functionality and creating 1 big fxml file.I wish that I could find a way to have the included fxml inherit the parent fxml fx:id.
         //Missing Skill This will now require me to create a unified fxml & controller class to keep the original intention and avoid avoid a sapir-whorf like tool constraint.
         Tab newTab = new Tab();

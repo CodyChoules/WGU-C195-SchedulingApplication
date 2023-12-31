@@ -1,4 +1,4 @@
-package applicationObject;
+package applicationObject.trash;
 
 public class CountryCustomerVolumeReport {
 

@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.Locale;
 
 public class CountryDAO extends applicationObject.Country {
     //TODO [l] TEST ME
@@ -18,7 +17,7 @@ public class CountryDAO extends applicationObject.Country {
         super(countryId, countryName);
     }
 
-    public static ObservableList<Country> getCountries() throws SQLException {
+    public static ObservableList<Country> getAllCountries() throws SQLException {
         ObservableList<Country> countryObservableList = FXCollections.observableArrayList();
         String sql = "SELECT Country_ID, Country from countries";
         String sqlForFDL = "SELECT Division FROM client_schedule.first_level_divisions where Country_ID = ?";
@@ -52,7 +51,7 @@ public class CountryDAO extends applicationObject.Country {
         ObservableList<String> countryNames = FXCollections.observableArrayList();
         //TODO [Extra] Note: This is not like other objects or lists very confusing to initialize and not intuitive at all. Remember me.
 
-        for (Country country: getCountries()) {
+        for (Country country: getAllCountries()) {
             countryNames.add(country.getCountryName());
         }
 
@@ -75,7 +74,7 @@ public class CountryDAO extends applicationObject.Country {
     }
 
     public static Country getCountryByName(String countryName) throws SQLException {
-        ObservableList<Country> listOfCountries = CountryDAO.getCountries();
+        ObservableList<Country> listOfCountries = CountryDAO.getAllCountries();
         Country foundCountry = new Country(0, "NO COUNTRY FOUND");
         foundCountry.setChildFDLNames(FirstLvlDivisionDAO.getFLD_Names());
 

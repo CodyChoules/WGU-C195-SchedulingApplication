@@ -175,7 +175,7 @@ public class Customers {
 
         CRCountryDropDown.setItems(CountryDAO.getCountryNames());
         CRStateDropDown.setItems(FirstLvlDivisionDAO.getFLD_Names());
-
+        //TODO [Extra] implement searcher while still limiting FLD_Names to Countries DAO 
 
 //        Searcher.nameListener(CRStateDropDown, FirstLvlDivisionDAO.getFLD_Names());
 

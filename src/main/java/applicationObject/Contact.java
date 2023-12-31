@@ -1,11 +1,11 @@
 package applicationObject;
 
-public class Contact {
+public class Contact extends ApplicationObject{
     public int contactId;
     public String contactName;
     public String contactEmail;
 
-    public Contact(int contactID, String contactName, String contactEmail) {
+    public Contact (int contactID, String contactName, String contactEmail) {
         this.contactId = contactID;
         this.contactName = contactName;
         this.contactEmail = contactEmail;
