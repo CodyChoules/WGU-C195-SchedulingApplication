@@ -1,12 +1,8 @@
 package controller;
 
-import applicationObject.Appointment;
-import applicationObject.Country;
-import applicationObject.Customer;
+import applicationObject.*;
 import applicationTools.CChoulesDevTools;
-import dataAccessObject.AppointmentDAO;
-import dataAccessObject.CountryDAO;
-import dataAccessObject.CustomerDAO;
+import dataAccessObject.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 public class Reports {
 
@@ -30,10 +27,10 @@ public class Reports {
     public TableView<totalsReport> customersByCountryTable;
     public TableColumn<?, ?> customerByCountryName;
     public TableColumn<?, ?> customerByCountryNumber;
-    public TableView<totalsReport> customersByContact;
-    public TableColumn<?, ?> customersByContactName;
-    public TableColumn<?, ?> customersByContactNumber;
-    public TableView<totalsReport> customersGainedByMonth;
+    public TableView<totalsReport> customersByDivisionTable;
+    public TableColumn<?, ?> customersByDivisionName;
+    public TableColumn<?, ?> customersByDivisionNumber;
+    public TableView<totalsReport> customersGainedByMonthTable;
     public TableColumn<?, ?> customersGainedByMonthName;
     public TableColumn<?, ?> customersGainedByMonthNumber;
     //APPOINTMENT TOTALS TAB\\
@@ -41,9 +38,10 @@ public class Reports {
     public TableView<totalsReport> AppointmentsByCountry;
     public TableColumn<?, ?> countryName;
     public TableColumn<?, ?> countryCounter;
-    public TableView<totalsReport> apTotalsApType;
+    public TableView<totalsReport> appointmentsByTypeTable;
     public TableColumn<?, ?> apTotalsApTypeCol;
     public TableColumn<?, ?> apTotalsTypeTotalCol;
+    public TableView<totalsReport> appointmentsByMonthTable;
     public TableColumn<?, ?> apTotalsByMonth;
     public TableColumn<?, ?> apTotalsMonthTotal;
 
@@ -69,6 +67,7 @@ public class Reports {
         //Getter & Setter for howMany
         public int getHowMany() { return howMany; }
         public void setHowMany(int howMany) { this.howMany = howMany; }
+        public void addToHowMany(int howMany) {this.howMany = this.howMany + howMany;}
 
     }
 
@@ -147,6 +146,10 @@ public class Reports {
         //Call populate Tables
         loadApByContactTable();
         loadTotalsReportTable(customersByCountryList(), customersByCountryTable, customerByCountryName, customerByCountryNumber);
+        loadTotalsReportTable(customersByDivisionList(), customersByDivisionTable, customersByDivisionName, customersByDivisionNumber);
+        loadTotalsReportTable(customersByMonthList(), customersGainedByMonthTable, customersGainedByMonthName, customersGainedByMonthNumber);
+        loadTotalsReportTable(appointmentsByMonthList(), appointmentsByMonthTable, apTotalsByMonth, apTotalsMonthTotal);
+        loadTotalsReportTable(appointmentsByTypeList(), appointmentsByTypeTable, apTotalsApTypeCol, apTotalsTypeTotalCol);
         //Call populate Combos
 
 
@@ -180,20 +183,15 @@ public class Reports {
 
     public ObservableList<totalsReport> customersByCountryList() throws SQLException {
         //use this to load the customersByCountryTable
-
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-
         //List of Customers to count from
         ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
-
         //List of Countries to count for
         ObservableList<Country> allCountries = CountryDAO.getAllCountries();
-
         //Creating a report for each country and counting the corresponding customers by comparing countryId
         for (Country country : allCountries) {
             int numberOfCustomers = 0;
-
             //Loop through all customers and count the ones with matching countryId
             for (Customer customer : allCustomers) {
                 //TODO [Extra] this is using name when ID would be faster
@@ -201,14 +199,175 @@ public class Reports {
                     numberOfCustomers++;
                 }
             }
-
             // Create a totalsReport object and add it to the reportList
             totalsReport report = new totalsReport(country.getCountryName(), numberOfCustomers);
             reportList.add(report);
         }
+        return reportList;
+    }
 
+    public ObservableList<totalsReport> customersByDivisionList() throws SQLException {
+        //use this to load the customersByContactTable
+        //List of totals to be returned after totals are added
+        ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
+        //List of Customers to count from
+        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        //List of Countries to count for
+        ObservableList<FirstLvlDivision> allDivisions = FirstLvlDivisionDAO.getAllFirstLvlDivisions();
+        //Creating a report for each contact and counting the corresponding customers by comparing contactId
+        for (FirstLvlDivision division : allDivisions) {
+            int numberOfCustomers = 0;
+            //Loop through all customers and count the ones with matching countryId
+            for (Customer customer : allCustomers) {
+                //TODO [Extra] this is using name when ID would be faster
+                if (customer.getCustomerDivisionId() == division.getId()) {
+                    numberOfCustomers++;
+                }
+            }
+            // Create a totalsReport object and add it to the reportList
+            if (numberOfCustomers > 0) {
+                totalsReport report = new totalsReport(division.getDivisionName(), numberOfCustomers);
+                reportList.add(report);
+            }
+        }
+        return reportList;
+    }
+    public ObservableList<totalsReport> appointmentsByTypeList() throws SQLException {
+        //use this to load the appointmentsByContactTable
+        //List of totals to be returned after totals are added
+        ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
+        //List of Appointments to count from
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
+        //List of Countries to count for
+
+        //create list of appointment types
+        ObservableList<String> availableTypes = FXCollections.observableArrayList();
+        for (Appointment appointment : allAppointments){
+            String type = appointment.getApType();
+            if (availableTypes.contains(type)){
+                continue;
+            }
+            availableTypes.add(type);
+        }
+        //Creating a report for each contact and counting the corresponding appointments by comparing contactId
+        for (String type : availableTypes) {
+            int numberOfAppointments = 0;
+            //Loop through all appointments and count the ones with matching countryId
+            for (Appointment appointment : allAppointments) {
+
+                if (appointment.getApType().equals(type)) {
+                    numberOfAppointments++;
+                }
+            }
+            // Create a totalsReport object and add it to the reportList
+            if (numberOfAppointments > 0) {
+                totalsReport report = new totalsReport(type, numberOfAppointments);
+                reportList.add(report);
+            }
+        }
+        return reportList;
+    }
+
+
+    public ObservableList<totalsReport> customersByMonthList() throws SQLException {
+        //use this to load the customersByContactTable
+        //List of totals to be returned after totals are added
+        ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
+        //List of Customers to count from
+        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        //List of Countries to count for
+        //ObservableList<Month> allMonths = FXCollections.observableArrayList();
+        //allMonths.add(Month.JUNE, Month.JUNE);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM.yyyy");
+        int customerCounter = 0;
+        totalsReport currentReport = new totalsReport("noMonthFound", 0);
+
+
+        ObservableList<String> allMonthYearUsed = FXCollections.observableArrayList();
+        for (Customer customer : allCustomers) {
+            //Check to see if we have moved on to a new month
+            String monthName = customer.getCreateDate().format(dtf);
+
+            if (!currentReport.byWhat.equals("noMonthFound")){ //For it not to run on start
+                if (!currentReport.byWhat.equals(monthName)) { //If new month detected add last report.
+                    if (currentReport.howMany > 0) {
+                        reportList.add(currentReport);
+                        CChoulesDevTools.println("Adding " + currentReport.byWhat);
+                    }
+                    currentReport = new totalsReport(monthName, 1);
+                    allMonthYearUsed.add(monthName);
+                    continue;
+                }
+            }
+
+            //If month matches
+            if (allMonthYearUsed.contains(monthName)) {
+                currentReport.addToHowMany(1);
+                CChoulesDevTools.println("Counting +1");
+                continue;
+            }
+
+            //Only runs on start
+            currentReport = new totalsReport(monthName, 1);
+            allMonthYearUsed.add(monthName);
+
+        }
+        if (currentReport.howMany > 0) {
+            reportList.add(currentReport);
+        }
 
         return reportList;
+
+    }
+    public ObservableList<totalsReport> appointmentsByMonthList() throws SQLException {
+
+        ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
+
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
+
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM.yyyy");
+
+
+        totalsReport currentReport = new totalsReport("noMonthFound", 0);
+
+
+        ObservableList<String> allMonthYearUsed = FXCollections.observableArrayList();
+        for (Appointment appointment : allAppointments) {
+            //Check to see if we have moved on to a new month
+            String monthName = appointment.getApStart().format(dtf);
+
+            if (!currentReport.byWhat.equals("noMonthFound")){ //For it not to run on start
+                if (!currentReport.byWhat.equals(monthName)) { //If new month detected add last report.
+                    if (currentReport.howMany > 0) {
+                        reportList.add(currentReport);
+                        CChoulesDevTools.println("Adding " + currentReport.byWhat);
+                    }
+                    currentReport = new totalsReport(monthName, 1);
+                    allMonthYearUsed.add(monthName);
+                    continue;
+                }
+            }
+
+            //If month matches
+            if (allMonthYearUsed.contains(monthName)) {
+                currentReport.addToHowMany(1);
+                CChoulesDevTools.println("Counting +1");
+                continue;
+            }
+
+            //Only runs on start
+            currentReport = new totalsReport(monthName, 1);
+            allMonthYearUsed.add(monthName);
+
+        }
+        if (currentReport.howMany > 0) {
+            reportList.add(currentReport);
+        }
+
+        return reportList;
+
     }
 
     //public void loadAp
@@ -219,56 +378,6 @@ public class Reports {
 
 
 
-
-
-
-//    public interface Reportable {
-//        String getName();
-//        int getCount();
-//    }
-//
-//    public class TotalsReport implements Reportable {
-//        private String name;
-//        private int count;
-//
-//        public TotalsReport(String name, int count) {
-//            this.name = name;
-//            this.count = count;
-//        }
-//
-//        @Override
-//        public String getName() {
-//            return name;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return count;
-//        }
-//    }
-//
-//    public class ReportGenerator<T extends Reportable> {
-//
-//        public ObservableList<T> generateReport(ObservableList<T> allItems) {
-//            ObservableList<T> reportList = FXCollections.observableArrayList();
-//
-//            for (T currentItem : allItems) {
-//                // Perform your counting logic here based on the properties of the items
-//                // For example: currentItem.getName(), currentItem.getCount()
-//            }
-//
-//            return reportList;
-//        }
-//    }
-//
-//    ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
-//    ObservableList<Country> allCountries = CountryDAO.getAllCountries();
-//
-//    ReportGenerator<TotalsReport> customerReportGenerator = new ReportGenerator<>();
-//    ObservableList<TotalsReport> customerReport = customerReportGenerator.generateReport(allCustomers);
-//
-//    ReportGenerator<TotalsReport> countryReportGenerator = new ReportGenerator<>();
-//    ObservableList<TotalsReport> countryReport = countryReportGenerator.generateReport(allCountries);
 
 
 

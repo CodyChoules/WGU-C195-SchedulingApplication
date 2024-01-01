@@ -8,18 +8,27 @@ public class Country extends ApplicationObject{
     private ObservableList<String> childFDLNames;
 
 
-    public Country(int countryID, String countryName) {
-        this.countryId = countryID;
+    public Country(int countryId, String countryName) {
+        this.id = countryId;
+        this.name = countryName;
+
+        this.countryId = countryId;
         this.countryName = countryName;
     }
 
     //Getter and Setter methods for countryId
     public int getCountryId() { return countryId; }
-    public void setCountryId(int countryID) {  this.countryId = countryID; }
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+        this.id = countryId;
+    }
 
     //Getter and Setter methods for countryName
     public String getCountryName() { return countryName; }
-    public void setCountryName(int countryID) {  this.countryId = countryID; }
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+        this.name = countryName;
+    }
 
     // Getter & setter methods for getting Child FDL to display in things like combo boxes
     public ObservableList<String> getChildFDLNames() {

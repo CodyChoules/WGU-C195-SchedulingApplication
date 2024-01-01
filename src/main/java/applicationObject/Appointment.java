@@ -32,6 +32,11 @@ public class Appointment extends ApplicationObject{
                        int apContactID,
                        int apUserID
     ) {
+
+        this.id = apID;
+        this.name = apTitle;
+
+
         this.apTitle = apTitle;
         this.apType = apType;
         this.apLocation = apLocation;
@@ -50,6 +55,7 @@ public class Appointment extends ApplicationObject{
     }
     public void setApTitle(String apTitle) {
         this.apTitle = apTitle;
+        this.name = apTitle;
     }
 
     //Getter and Setter methods for apType
@@ -74,6 +80,7 @@ public class Appointment extends ApplicationObject{
     }
     public void setApID(int apID) {
         this.apID = apID;
+        this.id = apID;
     }
 
     //Getter and Setter methods for apDescription

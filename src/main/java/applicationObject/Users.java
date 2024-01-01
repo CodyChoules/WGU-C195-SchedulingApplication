@@ -7,14 +7,24 @@ public class Users extends ApplicationObject{
     private String userPassword;
 
     public Users(int userId, String userName, String userPassword) {
+
+        this.id = userId;
+        this.name = userName;
+
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
     }
 
-    public int getUserId() { return userId; }
+    public int getUserId() {
+        return userId;
 
-    public String getUserName() { return userName; }
+    }
+
+    public String getUserName() {
+        return userName;
+
+    }
 
     public String getUserPassword() { return userPassword; }
 

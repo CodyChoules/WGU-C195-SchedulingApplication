@@ -1,5 +1,7 @@
 package applicationObject;
 
+import java.time.LocalDateTime;
+
 public class Customer extends ApplicationObject{
 
     private int customerId;
@@ -9,6 +11,7 @@ public class Customer extends ApplicationObject{
     private String customerPhoneNumber;
     private String customerDivisionName;
     private String customerCountryName;
+    private LocalDateTime createDate;
 
     private int divisionId;
 
@@ -19,7 +22,13 @@ public class Customer extends ApplicationObject{
                     String customerPhoneNumber,
                     int divisionId,
                     String customerDivisionName,
-                    String customerCountryName) {
+                    String customerCountryName,
+                    LocalDateTime createDate) {
+
+        this.id = customerId;
+        this.name = customerName;
+
+        this.createDate = createDate;
 
         this.customerId = customerId;
         this.customerName = customerName;
@@ -31,6 +40,9 @@ public class Customer extends ApplicationObject{
         this.customerCountryName = customerCountryName;
     }
 
+
+    public LocalDateTime getCreateDate() { return createDate; }
+    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
 
     public Integer getCustomerId() { return customerId; }
     public void setCustomerId(Integer customerId) { this.customerId = customerId; }

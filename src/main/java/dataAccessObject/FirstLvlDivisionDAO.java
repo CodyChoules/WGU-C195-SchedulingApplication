@@ -16,8 +16,8 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
         super(divisionId, divisionName, countryIdOfDivision, countryNameOfDivision);
     }
 
-    public static ObservableList<FirstLvlDivisionDAO> getAllFirstLvlDivisions() throws SQLException {
-        ObservableList<FirstLvlDivisionDAO> firstLvlDivisionsObservableList = FXCollections.observableArrayList();
+    public static ObservableList<FirstLvlDivision> getAllFirstLvlDivisions() throws SQLException {
+        ObservableList<FirstLvlDivision> firstLvlDivisionsObservableList = FXCollections.observableArrayList();
         String sqlFLD = "SELECT * from first_level_divisions";
         String sqlCountryName = "SELECT Country from client_schedule.countries WHERE ? = ?";
 
@@ -32,7 +32,7 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
             preparedStatementForCountryNames.setString(2, String.valueOf(countryIdOfDivision));
             ResultSet countryNameOfDivisionResults = preparedStatementForCountryNames.executeQuery();
             String countryNameOfDivision = countryNameOfDivisionResults.toString();
-            FirstLvlDivisionDAO firstLvlDivision = new FirstLvlDivisionDAO(divisionId, divisionName, countryIdOfDivision,countryNameOfDivision);
+            FirstLvlDivision firstLvlDivision = new FirstLvlDivision(divisionId, divisionName, countryIdOfDivision,countryNameOfDivision);
             firstLvlDivisionsObservableList.add(firstLvlDivision);
         }
         return firstLvlDivisionsObservableList;

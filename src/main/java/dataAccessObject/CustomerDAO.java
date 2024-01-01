@@ -3,6 +3,7 @@ package dataAccessObject;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
+import controller.Reports;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,12 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 
 public class CustomerDAO {
 
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
 
-        String query = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division from customers INNER JOIN  first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
+        String query = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division, customers.Create_Date from customers INNER JOIN  first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
 
 
 
@@ -39,6 +41,8 @@ public class CustomerDAO {
             preparedStatementForCountryName.setString(1, String.valueOf(divisionId));
             ResultSet resultSetCountry = preparedStatementForCountryName.executeQuery();
 
+            LocalDateTime createDate = resultSet.getTimestamp("Create_Date").toLocalDateTime();
+
             String countryName = "No Country Found";
             while (resultSetCountry.next()) {
                 countryName = resultSetCountry.getString("Country");
@@ -53,7 +57,8 @@ public class CustomerDAO {
                             customerPhone,
                             divisionId,
                             divisionName,
-                            countryName
+                            countryName,
+                            createDate
             );
 
             customersObservableList.add(customer);

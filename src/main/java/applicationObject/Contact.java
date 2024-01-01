@@ -5,19 +5,29 @@ public class Contact extends ApplicationObject{
     public String contactName;
     public String contactEmail;
 
-    public Contact (int contactID, String contactName, String contactEmail) {
-        this.contactId = contactID;
+    public Contact (int contactId, String contactName, String contactEmail) {
+
+        this.id = contactId;
+        this.name = contactName;
+
+        this.contactId = contactId;
         this.contactName = contactName;
         this.contactEmail = contactEmail;
     }
 
     //Getter and Setter methods for contactId
     public int getContactId() { return contactId; }
-    public void setContactId(int contactId) { this.contactId = contactId; }
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+        this.id = contactId;
+    }
 
     //Getter and Setter methods for contactName
     public String getContactName() { return contactName; }
-    public void setContactName(String contactName) { this.contactName = contactName; }
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+        this.name = contactName;
+    }
 
     //Getter and Setter methods for contactId
     public String getContactEmail() { return contactEmail; }

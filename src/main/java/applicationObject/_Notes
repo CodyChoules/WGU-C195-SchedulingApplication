@@ -28,3 +28,5 @@ This package is to create Java objects that are designed to be used within the s
                 Classes: Named using PascalCase (e.g., MyClass).
 
     Mistake: It may not have been wise to abbreviate appointment with ap. May have been faster but has mad things difficult to refactor and less readable. Now the project has less consistent naming conventions as well.
+
+    Mistake: I Should have recognized that I could have made a parent application object that initialized the object ID. I have some redundant code due to the difficulty refactoring fx but did implement this. Would have been better to implement this first.
