@@ -185,15 +185,15 @@ public class Reports {
         //use this to load the customersByCountryTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
-        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        //List of Customer to count from
+        ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<Country> allCountries = CountryDAO.getAllCountries();
         //Creating a report for each country and counting the corresponding customers by comparing countryId
         for (Country country : allCountries) {
             int numberOfCustomers = 0;
             //Loop through all customers and count the ones with matching countryId
-            for (Customer customer : allCustomers) {
+            for (applicationObject.Customer customer : allCustomers) {
                 //TODO [Extra] this is using name when ID would be faster
                 if (customer.getCustomerCountryName().equals(country.getCountryName())) {
                     numberOfCustomers++;
@@ -210,15 +210,15 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
-        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        //List of Customer to count from
+        ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<FirstLvlDivision> allDivisions = FirstLvlDivisionDAO.getAllFirstLvlDivisions();
         //Creating a report for each contact and counting the corresponding customers by comparing contactId
         for (FirstLvlDivision division : allDivisions) {
             int numberOfCustomers = 0;
             //Loop through all customers and count the ones with matching countryId
-            for (Customer customer : allCustomers) {
+            for (applicationObject.Customer customer : allCustomers) {
                 //TODO [Extra] this is using name when ID would be faster
                 if (customer.getCustomerDivisionId() == division.getId()) {
                     numberOfCustomers++;
@@ -273,8 +273,8 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
-        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        //List of Customer to count from
+        ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         //ObservableList<Month> allMonths = FXCollections.observableArrayList();
         //allMonths.add(Month.JUNE, Month.JUNE);
@@ -285,7 +285,7 @@ public class Reports {
 
 
         ObservableList<String> allMonthYearUsed = FXCollections.observableArrayList();
-        for (Customer customer : allCustomers) {
+        for (applicationObject.Customer customer : allCustomers) {
             //Check to see if we have moved on to a new month
             String monthName = customer.getCreateDate().format(dtf);
 

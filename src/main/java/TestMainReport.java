@@ -1,6 +1,5 @@
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
-import controller.Customers;
 import controller.Reports;
 import javafx.application.Application;
 import javafx.stage.Stage;

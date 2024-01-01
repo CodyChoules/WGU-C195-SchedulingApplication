@@ -1,7 +1,6 @@
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
-import controller.Customers;
-import controller.Reports;
+import controller.Customer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +18,7 @@ public class TestMainCustomers extends Application {
 
         try {
             JDBTools.openConnection();
-            Customers.loadThisFXML(mainStage);
+            Customer.loadThisFXML(mainStage);
         } catch (IOException e) {
             CChoulesDevTools.println(e.toString());
             e.printStackTrace();
