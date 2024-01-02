@@ -51,6 +51,20 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
         return observableList;
     }
 
+    public static int getFLD_IdByName(String name) throws SQLException {
+
+
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+
+        for (FirstLvlDivision firstLvlDivision: getAllFirstLvlDivisions()) {
+            if (firstLvlDivision.getDivisionName().equals(name)) {
+                return firstLvlDivision.getDivisionId();
+            }
+        }
+
+        return 0;
+    }
+
     public static ObservableList<String> getFDL_NamesByCountry(String countryName) throws SQLException {
         //FDL : First_Level_Division (Country or state)
 

@@ -467,7 +467,7 @@ public class Appointments {
             CChoulesDevTools.println("Description: " + appointment.getApDescription());
             CChoulesDevTools.println("Start: " + appointment.getApStart());
             CChoulesDevTools.println("End: " + appointment.getApEnd());
-            CChoulesDevTools.println("Customer ID: " + appointment.getApCustomerId());
+            CChoulesDevTools.println("Customers ID: " + appointment.getApCustomerId());
             CChoulesDevTools.println("Contact ID: " + appointment.getApContactId());
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }
@@ -534,7 +534,7 @@ public class Appointments {
 
 
     //TODO [l] After you complete the applicationObject & DAO for Client Name include access to it here
-    // In addition change the contactName to Customer Name (Customer Name is important for meetings)
+    // In addition change the contactName to Customers Name (Customers Name is important for meetings)
 //        String sqlQueryForContact = "SELECT * FROM client_schedule.appointments WHERE Contact_ID = ?";
 //
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -578,7 +578,7 @@ public class Appointments {
             CChoulesDevTools.println("Description: " + appointment.getApDescription());
             CChoulesDevTools.println("Start: " + appointment.getApStart());
             CChoulesDevTools.println("End: " + appointment.getApEnd());
-            CChoulesDevTools.println("Customer ID: " + appointment.getApCustomerId());
+            CChoulesDevTools.println("Customers ID: " + appointment.getApCustomerId());
             CChoulesDevTools.println("Contact ID: " + appointment.getApContactId());
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }

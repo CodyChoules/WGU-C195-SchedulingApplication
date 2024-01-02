@@ -28,6 +28,20 @@ public class LocalDateTimeApplicationTool {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
+    public static LocalDateTime parseToLocalDateTimeForDB(String dateString, String timeString) {
+        dateString = replaceSlash(dateString);
+        //TODO [c] create an if statement to call adjustDateFormat
+        // Found: we can use String.matches to check string format \\d{x,y} means string decimal of length x or y.
+        if (dateString.matches("\\d{1,2}-\\d{1,2}-\\d{4}")) {
+            dateString = adjustDateFormat(dateString);
+        } else {
+            CChoulesDevTools.println("Date input must be an acceptable format");
+            return null;
+        }
+        String dateTimeString = dateString + " " + timeString;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+        return LocalDateTime.parse(dateTimeString, formatter);
+    }
 
     private static String adjustDateFormat(String dateString) {
         //TODO [c] find a way to format strings into date format

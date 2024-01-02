@@ -185,7 +185,7 @@ public class Reports {
         //use this to load the customersByCountryTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customer to count from
+        //List of Customers to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<Country> allCountries = CountryDAO.getAllCountries();
@@ -210,7 +210,7 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customer to count from
+        //List of Customers to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<FirstLvlDivision> allDivisions = FirstLvlDivisionDAO.getAllFirstLvlDivisions();
@@ -273,7 +273,7 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customer to count from
+        //List of Customers to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         //ObservableList<Month> allMonths = FXCollections.observableArrayList();

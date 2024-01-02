@@ -26,11 +26,11 @@ public class Home {
       --structure
             login -c-> mainWindow { tabs:
             -->Appointments {add brings up split pane}
-            -->Customer (Edit,Delete,Add New) -->Save
+            -->Customers (Edit,Delete,Add New) -->Save
             -->Reports {subTabs:
                 -->Contact Schedule
                 -->Appointment Totals
-                -->Customer by Country
+                -->Customers by Country
             -->Exit
 
             -optional-> Logout

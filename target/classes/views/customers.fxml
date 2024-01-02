@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="875.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Customer">
+<AnchorPane prefHeight="875.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Customers">
 
     <TableView fx:id="CRTable" layoutX="29.0" layoutY="73.0" onMouseClicked="#handleTableDoubleClick" prefHeight="537.0" prefWidth="1010.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="305.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
         <columns>
-            <!--                CR : Customer Report-->
+            <!--                CR : Customers Report-->
             <TableColumn fx:id="CRTableId" prefWidth="38.0" text="ID" />
             <TableColumn fx:id="CRTableName" prefWidth="144.5" text="Customer Name" />
             <TableColumn fx:id="CRTableAddress" prefWidth="214.5" text="Address" />
@@ -100,7 +100,7 @@
                                           <Insets right="5.0" />
                                       </GridPane.margin>
                                   </ComboBox>
-                                  <ComboBox fx:id="CRStateDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                  <ComboBox fx:id="CRFirstLvlDivDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                       <GridPane.margin>
                                           <Insets right="5.0" />
                                       </GridPane.margin>
@@ -125,7 +125,7 @@
                                           <Insets right="5.0" />
                                       </GridPane.margin>
                                   </Label>
-                            <Button fx:id="CRSelectCustomerButton" mnemonicParsing="false" onAction="#CRSelectCustomerButton" style="-fx-border-color: orange;" text="Save This Edit" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                            <Button fx:id="CRSaveEditedCustomer" mnemonicParsing="false" onAction="#CRSaveCustomer" style="-fx-border-color: orange;" text="Save This Edit" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               </children>
                               <opaqueInsets>
                                   <Insets />
@@ -194,7 +194,7 @@
                                  <Insets right="5.0" />
                               </GridPane.margin>
                            </ComboBox>
-                           <ComboBox fx:id="CRStateDropDown1" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <ComboBox fx:id="CRFirstLvlDivDropDown1" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                               <GridPane.margin>
                                  <Insets right="5.0" />
                               </GridPane.margin>

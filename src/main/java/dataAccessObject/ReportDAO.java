@@ -36,7 +36,7 @@ public class ReportDAO extends applicationObject.Appointment {
     }
 
     public static ObservableList<CountryCustomerVolumeReport> getCountries() throws SQLException {
-        //Creating a list to hold Country Customer Volumes for each country.
+        //Creating a list to hold Country Customers Volumes for each country.
         ObservableList<CountryCustomerVolumeReport> customerVolumeReportObservableList = FXCollections.observableArrayList();
         //TODO [l] double check this sql
         String preparedStatement =

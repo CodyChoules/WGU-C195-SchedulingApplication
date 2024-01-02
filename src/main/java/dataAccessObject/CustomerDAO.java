@@ -1,5 +1,6 @@
 package dataAccessObject;
 
+import applicationObject.Appointment;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
@@ -7,10 +8,8 @@ import controller.Reports;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+
+import java.sql.*;
 import java.time.LocalDateTime;
 
 public class CustomerDAO {
@@ -41,7 +40,13 @@ public class CustomerDAO {
             preparedStatementForCountryName.setString(1, String.valueOf(divisionId));
             ResultSet resultSetCountry = preparedStatementForCountryName.executeQuery();
 
-            LocalDateTime createDate = resultSet.getTimestamp("Create_Date").toLocalDateTime();
+            LocalDateTime createDate;
+            try {
+                createDate = resultSet.getTimestamp("Create_Date").toLocalDateTime();
+            } catch (NullPointerException e) {
+                CChoulesDevTools.println(e.toString());
+                createDate = null;
+            }
 
             String countryName = "No Country Found";
             while (resultSetCountry.next()) {
@@ -65,11 +70,69 @@ public class CustomerDAO {
 
         }
 
+
+
         return customersObservableList;
 
     }
-    
-    
 
+    public static int deleteCustomer(int customerId, Connection connection) throws SQLException {
+        String query = "DELETE FROM customers WHERE Customer_ID=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, customerId);
+        int result = preparedStatement.executeUpdate();
+        preparedStatement.close();
+        return result;
+    }
+
+    public static int updateCustomer(Customer updatedCustomer, Connection connection) throws SQLException {
+        String query = "UPDATE customers SET " +
+                "Customer_Name=?, " +
+                "Address=?, " +
+                "Postal_Code=?, " +
+                "Phone=?, " +
+                "Division_ID=? " +
+                "Create_Date=? " +
+                "WHERE Customer_ID=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setString(1, updatedCustomer.getCustomerName());
+        preparedStatement.setString(2, updatedCustomer.getCustomerAddress());
+        preparedStatement.setString(3, updatedCustomer.getCustomerPostalCode());
+        preparedStatement.setString(4, updatedCustomer.getCustomerPhoneNumber());
+        preparedStatement.setInt(5, updatedCustomer.getCustomerDivisionId());
+        preparedStatement.setString(6, String.valueOf(Timestamp.valueOf(updatedCustomer.getCreateDate())));
+//TODO [ip] time stamp value of not setting this value
+        preparedStatement.setInt(7, updatedCustomer.getCustomerId());
+
+        int result = preparedStatement.executeUpdate();
+
+        //Closing to not tie up DB Resources
+        preparedStatement.close();
+        return result;
+    }
+    public static int addCustomer(Customer addedCustomer, Connection connection) throws SQLException {
+        String query = "INSERT INTO customers (" +
+                "Customer_Name, " +
+                "Address, " +
+                "Postal_Code, " +
+                "Phone, " +
+                "Division_ID) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        preparedStatement.setString(1, addedCustomer.getCustomerName());
+        preparedStatement.setString(2, addedCustomer.getCustomerAddress());
+        preparedStatement.setString(3, addedCustomer.getCustomerPostalCode());
+        preparedStatement.setString(4, addedCustomer.getCustomerPhoneNumber());
+        preparedStatement.setInt(5, addedCustomer.getCustomerDivisionId());
+
+
+        int result = preparedStatement.executeUpdate();
+
+        //Closing to not tie up DB Resources
+        preparedStatement.close();
+        return result;
+    }
 }
 

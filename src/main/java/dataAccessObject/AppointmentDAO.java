@@ -103,13 +103,5 @@ public class AppointmentDAO {
         preparedStatement.close();
         return result;
     }
-
-    public static int generateUniqueId() {
-
-        return 1;
-    }
-
-
-
 }
 

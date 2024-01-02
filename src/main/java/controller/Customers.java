@@ -1,7 +1,9 @@
 package controller;
 
 import applicationObject.Country;
+import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
+import applicationTools.JDBTools;
 import dataAccessObject.CountryDAO;
 import dataAccessObject.CustomerDAO;
 import dataAccessObject.FirstLvlDivisionDAO;
@@ -19,8 +21,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-public class Customer {
+import static dataAccessObject.CustomerDAO.updateCustomer;
+
+public class Customers {
     public static Stage mainStage; //This is for page refresh. May not work with tabs
     //CUSTOMER PRIMARY TABLE\\;
     @FXML public TableView<applicationObject.Customer> CRTable;
@@ -40,8 +46,9 @@ public class Customer {
     @FXML public TextField CRPhoneNumberField;
     @FXML public TextField CRAddressField;
     @FXML public ComboBox<String> CRCountryDropDown; //Todo [] create a functioning dropdown
-    @FXML public ComboBox<String> CRStateDropDown; //Todo [] same ^
+    @FXML public ComboBox<String> CRFirstLvlDivDropDown; //Todo [] same ^
     @FXML public TextField CRPostalCodeField;
+    @FXML public Button CRSaveEditedCustomer;
     //TABS FOR EDITOR\\
     @FXML public Tab editCustomerTab;
     @FXML public Tab addCustomerTab;
@@ -53,7 +60,7 @@ public class Customer {
     @FXML public TextField CRPhoneNumberField1;
     @FXML public TextField CRAddressField1;
     @FXML public ComboBox<String> CRCountryDropDown1;
-    @FXML public ComboBox<String> CRStateDropDown1;
+    @FXML public ComboBox<String> CRFirstLvlDivDropDown1;
     @FXML public TextField CRPostalCodeField1;
 
     //CUSTOMER DELETER\\
@@ -66,6 +73,7 @@ public class Customer {
     @FXML public TableColumn<?, ?> CRTableCountry1;
     @FXML public TableColumn<?, ?> CRTableState1;
     public ObservableList<applicationObject.Customer> customersToDelete = FXCollections.observableArrayList();
+    private Customer updatingCustomer;
 
 
     //TABLE METHODS\\
@@ -98,7 +106,7 @@ public class Customer {
             CRPostalCodeField.setText(selectedObj.getCustomerPostalCode());
             CRPhoneNumberField.setText(selectedObj.getCustomerPhoneNumber());
             CRCountryDropDown.setValue(selectedObj.getCustomerCountryName());
-            CRStateDropDown.setValue(selectedObj.getCustomerDivisionName());
+            CRFirstLvlDivDropDown.setValue(selectedObj.getCustomerDivisionName());
         }
 
         if (addCustomerTab.isSelected()) {
@@ -115,7 +123,7 @@ public class Customer {
             CRPostalCodeField1.setText(selectedObj.getCustomerPostalCode());
             CRPhoneNumberField1.setText(selectedObj.getCustomerPhoneNumber());
             CRCountryDropDown1.setValue(selectedObj.getCustomerCountryName());
-            CRStateDropDown1.setValue(selectedObj.getCustomerDivisionName());
+            CRFirstLvlDivDropDown1.setValue(selectedObj.getCustomerDivisionName());
         }
 
         if (deleteCustomerTab.isSelected()){
@@ -143,7 +151,76 @@ public class Customer {
         CRDeleteTable.setItems(customersToDelete);
     }
 
-    @FXML public void CRSaveCustomer(ActionEvent actionEvent) {
+    @FXML public void CRSaveCustomer(ActionEvent actionEvent) throws SQLException {
+        if (CRNameField.getText().isEmpty() ||
+                CRPhoneNumberField.getText().isEmpty() ||
+                CRAddressField.getText().isEmpty() ||
+                CRCountryDropDown.getValue().isEmpty() ||
+                CRFirstLvlDivDropDown.getValue().isEmpty() ||
+                CRPostalCodeField.getText().isEmpty())
+        {
+            //TODO [] put alert to fill here
+            return;
+        }
+
+        int updatingDivisionId = 1;
+        LocalDateTime nullCreateDateToBeCreatedByDB = LocalDateTime.now();
+
+        updatingDivisionId = FirstLvlDivisionDAO.getFLD_IdByName(CRFirstLvlDivDropDown.getValue());
+
+        updatingCustomer = new Customer(
+                Integer.parseInt(CRIdField.getText()),
+                CRNameField.getText(),
+                CRAddressField.getText(),
+                CRPostalCodeField.getText(),
+                CRPhoneNumberField.getText(),
+                updatingDivisionId,
+                CRFirstLvlDivDropDown.getValue(),
+                CRCountryDropDown.getValue(),
+                nullCreateDateToBeCreatedByDB
+        );
+
+        CustomerDAO.updateCustomer(updatingCustomer, JDBTools.getConnection());
+        tableLoadFromDB();
+
+    }
+    @FXML public void CRAddCustomer(ActionEvent actionEvent) throws SQLException {
+        //Note 1 indicated that this object is in the add tab
+        if (CRNameField1.getText().isEmpty() ||
+                CRPhoneNumberField1.getText().isEmpty() ||
+                CRAddressField1.getText().isEmpty() ||
+                CRCountryDropDown1.getValue().isEmpty() ||
+                CRFirstLvlDivDropDown1.getValue().isEmpty() ||
+                CRPostalCodeField1.getText().isEmpty())
+        {
+            //TODO [] put alert to fill here
+            return;
+        }
+
+        int addDivisionId = FirstLvlDivisionDAO.getFLD_IdByName(CRFirstLvlDivDropDown1.getValue());;
+
+        Customer addingCustomer = new Customer(
+                0,
+                CRNameField1.getText(),
+                CRAddressField1.getText(),
+                CRPostalCodeField1.getText(),
+                CRPhoneNumberField1.getText(),
+                addDivisionId,
+                CRFirstLvlDivDropDown1.getValue(),
+                CRCountryDropDown1.getValue(),
+                LocalDateTime.now()
+        );
+
+        CChoulesDevTools.println("adding new customer: \n" +
+                addingCustomer.getCustomerName() + "\n" +
+                addingCustomer.getCreateDate() + "\n" +
+                addingCustomer.getCustomerId() + "\n" +
+                Timestamp.valueOf(addingCustomer.getCreateDate())
+        );
+
+        CustomerDAO.addCustomer(addingCustomer, JDBTools.getConnection());
+        tableLoadFromDB();
+
     }
 
     @FXML public void CRSelectCustomerButton(ActionEvent actionEvent) {
@@ -155,13 +232,11 @@ public class Customer {
     @FXML public void CRDelete(ActionEvent actionEvent) {
     }
 
-    @FXML public void CRAddCustomer(ActionEvent actionEvent) {
-    }
 
     @FXML public void CRCountryDropDownEnter(ActionEvent actionEvent) throws SQLException {
 
-        CRStateDropDown.setItems(setFLD_ByCountry());
-//        Searcher.nameListener(CRStateDropDown, setFLD_ByCountry());
+        CRFirstLvlDivDropDown.setItems(setFLD_ByCountry());
+//        Searcher.nameListener(CRFirstLvlDivDropDown, setFLD_ByCountry());
     }
 
     //FXML LOADER METHOD//
@@ -174,12 +249,12 @@ public class Customer {
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(controller.Customer.class.getResource("/views/customers.fxml"));
+        FXMLLoader loader = new FXMLLoader(Customers.class.getResource("/views/customers.fxml"));
 
 
         Parent root = loader.load();
 
-        controller.Customer mp = loader.getController();
+        Customers mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);
@@ -228,10 +303,10 @@ public class Customer {
     public void initialComboBoxLoadFromDB() throws SQLException {
 
         CRCountryDropDown.setItems(CountryDAO.getCountryNames());
-        CRStateDropDown.setItems(FirstLvlDivisionDAO.getFLD_Names());
+        CRFirstLvlDivDropDown.setItems(FirstLvlDivisionDAO.getFLD_Names());
         //TODO [Extra] implement searcher while still limiting FLD_Names to Countries DAO 
 
-//        Searcher.nameListener(CRStateDropDown, FirstLvlDivisionDAO.getFLD_Names());
+//        Searcher.nameListener(CRFirstLvlDivDropDown, FirstLvlDivisionDAO.getFLD_Names());
 
 //        CRCountryDropDown.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
 //
@@ -255,7 +330,7 @@ public class Customer {
 //                    CChoulesDevTools.println("limiting fdlAvailable");
 //                    fdlAvailable = country.getChildFDLNames();
 //                }
-//                Searcher.nameListener(CRStateDropDown, fdlAvailable);
+//                Searcher.nameListener(CRFirstLvlDivDropDown, fdlAvailable);
 //            } catch (SQLException e) {
 //                e.printStackTrace();
 //            }
