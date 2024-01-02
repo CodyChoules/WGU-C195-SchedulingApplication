@@ -260,7 +260,9 @@ public class Customers {
 //        mp.passCss(cssPath, darkModeOn);
 
 
+
         Scene scene = new Scene(root);
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
 
