@@ -36,7 +36,7 @@ public class AppointmentController {
     // TOP BAR //
     @FXML
     public Button backToHomeFromAp;
-
+    public Button removeAllApToBeDeleted;
 
 
     @FXML
@@ -401,9 +401,6 @@ public class AppointmentController {
     public TextArea apDescriptionAdd;
 
 
-    public void addSelectionToDeletion(ActionEvent actionEvent) {
-    }
-
     //DELETE APPOINTMENT TAB//
     ObservableList<Appointment> toBeDeletedApList = FXCollections.observableArrayList();
     //Question [] is there a way to note things when I type them for future use. For Example i forgot FXCollections.observableArrayList() and was trying to do : new Observable list instead. It there a more efficient way to remember these things.
@@ -425,7 +422,10 @@ public class AppointmentController {
     @FXML public void deleteAppointments(ActionEvent actionEvent) throws SQLException {
         for (Appointment appointment:toBeDeletedApList){
             AppointmentDAO.deleteAppointment(appointment.getApId(), JDBTools.getConnection());
+
         }
+        toBeDeletedApList.removeAll(toBeDeletedApList);
+        delApTable.setItems(toBeDeletedApList);
         tableLoadFromDB();
     }
     
@@ -468,6 +468,17 @@ public class AppointmentController {
             CChoulesDevTools.println("Contact ID: " + appointment.getApContactId());
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }
+    }
+
+    public void removeAllFromApToBeDeleted(ActionEvent actionEvent) {
+        toBeDeletedApList.removeAll(toBeDeletedApList);
+        delApTable.setItems(toBeDeletedApList);
+    }
+    public void addSelectionToDeletion(ActionEvent actionEvent) {
+            addApToBeDeleted(primaryApTable.getSelectionModel().getSelectedItem());
+    }
+    public void removeSelectionToDeletion(ActionEvent actionEvent) {
+            addApToBeDeleted(delApTable.getSelectionModel().getSelectedItem());
     }
 
 
@@ -610,6 +621,5 @@ public class AppointmentController {
     }
 
 
-    public void loginEnter(KeyEvent keyEvent) {
-    }
+
 }

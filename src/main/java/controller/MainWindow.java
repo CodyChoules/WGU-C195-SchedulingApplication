@@ -109,7 +109,7 @@ public class MainWindow extends Application {
 
         //Sets Parent root of scene then title & size
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/windows/mainWindow.fxml")));
-        primaryStage.setTitle("Main Menu");
+        primaryStage.setTitle("main.Main Menu");
 
         //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
         //CChoulesDevTools.redecorateStage(primaryStage);

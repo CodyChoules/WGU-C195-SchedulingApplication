@@ -6,7 +6,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -61,17 +60,13 @@
 <!--                  SEARCH BAR       -->
                   <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="24.0" prefWidth="1371.0" spacing="6.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search By:" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" />
                         <HBox>
                            <children>
-                              <Button mnemonicParsing="false" text="Title" />
-                              <Button mnemonicParsing="false" text="Type" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" text="Location" />
-                              <Button mnemonicParsing="false" text="Description" />
-                              <Button mnemonicParsing="false" text="Time/Date" />
+                              <TextField fx:id="searchBar" onKeyPressed="#searchBarEnter" prefHeight="25.0" prefWidth="405.0" promptText="Search By Title" />
+                              <Button mnemonicParsing="false" onAction="#seearchAppointments" text="Search" />
                            </children>
                         </HBox>
-                        <TextField fx:id="searchBar" prefHeight="25.0" prefWidth="507.0" text="Test search functionality before adding any other buttons" onKeyPressed="#searchBarEnter"/>
                           <RadioButton fx:id="apWeekRadial" mnemonicParsing="false" onAction="#apWeekSelected" text="Week">
                               <toggleGroup>
                                   <ToggleGroup fx:id="apRangeToggle" />
@@ -88,7 +83,7 @@
                   <TabPane minHeight="240.0" minWidth="978.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
 <!--                   UPDATE APPOINTMENT TAB      -->
-                      <Tab text="Update Appointments {alt 1}" fx:id="updateApTab">
+                      <Tab fx:id="updateApTab" text="Update Appointments {alt 1}">
                         <content>
                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
                                  <children>
@@ -123,7 +118,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="apIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                          <TextField fx:id="apIdUpdate" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -148,7 +143,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdUpdate" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdUpdate" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -256,26 +251,12 @@
                                     </GridPane>
                                     <TextArea fx:id="apDescriptionUpdate" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
                                     <Label alignment="CENTER" contentDisplay="CENTER" layoutY="135.0" prefHeight="43.0" prefWidth="86.0" text="Appointment Description:" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" />
-                                    <ScrollPane layoutX="986.0" layoutY="14.0" prefHeight="124.0" prefWidth="375.0" style="-fx-border-color: Black;">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="375.0">
-                                             <children>
-                                                <HBox prefHeight="99.0" prefWidth="976.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <Label prefHeight="105.0" prefWidth="30.0" style="-fx-border-color: black;" text="Tips:" />
-                                                      <Label alignment="TOP_LEFT" prefHeight="99.0" prefWidth="294.0" style="-fx-border-color: black;" text="[Feature in progress] HASH TAGGING: Add hashes (#) to your descriptions to add tags to your appointments. There can be no spaces in your tags. You can access your tag settings in &quot;Home&gt;Settings&gt;Tags&quot; Examples: #ImportantDeadline #OnlineMeeting #InPerson" wrapText="true" />
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
 <!--                  ADD APPOINTMENT TAB       -->
-                      <Tab text="Add Appointments {alt 2}" fx:id="addApTab">
+                      <Tab fx:id="addApTab" text="Add Appointments {alt 2}">
                         <content>
                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
                                  <children>
@@ -310,7 +291,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="apIdAdd" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                          <TextField fx:id="apIdAdd" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -335,7 +316,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdAdd" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdAdd" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -345,7 +326,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdAdd" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                          <TextField fx:id="apContactUserIdAdd" editable="false" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -448,7 +429,7 @@
                         </content>
 <!--                  DELETE APPOINTMENT TAB     -->
                       </Tab>
-                        <Tab text="Delete Appointments {alt 3}" fx:id="delApTab">
+                        <Tab fx:id="delApTab" text="Delete Appointments {alt 3}">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -472,8 +453,9 @@
                                     </TableView>
                                     <HBox alignment="TOP_CENTER" layoutX="386.0" layoutY="180.0" prefHeight="26.0" prefWidth="465.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <children>
-                                          <Button fx:id="addApToDelete" mnemonicParsing="false" onAction="#addSelectionToDeletion" prefHeight="25.0" text="Add Selected Appointment to be Deleted {Right Click}" />
+                                          <Button fx:id="addApToDelete" mnemonicParsing="false" onAction="#addSelectionToDeletion" prefHeight="25.0" text="Add/Remove Selected Appointment to be Deleted {Double Click}" />
                                             <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointments" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointment {alt + D, alt +Del}" />
+                                          <Button fx:id="removeAllApToBeDeleted" mnemonicParsing="false" onAction="#removeAllFromApToBeDeleted" prefHeight="25.0" text="Remove all from Appointments to be Deleted" />
                                        </children>
                                     </HBox>
                                  </children>

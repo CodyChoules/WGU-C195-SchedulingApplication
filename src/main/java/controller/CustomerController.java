@@ -71,7 +71,6 @@ public class CustomerController {
     @FXML public TableColumn<?, ?> CRTableCountry1;
     @FXML public TableColumn<?, ?> CRTableState1;
     public ObservableList<applicationObject.Customer> customersToDelete = FXCollections.observableArrayList();
-    private Customer updatingCustomer;
 
 
     //TABLE METHODS\\
@@ -145,7 +144,7 @@ public class CustomerController {
 
 
     @FXML public void CRClearDeleteTable(ActionEvent actionEvent) {
-        customersToDelete.removeAll();
+        customersToDelete.clear();
         CRDeleteTable.setItems(customersToDelete);
     }
 
@@ -166,7 +165,7 @@ public class CustomerController {
 
         updatingDivisionId = FirstLvlDivisionDAO.getFLD_IdByName(CRFirstLvlDivDropDown.getValue());
 
-        updatingCustomer = new Customer(
+        Customer updatingCustomer = new Customer(
                 Integer.parseInt(CRIdField.getText()),
                 CRNameField.getText(),
                 CRAddressField.getText(),
@@ -219,6 +218,14 @@ public class CustomerController {
         CustomerDAO.addCustomer(addingCustomer, JDBTools.getConnection());
         tableLoadFromDB();
 
+    }
+    public void CRDeleteListedCustomers(ActionEvent actionEvent) throws SQLException {
+        for (Customer customer : customersToDelete){
+            CustomerDAO.deleteCustomer(customer.getCustomerId(), JDBTools.getConnection());
+        }
+        tableLoadFromDB();
+        customersToDelete.clear();
+        CRDeleteTable.setItems(customersToDelete);
     }
 
     @FXML public void CRSelectCustomerButton(ActionEvent actionEvent) {

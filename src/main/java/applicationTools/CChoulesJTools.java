@@ -30,7 +30,7 @@ public class CChoulesJTools {
     }
 
     public static void main(String[] args) {
-        //Main for quick tests on tools.
+        //main.Main for quick tests on tools.
         CChoulesDevTools.toolsOn();
         String input = "\"This is a test\"; with 'a SQL injection' \\-- attempt";
         CChoulesDevTools.println(sanitizeInput(input));

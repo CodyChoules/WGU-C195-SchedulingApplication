@@ -1,5 +1,6 @@
 package controller;
 
+import applicationObject.User;
 import dataAccessObject.UserDAO;
 
 import applicationTools.CChoulesDevTools;
@@ -17,12 +18,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-
+import main.Main;
 
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -35,11 +37,12 @@ public class Login implements Initializable {
     @FXML public Label passwordLabel;
     @FXML private TextField passwordInput;
     @FXML public Label locationLabel;
-    @FXML private TextField loginScreenLocationField;
+    @FXML private TextField loginLocationField;
     @FXML public Button loginButton;
     @FXML public Label darkModeLabel;
     @FXML public Button darkModeButton; //FXML fx:id References
     @FXML public Button exitButton;
+
 
     Stage stage;
 
@@ -89,40 +92,43 @@ public class Login implements Initializable {
         }
 
 
-        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in."); }
-
-
-        //TODO [c] create home menu fxml
-        //TODO [c] create load home menu on validation logic //Committing
-        if (loginValidated) {
-
-
-            //Home.loadHomeFXML(stage, loginButton, getClass());
-
-            //TODO [Extra] was attempting to make a a clean method for loading scenes shown below, did not work properly but may revit the idea.
-            //Home.loadHomeFXML(loginButton, getClass());
-
-            CChoulesDevTools.println("Loading mainWindow.fxml");
-
-            //Note: this is incorrect I keep doing this bellow:
-            //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/windows/mainWindow.fxml"));
-
-            Parent root = loader.load();
-
-            //TODO [Extra] Complete dark mode pass through from this scene to home
-//            controller.Home mp = loader.getController();
-//        //passing the css settings
-//        mp.passCss(cssPath, darkModeOn);
-
-            stage = (Stage) loginButton.getScene().getWindow();
-            Scene scene = new Scene(root);
-
-            CChoulesDevTools.applyDevStyleToScene(scene);
-
-            stage.setScene(scene);
-            stage.show();
+        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in.");
+            User currentUser = new User(0, nameInput, "NoNoNo");
+            main.Main.loadMainWindowAndSetUser(currentUser);
         }
+
+
+//        //TODO [c] create home menu fxml
+//        //TODO [c] create load home menu on validation logic //Committing
+//        if (loginValidated) {
+//
+//
+//            //Home.loadHomeFXML(stage, loginButton, getClass());
+//
+//            //TODO [Extra] was attempting to make a a clean method for loading scenes shown below, did not work properly but may revit the idea.
+//            //Home.loadHomeFXML(loginButton, getClass());
+//
+//            CChoulesDevTools.println("Loading mainWindow.fxml");
+//
+//            //Note: this is incorrect I keep doing this bellow:
+//            //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/windows/mainWindow.fxml"));
+//
+//            Parent root = loader.load();
+//
+//            //TODO [Extra] Complete dark mode pass through from this scene to home
+////            controller.Home mp = loader.getController();
+////        //passing the css settings
+////        mp.passCss(cssPath, darkModeOn);
+//
+//            stage = (Stage) loginButton.getScene().getWindow();
+//            Scene scene = new Scene(root);
+//
+//            CChoulesDevTools.applyDevStyleToScene(scene);
+//
+//            stage.setScene(scene);
+//            stage.show();
+//        }
 
         //showIncorrectPasswordPopup();
 
@@ -146,8 +152,15 @@ public class Login implements Initializable {
         }
     }
 
-    public void handleDarkButtonClick(ActionEvent actionEvent) {
-        System.out.println("Executing handleDarkButtonClick");
+    public void handleDarkButtonClick(ActionEvent actionEvent) throws IOException {
+        CChoulesDevTools.println("Executing handleDarkButtonClick");
+
+        //sets dark-mode object value in main to opposite of current value
+        Main.currentDarkMode.setDarkModeOn(!Main.currentDarkMode.isDarkModeOn());
+
+        darkModeButton.setText(Main.currentDarkMode.getDarkModeStateAsString());
+
+        Main.loadLoginWithKeeper(usernameInput.getText(), passwordInput.getText());
     }
 
     public void exitClick(ActionEvent actionEvent) {
@@ -157,9 +170,49 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if (CChoulesDevTools.toolsState()) {
-            passwordInput.setText("test");
-            usernameInput.setText("test");
-        }
+
+        loadLocationField();
+        //setLoginLang(resourceBundle, url);
+        darkModeButton.setText(Main.currentDarkMode.getDarkModeStateAsString());
+
+        usernameInput.setText(Main.loginKeeper.getUserName());
+        passwordInput.setText(Main.loginKeeper.getUserPassword());
+        Main.loginKeeper = new User(0, "","");
+
+//        if (CChoulesDevTools.toolsState()) {
+//            passwordInput.setText("test");
+//            usernameInput.setText("test");
+//        }
+
+    }
+
+    public void loadLocationField() {
+
+        Locale locale = Locale.getDefault();
+        Locale.setDefault(locale);
+
+        ZoneId zone = ZoneId.systemDefault();
+
+        loginLocationField.setText(String.valueOf(zone));
+
+    }
+
+    public void setLoginLang(ResourceBundle resourceBundle, URL url) {
+
+        //defaultMessages = ResourceBundle.getBundle("MessagesBundle");
+
+
+        resourceBundle = ResourceBundle.getBundle("language/login", Locale.getDefault());
+
+
+        loginTitle.setText(resourceBundle.getString("Login"));
+        usernameLabel.setText(resourceBundle.getString("Username"));
+        passwordLabel.setText(resourceBundle.getString("Password"));
+        locationLabel.setText(resourceBundle.getString("Location"));
+        loginButton.setText(resourceBundle.getString("Login"));
+        exitButton.setText(resourceBundle.getString("Exit"));
+
+
+
     }
 }

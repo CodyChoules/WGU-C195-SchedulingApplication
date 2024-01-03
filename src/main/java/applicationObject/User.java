@@ -1,12 +1,12 @@
 package applicationObject;
 
-public class Users extends ApplicationObject{
+public class User extends ApplicationObject{
 
     private int userId;
     private String userName;
     private String userPassword;
 
-    public Users(int userId, String userName, String userPassword) {
+    public User(int userId, String userName, String userPassword) {
 
         this.id = userId;
         this.name = userName;
@@ -16,15 +16,9 @@ public class Users extends ApplicationObject{
         this.userPassword = userPassword;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUserId() { return userId; }
 
-    }
-
-    public String getUserName() {
-        return userName;
-
-    }
+    public String getUserName() { return userName; }
 
     public String getUserPassword() { return userPassword; }
 

@@ -24,7 +24,7 @@ public class Test extends Application {
 
         //Sets Parent root of scene then title & size
         Parent root = FXMLLoader.load(Objects.requireNonNull(Test.class.getResource("/views/trash/subTest.fxml")));
-        primaryStage.setTitle("Main Menu");
+        primaryStage.setTitle("main.Main Menu");
 
         //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
         //CChoulesDevTools.redecorateStage(primaryStage);

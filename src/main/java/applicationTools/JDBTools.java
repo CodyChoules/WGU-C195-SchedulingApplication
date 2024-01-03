@@ -84,6 +84,11 @@ public class JDBTools {
                 //convertToTimeZoneTime(timestamp);
         return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
+    public static LocalDateTime convertToUTC(LocalDateTime timestamp){
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(timestamp, ZoneId.systemDefault());
+                //convertToTimeZoneTime(timestamp);
+        return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+    }
 
     public static LocalDateTime convertFromUTC(Timestamp timestamp){
 

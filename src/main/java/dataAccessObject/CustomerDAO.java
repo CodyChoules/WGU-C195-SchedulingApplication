@@ -85,13 +85,14 @@ public class CustomerDAO {
 
     public static int updateCustomer(Customer updatedCustomer, Connection connection) throws SQLException {
         String query = "UPDATE customers SET " +
-                "Customer_Name=?, " +
-                "Address=?, " +
-                "Postal_Code=?, " +
-                "Phone=?, " +
-                "Division_ID=?, " +
-                "Last_Update=? " +
-                "WHERE Customer_ID=?";
+                /*1*/"Customer_Name=?, " +
+                /*2*/"Address=?, " +
+                /*3*/"Postal_Code=?, " +
+                /*4*/"Phone=?, " +
+                /*5*/"Division_ID=?, " +
+                /*6*/"Last_Update=? " +
+                /*7*/"Last_Updated_By=? " +
+                /*8*/"WHERE Customer_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, updatedCustomer.getCustomerName());
@@ -99,13 +100,14 @@ public class CustomerDAO {
         preparedStatement.setString(3, updatedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, updatedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, updatedCustomer.getCustomerDivisionId());
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now(ZoneOffset.UTC)));
-//TODO [ip] DO UTC offset for everyhting on db save & load
-        preparedStatement.setInt(7, updatedCustomer.getCustomerId());
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setString(7, main.Main.currentUser.getUserName());
+        preparedStatement.setInt(8, updatedCustomer.getCustomerId());
+
 
         int result = preparedStatement.executeUpdate();
 
-        
+
 
         //Closing to not tie up DB Resources
         preparedStatement.close();
@@ -113,13 +115,16 @@ public class CustomerDAO {
     }
     public static int addCustomer(Customer addedCustomer, Connection connection) throws SQLException {
         String query = "INSERT INTO customers (" +
-                "Customer_Name, " +
-                "Address, " +
-                "Postal_Code, " +
-                "Phone, " +
-                "Division_ID," +
-                "Create_Date) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                /*1*/"Customer_Name, " +
+                /*2*/"Address, " +
+                /*3*/"Postal_Code, " +
+                /*4*/"Phone, " +
+                /*5*/"Division_ID, " +
+                /*6*/"Create_Date, " +
+                /*7*/"Last_Update, " +
+                /*8*/"Last_Updated_By, " +
+                /*9*/"Created_By) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, addedCustomer.getCustomerName());
@@ -127,7 +132,10 @@ public class CustomerDAO {
         preparedStatement.setString(3, addedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, addedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, addedCustomer.getCustomerDivisionId());
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setTimestamp(7, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setString(8, main.Main.currentUser.getUserName());
+        preparedStatement.setString(9, main.Main.currentUser.getUserName());
 
 
         int result = preparedStatement.executeUpdate();

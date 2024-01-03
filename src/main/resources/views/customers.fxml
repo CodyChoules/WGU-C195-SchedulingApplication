@@ -247,8 +247,8 @@
                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                      </TableView>
-                      <Button layoutX="375.0" layoutY="10.0" mnemonicParsing="false" onAction="#CRClearDeleteTable" style="-fx-border-color: Red;" text="Delete Listed Customers" AnchorPane.leftAnchor="375.0" AnchorPane.topAnchor="10.0" />
-                     <Button layoutX="262.0" layoutY="11.0" mnemonicParsing="false" onAction="#CRDelete" text="Clear Delete List" />
+                      <Button layoutX="375.0" layoutY="10.0" mnemonicParsing="false" onAction="#CRDeleteListedCustomers" style="-fx-border-color: Red;" text="Delete Listed Customers" AnchorPane.leftAnchor="375.0" AnchorPane.topAnchor="10.0" />
+                     <Button layoutX="262.0" layoutY="11.0" mnemonicParsing="false" onAction="#CRClearDeleteTable" text="Clear Delete List" />
                      <Button layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#CRDelete" text="Add or Remove Customer {Double Click}" />
                   </children></AnchorPane>
               </content>

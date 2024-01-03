@@ -16,7 +16,7 @@ public class TestMainAppoint extends Application {
 //        //Set Parent root of scene then title & size
 //        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/windows/mainWindow.fxml")));
 //
-//        primaryStage.setTitle("Main Menu");
+//        primaryStage.setTitle("main.Main Menu");
 //
 //        CChoulesDevTools.redecorateStage(primaryStage);
 //

@@ -1,5 +1,6 @@
 package dataAccessObject;
 
+
 import applicationObject.Appointment;
 import applicationTools.JDBTools;
 import javafx.collections.FXCollections;
@@ -13,11 +14,7 @@ import java.time.ZoneOffset;
 
 public class AppointmentDAO {
 
-    /**
-     * Observablelist for all appointments in database.
-     * @throws SQLException
-     * @return appointmentsObservableList
-     */
+
     public static ObservableList<applicationObject.Appointment> getAllAppointments() throws SQLException {
 
         String sqlQuery = "SELECT * from client_schedule.appointments";
@@ -37,12 +34,8 @@ public class AppointmentDAO {
             String apDescription = resultSet.getString("Description");
             String apLocation = resultSet.getString("Location");
             String apType = resultSet.getString("Type");
-            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start")); //is this converting?
-            //Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
-
-            //Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
-
-            LocalDateTime apEnd = resultSet.getTimestamp("End").toLocalDateTime();
+            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start"));
+            LocalDateTime apEnd = JDBTools.convertFromUTC(resultSet.getTimestamp("End"));;
             int apCustomerID = resultSet.getInt("Customer_ID");
             int apUserID = resultSet.getInt("User_ID");
             int apContactID = resultSet.getInt("Contact_ID");
@@ -68,7 +61,19 @@ public class AppointmentDAO {
     }
 
     public static int updateAppointment(Appointment updatedAppointment, Connection connection) throws SQLException {
-        String query = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID=?";
+        String query = "UPDATE appointments SET " +
+                /*1*/"Title=?, " +
+                /*2*/"Description=?, " +
+                /*3*/"Location=?, " +
+                /*4*/"Type=?, " +
+                /*5*/"Start=?, " +
+                /*6*/"End=?, " +
+                /*7*/"Customer_ID=?, " +
+                /*8*/"User_ID=?, " +
+                /*9*/"Contact_ID=? " +
+                /*10*/"Last_Update=? " +
+                /*11*/"Last_Updated_By=? " +
+                /*12*/"WHERE Appointment_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, updatedAppointment.getApTitle());
@@ -76,14 +81,16 @@ public class AppointmentDAO {
         preparedStatement.setString(3, updatedAppointment.getApLocation());
         preparedStatement.setString(4, updatedAppointment.getApType());
         preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
-                //Timestamp.valueOf(LocalDateTime.ofInstant(updatedAppointment.getApStart().toInstant(ZoneOffset.of(String.valueOf(ZoneId.systemDefault()))),ZoneId.systemDefault())));
-                //updatedAppointment.getApStart().atZone(ZoneId.systemDefault().toInstant()
-                //Timestamp.valueOf(updatedAppointment.getApStart().));//NotConverting
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApEnd())));
         preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
         preparedStatement.setInt(8, updatedAppointment.getApUserId());
         preparedStatement.setInt(9, updatedAppointment.getApContactId());
-        preparedStatement.setInt(10, updatedAppointment.getApId());
+
+
+
+        preparedStatement.setTimestamp(10, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setString(11, main.Main.currentUser.getUserName());
+        preparedStatement.setInt(12, updatedAppointment.getApId());
 
         int result = preparedStatement.executeUpdate();
 
@@ -93,18 +100,38 @@ public class AppointmentDAO {
     }
 
     public static int addAppointment(Appointment updatedAppointment, Connection connection) throws SQLException {
-        String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO appointments (" +
+                /*1*/"Title, " +
+                /*2*/"Description, " +
+                /*3*/"Location, " +
+                /*4*/"Type, " +
+                /*5*/"Start, " +
+                /*6*/"End, " +
+                /*7*/"Customer_ID, " +
+                /*8*/"User_ID, " +
+                /*9*/"Contact_ID, " +
+                /*10*/"Create_Date, " +
+                /*11*/"Last_Update, " +
+                /*12*/"Created_By, " +
+                /*13*/"Last_Updated_By) " +
+                "VALUES (?, ?, ?, ?, ?," +
+                " ?, ?, ?, ?, ?," +
+                " ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, updatedAppointment.getApTitle());
         preparedStatement.setString(2, updatedAppointment.getApDescription());
         preparedStatement.setString(3, updatedAppointment.getApLocation());
         preparedStatement.setString(4, updatedAppointment.getApType());
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(updatedAppointment.getApStart()));
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApStart())));
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApEnd())));
         preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
         preparedStatement.setInt(8, updatedAppointment.getApUserId());
         preparedStatement.setInt(9, updatedAppointment.getApContactId());
+        preparedStatement.setTimestamp(10, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setTimestamp(11, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setString(12, main.Main.currentUser.getUserName());
+        preparedStatement.setString(13, main.Main.currentUser.getUserName());
 
 
         int result = preparedStatement.executeUpdate();
