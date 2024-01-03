@@ -6,7 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class AppointmentDAO {
 
@@ -34,7 +37,11 @@ public class AppointmentDAO {
             String apDescription = resultSet.getString("Description");
             String apLocation = resultSet.getString("Location");
             String apType = resultSet.getString("Type");
-            LocalDateTime apStart = resultSet.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start")); //is this converting?
+            //Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
+
+            //Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
+
             LocalDateTime apEnd = resultSet.getTimestamp("End").toLocalDateTime();
             int apCustomerID = resultSet.getInt("Customer_ID");
             int apUserID = resultSet.getInt("User_ID");
@@ -68,7 +75,10 @@ public class AppointmentDAO {
         preparedStatement.setString(2, updatedAppointment.getApDescription());
         preparedStatement.setString(3, updatedAppointment.getApLocation());
         preparedStatement.setString(4, updatedAppointment.getApType());
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(updatedAppointment.getApStart()));
+        preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
+                //Timestamp.valueOf(LocalDateTime.ofInstant(updatedAppointment.getApStart().toInstant(ZoneOffset.of(String.valueOf(ZoneId.systemDefault()))),ZoneId.systemDefault())));
+                //updatedAppointment.getApStart().atZone(ZoneId.systemDefault().toInstant()
+                //Timestamp.valueOf(updatedAppointment.getApStart().));//NotConverting
         preparedStatement.setTimestamp(6, Timestamp.valueOf(updatedAppointment.getApEnd()));
         preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
         preparedStatement.setInt(8, updatedAppointment.getApUserId());

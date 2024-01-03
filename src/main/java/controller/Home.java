@@ -25,12 +25,12 @@ public class Home {
       --create a test scaffold then prepare actions & structure below
       --structure
             login -c-> mainWindow { tabs:
-            -->Appointments {add brings up split pane}
-            -->Customers (Edit,Delete,Add New) -->Save
-            -->Reports {subTabs:
+            -->AppointmentController {add brings up split pane}
+            -->CustomerController (Edit,Delete,Add New) -->Save
+            -->ReportController {subTabs:
                 -->Contact Schedule
                 -->Appointment Totals
-                -->Customers by Country
+                -->CustomerController by Country
             -->Exit
 
             -optional-> Logout

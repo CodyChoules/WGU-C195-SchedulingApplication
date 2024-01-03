@@ -1,9 +1,10 @@
 package applicationTools;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 public class JDBTools {
 
@@ -76,6 +77,18 @@ public class JDBTools {
     public static PreparedStatement getPreparedStatement() {
 
         return preparedStatement;
+    }
+
+    public static LocalDateTime convertToUTC(Timestamp timestamp){
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.systemDefault());
+                //convertToTimeZoneTime(timestamp);
+        return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+    }
+
+    public static LocalDateTime convertFromUTC(Timestamp timestamp){
+
+        return ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC")).toOffsetDateTime().atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
     }
 
 }

@@ -11,7 +11,6 @@ import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,13 +26,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Appointments {
+public class AppointmentController {
     private static Stage mainStage; //This is for page refresh. May not work with tabs
 
     // TOP BAR //
@@ -467,7 +464,7 @@ public class Appointments {
             CChoulesDevTools.println("Description: " + appointment.getApDescription());
             CChoulesDevTools.println("Start: " + appointment.getApStart());
             CChoulesDevTools.println("End: " + appointment.getApEnd());
-            CChoulesDevTools.println("Customers ID: " + appointment.getApCustomerId());
+            CChoulesDevTools.println("CustomerController ID: " + appointment.getApCustomerId());
             CChoulesDevTools.println("Contact ID: " + appointment.getApContactId());
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }
@@ -534,7 +531,7 @@ public class Appointments {
 
 
     //TODO [l] After you complete the applicationObject & DAO for Client Name include access to it here
-    // In addition change the contactName to Customers Name (Customers Name is important for meetings)
+    // In addition change the contactName to CustomerController Name (CustomerController Name is important for meetings)
 //        String sqlQueryForContact = "SELECT * FROM client_schedule.appointments WHERE Contact_ID = ?";
 //
 //        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -578,7 +575,7 @@ public class Appointments {
             CChoulesDevTools.println("Description: " + appointment.getApDescription());
             CChoulesDevTools.println("Start: " + appointment.getApStart());
             CChoulesDevTools.println("End: " + appointment.getApEnd());
-            CChoulesDevTools.println("Customers ID: " + appointment.getApCustomerId());
+            CChoulesDevTools.println("CustomerController ID: " + appointment.getApCustomerId());
             CChoulesDevTools.println("Contact ID: " + appointment.getApContactId());
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }
@@ -590,16 +587,16 @@ public class Appointments {
         Home.testMethod();
         //Home.loadHomeFXML(loginButton, getClass());
 
-        CChoulesDevTools.println("Loading Appointments.fxml");
+        CChoulesDevTools.println("Loading AppointmentController.fxml");
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(controller.Appointments.class.getResource("/views/appointments.fxml"));
+        FXMLLoader loader = new FXMLLoader(AppointmentController.class.getResource("/views/appointments.fxml"));
 
 
         Parent root = loader.load();
 
-        controller.Appointments mp = loader.getController();
+        AppointmentController mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);

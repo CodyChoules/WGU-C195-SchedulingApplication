@@ -24,9 +24,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static dataAccessObject.CustomerDAO.updateCustomer;
-
-public class Customers {
+public class CustomerController {
     public static Stage mainStage; //This is for page refresh. May not work with tabs
     //CUSTOMER PRIMARY TABLE\\;
     @FXML public TableView<applicationObject.Customer> CRTable;
@@ -249,12 +247,12 @@ public class Customers {
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(Customers.class.getResource("/views/customers.fxml"));
+        FXMLLoader loader = new FXMLLoader(CustomerController.class.getResource("/views/customers.fxml"));
 
 
         Parent root = loader.load();
 
-        Customers mp = loader.getController();
+        CustomerController mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);

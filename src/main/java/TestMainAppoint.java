@@ -1,6 +1,6 @@
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
-import controller.Appointments;
+import controller.AppointmentController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -37,7 +37,7 @@ public class TestMainAppoint extends Application {
 
         try {
             JDBTools.openConnection();
-            Appointments.loadThisFXML(mainStage);
+            AppointmentController.loadThisFXML(mainStage);
         } catch (IOException e) {
             CChoulesDevTools.println(e.toString());
             e.printStackTrace();

@@ -1,16 +1,14 @@
 package dataAccessObject;
 
-import applicationObject.Appointment;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
-import controller.Reports;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public class CustomerDAO {
 
@@ -91,8 +89,8 @@ public class CustomerDAO {
                 "Address=?, " +
                 "Postal_Code=?, " +
                 "Phone=?, " +
-                "Division_ID=? " +
-                "Create_Date=? " +
+                "Division_ID=?, " +
+                "Last_Update=? " +
                 "WHERE Customer_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
@@ -101,11 +99,13 @@ public class CustomerDAO {
         preparedStatement.setString(3, updatedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, updatedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, updatedCustomer.getCustomerDivisionId());
-        preparedStatement.setString(6, String.valueOf(Timestamp.valueOf(updatedCustomer.getCreateDate())));
-//TODO [ip] time stamp value of not setting this value
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now(ZoneOffset.UTC)));
+//TODO [ip] DO UTC offset for everyhting on db save & load
         preparedStatement.setInt(7, updatedCustomer.getCustomerId());
 
         int result = preparedStatement.executeUpdate();
+
+        
 
         //Closing to not tie up DB Resources
         preparedStatement.close();
@@ -117,8 +117,9 @@ public class CustomerDAO {
                 "Address, " +
                 "Postal_Code, " +
                 "Phone, " +
-                "Division_ID) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "Division_ID," +
+                "Create_Date) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setString(1, addedCustomer.getCustomerName());
@@ -126,6 +127,7 @@ public class CustomerDAO {
         preparedStatement.setString(3, addedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, addedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, addedCustomer.getCustomerDivisionId());
+        preparedStatement.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
 
 
         int result = preparedStatement.executeUpdate();

@@ -124,7 +124,7 @@ public class Searcher {
         ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
         partialName = partialName.toLowerCase();
-        if (partialName.length() == 0){CChoulesDevTools.println("Search empty, Displaying " + "All Appointments");
+        if (partialName.length() == 0){CChoulesDevTools.println("Search empty, Displaying " + "All AppointmentController");
             return allAppointments;
         }
         Integer partialInteger = null;

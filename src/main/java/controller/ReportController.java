@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-public class Reports {
+public class ReportController {
 
     private static Stage mainStage; //This is for page refresh. May not work with tabs
 
@@ -45,7 +45,7 @@ public class Reports {
     public TableColumn<?, ?> apTotalsByMonth;
     public TableColumn<?, ?> apTotalsMonthTotal;
 
-    public Reports() throws SQLException {
+    public ReportController() throws SQLException {
     }
 
 
@@ -118,16 +118,16 @@ public class Reports {
         Home.testMethod();
         //Home.loadHomeFXML(loginButton, getClass());
 
-        CChoulesDevTools.println("Loading Reports.fxml");
+        CChoulesDevTools.println("Loading ReportController.fxml");
 
         //Note: this is incorrect I keep doing this bellow:
         //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(controller.Reports.class.getResource("/views/Reports.fxml"));
+        FXMLLoader loader = new FXMLLoader(ReportController.class.getResource("/views/Reports.fxml"));
 
 
         Parent root = loader.load();
 
-        controller.Reports mp = loader.getController();
+        ReportController mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);
@@ -185,7 +185,7 @@ public class Reports {
         //use this to load the customersByCountryTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
+        //List of CustomerController to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<Country> allCountries = CountryDAO.getAllCountries();
@@ -210,7 +210,7 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
+        //List of CustomerController to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         ObservableList<FirstLvlDivision> allDivisions = FirstLvlDivisionDAO.getAllFirstLvlDivisions();
@@ -236,7 +236,7 @@ public class Reports {
         //use this to load the appointmentsByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Appointments to count from
+        //List of AppointmentController to count from
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
         //List of Countries to count for
 
@@ -273,7 +273,7 @@ public class Reports {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
-        //List of Customers to count from
+        //List of CustomerController to count from
         ObservableList<applicationObject.Customer> allCustomers = CustomerDAO.getAllCustomers();
         //List of Countries to count for
         //ObservableList<Month> allMonths = FXCollections.observableArrayList();
