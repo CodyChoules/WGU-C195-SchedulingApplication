@@ -2,9 +2,9 @@ package applicationObject;
 
 import applicationTools.CChoulesDevTools;
 import dataAccessObject.ContactDAO;
+import dataAccessObject.CustomerDAO;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointment extends ApplicationObject{
@@ -135,6 +135,18 @@ public class Appointment extends ApplicationObject{
         //TODO [Extra] Be handle null  here.
         assert contact != null;
         String nameOfContact = contact.getContactName();
+        if (nameOfContact == null) {
+            return "Name Not Found";
+        }
+        CChoulesDevTools.println("Found name of Contact: " + nameOfContact);
+        return nameOfContact;
+    }
+
+    public String getApCustomerName() throws SQLException {
+        Customer customer = CustomerDAO.findCustomerFromId(apCustomerID);
+        //TODO [Extra] Be handle null  here.
+        assert customer != null;
+        String nameOfContact = customer.getCustomerName();
         if (nameOfContact == null) {
             return "Name Not Found";
         }

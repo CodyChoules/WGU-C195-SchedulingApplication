@@ -1,5 +1,6 @@
 package dataAccessObject;
 
+import applicationObject.Contact;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
@@ -90,7 +91,7 @@ public class CustomerDAO {
                 /*3*/"Postal_Code=?, " +
                 /*4*/"Phone=?, " +
                 /*5*/"Division_ID=?, " +
-                /*6*/"Last_Update=? " +
+                /*6*/"Last_Update=?, " +
                 /*7*/"Last_Updated_By=? " +
                 /*8*/"WHERE Customer_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -104,14 +105,12 @@ public class CustomerDAO {
         preparedStatement.setString(7, main.Main.currentUser.getUserName());
         preparedStatement.setInt(8, updatedCustomer.getCustomerId());
 
-
         int result = preparedStatement.executeUpdate();
-
-
 
         //Closing to not tie up DB Resources
         preparedStatement.close();
         return result;
+
     }
     public static int addCustomer(Customer addedCustomer, Connection connection) throws SQLException {
         String query = "INSERT INTO customers (" +
@@ -143,6 +142,33 @@ public class CustomerDAO {
         //Closing to not tie up DB Resources
         preparedStatement.close();
         return result;
+    }
+
+    public static int findIdFromName(String customerName) throws SQLException {
+        PreparedStatement preparedStatement = JDBTools.getConnection().prepareStatement("SELECT * FROM customers WHERE Customer_Name = ?");
+        preparedStatement.setString(1, customerName);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        int customerId = 0;
+        while (resultSet.next()) {
+            customerId = resultSet.getInt("Customer_ID");
+        }
+
+
+        return customerId;
+    }
+
+
+    public static Customer findCustomerFromId(int customerId) throws SQLException {
+        ObservableList<Customer> allCustomers = getAllCustomers();
+
+        for (Customer customer : allCustomers) {
+            CChoulesDevTools.println(customer.toString());
+            if (customer.getCustomerId() == customerId) {
+                return customer;
+            }
+        }
+
+        return null;
     }
 }
 

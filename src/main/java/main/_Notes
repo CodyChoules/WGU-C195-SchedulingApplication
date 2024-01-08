@@ -1,0 +1,19 @@
+This package contains all of the controllers.
+
+
+
+//NOTES, MISTAKES, & THINGS I FORGOT//
+    // Missing Skill: @ Main
+    // Skill Found: Java Community Naming Conventions:
+    // In Java, the convention is to use PascalCase (also known as CamelCase
+    // w/ an uppercase C in Camel as opposed to camelCase for lower case first)
+    // for class names. This means that the first letter of each word in the
+    // class name is capitalized INCLUDING THE FIRST WORD. {Note: This is why
+    // String, a class, is capitalized and other data types are not.} Conversely,
+    // variable names & method names usually use camelCase meaning they use a
+    // lowercase for letter for the first word then uppercase for the following.
+    // TODO [c] updated the naming convention throughout the project.
+    // Missing Skill I do not know why but i was having a ton of problems with global objects and variables but now they are working. I am instantiating 'global' objects in main and I am calling them easily now but I need to review and check to see why this was happening.
+
+    //Near End of project:
+    //Missing Skill Johann gave the tip to include fundamental application wide logic and objects especially loading FXML scenes in the Main along with any initial logic for loading fxml. This allows for the initialization of these object to play better with javaFX & fxml classes & objects (especially stage, scene, FXMLLoader) in comparison to initializing them in controllers such as in the pass the football methodology discussed in class.

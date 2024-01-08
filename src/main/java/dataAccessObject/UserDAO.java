@@ -1,7 +1,9 @@
 package dataAccessObject;
 
+import applicationObject.User;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
+import main.Main;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,6 +83,51 @@ public class UserDAO {
             return false;
         }
 
+        return false;
+
+    }
+    public static boolean validateUserLogin(String username,String password, User user){
+        //overLoad method to set user along with validation
+        try {
+            String sqlQuery = "SELECT * FROM users WHERE " +
+                    /*1*/"user_name = ? " +
+                    "AND " +
+                    /*2*/"password = ?";
+
+            PreparedStatement preparedStatement = JDBTools.getConnection().prepareStatement(sqlQuery);
+
+            //Setting sql parameters to prevent SQL injection.
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            //checks to see if any results were stored in result set.
+            if (! resultSet.next()) {
+                CChoulesDevTools.println("No results found in Data Base using user input.");
+                return false;
+            }
+
+
+            //TODO [Extra] create logic to check for duplicate accounts; code found in under-load method
+            String foundName = resultSet.getString("User_Name");
+            int foundInt = resultSet.getInt("User_ID");
+
+            if (foundName.equals(username)){ //This is just to double check user name match
+                if (foundInt > -1){
+                    CChoulesDevTools.println("validateUserLogin -> found and validated login input");
+                    Main.currentUser.setName(foundName);
+                    user.setName(foundName);
+                    Main.currentUser.setId(foundInt);
+                    user.setId(foundInt);
+                    return true;
+                }
+            }
+        } catch (SQLException exception) {
+            CChoulesDevTools.println("Failed to validate login Input due to connection or error.");
+            CChoulesDevTools.println(exception.toString());
+            return false;
+        }
         return false;
 
     }

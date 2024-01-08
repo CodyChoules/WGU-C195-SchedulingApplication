@@ -1,0 +1,209 @@
+/* This */
+
+
+.root{
+    -fx-background-color: #202124;
+}
+
+.tab-pane{
+    -fx-background-color: #202124;
+}
+
+#AnchorPane{
+    -fx-background-color: #202124;
+}
+
+.border-prime{
+    -fx-border-color: #ffff;
+}
+
+.soft{
+    -fx-background-color: #303443;
+}
+
+.prime{
+    -fx-background-color: #202124;
+}
+
+.accent{
+    -fx-background-color: #141517;
+}
+
+.text-prime{
+    -fx-text-fill: #ffff;
+}
+
+.btn-prime{
+
+    -fx-border-radius: 3;
+    -fx-border-color: #ababab;
+    -fx-background-color: #292929;
+    -fx-text-fill: #ffff;
+}
+
+.btn-accent{
+    -fx-border-radius: 50px;
+    -fx-background-color: #303134;
+    -fx-text-fill: #ffff;
+}
+
+.label{
+    -fx-text-fill: #ffff;
+}
+
+.txt-prime{
+    -fx-font-family: "Popping";
+    -fx-text-fill: #ffff;
+}
+
+.combo-box .list-cell{
+
+    -fx-text-fill: #ffff;
+}
+.combo-box .arrow-button .arrow{
+/*    -fx-region-background: #ababab;*/
+    -fx-background-color: #ababab;
+}
+.combo-box .list-view .list-cell{
+    -fx-text-fill: #ffff;
+}
+.combo-box .list-view {
+    -fx-background-color: #292929;
+    -fx-border-color: #ababab;
+}
+.combo-box {
+    -fx-border-radius: 3;
+    -fx-border-color: #ababab;
+    -fx-background-color: #292929;
+}
+
+.text-field {
+    -fx-border-radius: 3;
+    -fx-border-color: #ababab;
+    -fx-background-color: #292929;
+    -fx-text-fill: #ffff;
+}
+
+.button {
+    -fx-border-radius: 3;
+    -fx-border-color: #ababab;
+    -fx-background-color: #292929;
+    -fx-text-fill: #ffff;
+}
+
+.body{
+    -fx-background-color: #202124;
+}
+
+.tab-pane:top .tab-header-area .tab-header-background{
+    -fx-background-color: #292929;
+    -fx-border-coler: #414549;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:selected:top {
+    -fx-background-color: #414549;
+    -fx-border-color: #fdfdfd;
+    -fx-border-radius: 3;
+
+
+}
+.tab-pane:top .tab-header-area .headers-region .tab:selected:top .tab-container .tab-label{
+    -fx-text-fill: #ffff;
+}
+.tab-pane:top .tab-header-area .headers-region .tab:top{
+    -fx-background-color: #414549;
+    -fx-border-coler: #414549;
+    -fx-text-fill: #ffff;
+}
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .tab-label{
+    -fx-text-fill: #ffff;
+}
+
+.prime2{
+    -fx-background-color: #414549;
+
+}
+
+.table-view:row-selection:unconstrained-resize .column-header-background .nested-column-header .table-column{
+    -fx-background-color: #050505;
+}
+.table-view:row-selection:unconstrained-resize .placeholder{
+    -fx-background-color: #2d2d2d;
+}
+
+.text{
+    -fx-text-fill: #ffff;
+}
+.radio-button{
+    -fx-text-fill: #ffff;
+}
+
+.text-area .scroll-pane:fitToWidth:fitToHeight .viewport .content{
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: #ffff;
+}
+
+.combo-box:editable .arrow-button{
+    -fx-background-color: #292929;
+    -fx-border-color: #ababab;
+    -fx-border-radius: 2;
+}
+
+.date-picker:editable .arrow-button{
+    -fx-background-color: #bdbdbd;
+    -fx-border-color: #a0a0a0;
+    -fx-border-radius: 2;
+}
+
+.table-view:row-selection:unconstrained-resize .column-header-background{
+    -fx-background-color: #2d2d2d;
+}
+
+.table-view:row-selection:unconstrained-resize .column-header-background .show-hide-columns-button{
+    -fx-background-color: #292929;
+}
+
+.table-view:row-selection:unconstrained-resize .column-header-background .show-hide-columns-button .show-hide-column-image{
+    -fx-background-color: #ffffff;
+}
+
+
+
+
+.table-row-cell:odd{
+    -fx-background-color: #3d3d3d;
+    -fx-text-fill: #ffff;
+
+}
+
+.table-row-cell:even{
+    -fx-background-color: #3b3b3d;
+    -fx-text-fill: #ffff;
+}
+
+.table-view:row-selection{
+    -fx-background-color: #000000a8;
+}
+
+.nested-column-header .table-column{
+    -fx-border-color: #ffffff4f;
+}
+.table-column{
+    -fx-border-color: #00000079;
+    -fx-text-fill: #ffff;
+}
+
+.table-view:row-selection:unconstrained-resize .column-header-background .filler{
+    -fx-background-color: #3b3b3d;
+}
+
+.table-view{
+    -fx-background-color: #29292900;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: steelblue;
+}
+
+
+

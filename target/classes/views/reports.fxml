@@ -55,9 +55,9 @@
                                        </font>
                                     </Label>
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments by contact:" />
-                                              <ComboBox fx:id="contactScheduleContactBox" onAction="#apDataByContact" prefWidth="150.0" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments by #Tag:" />
-                                    <ComboBox fx:id="apHashTagSelection" onAction="#addTagToSearch" prefWidth="150.0" promptText="To be added soon." />
+                                              <ComboBox fx:id="contactScheduleContactBox" onAction="#apDataByContactComboBox" prefWidth="150.0" />
+                                    <Text disable="true" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments by #Tag:" visible="false" />
+                                    <ComboBox fx:id="apHashTagSelection" disable="true" onAction="#addTagToSearch" prefWidth="150.0" promptText="To be added soon." visible="false" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

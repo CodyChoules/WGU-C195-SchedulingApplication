@@ -66,9 +66,21 @@ public class CChoulesDevTools {
         }
     }
 
-    public static void applyDevStyleToScene(Scene scene){
-        scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
+    private static boolean devStyleOn = false;
+    public boolean isDevStyleOn() { return devStyleOn; }
+    public void setDevStyleOn(boolean devStyle) { this.devStyleOn = devStyle; }
+
+    public static void applyDevStyleToScene(Scene scene) {
+        if (devStyleOn) {
+            scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
+        }
     }
+
+
+    public static void applyDevStyleToStage(Stage stage){
+
+    }
+
 
     //Test for undecorated stage
     public static void redecorateStage(Stage primaryStage){

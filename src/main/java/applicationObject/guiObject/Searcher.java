@@ -115,11 +115,24 @@ public class Searcher {
         CChoulesDevTools.println("Searching in " + resultTable.getId());
 
         String searchFieldValue = searchBar.getText();
-        //Creating a new parts list to display & replacing the table items with selected items
+        //Creating a new list to display & replacing the table items with selected items
         ObservableList<Appointment> displayedAp = lookupAppointmentNameId(searchFieldValue);
         resultTable.setItems(displayedAp);
 
     }
+
+    public static void updateFromComboBox(String contact,
+    TableView<Appointment> resultTable) throws SQLException {
+        CChoulesDevTools.println("Searching in " +
+                resultTable.getId() +
+                " for contact " +
+                contact);
+
+        ObservableList<Appointment> displayedAp = lookupAppointmentByContact(contact);
+
+        resultTable.setItems(displayedAp);
+    }
+
     private static ObservableList<Appointment> lookupAppointmentNameId (String partialName) throws SQLException {
         ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
@@ -145,6 +158,27 @@ public class Searcher {
                 partialName);}
         return foundAppointments;
     }
+    private static ObservableList<Appointment> lookupAppointmentByContact (String partialName) throws SQLException {
+        ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
+        partialName = partialName.toLowerCase();
+        if (partialName.length() == 0){CChoulesDevTools.println("Selection empty, Displaying " + "All AppointmentController");
+            return allAppointments;
+        }
+        Integer partialInteger = null;
+
+        for (Appointment ap: allAppointments) {
+            Integer ID = ap.getApId();
+            if (ap.getApContactName().toLowerCase().contains(partialName)) {
+                foundAppointments.add(ap);
+            }
+        }
+        if (foundAppointments.size() == 0){CChoulesDevTools.println("No contact found for " +
+                partialName);}
+        return foundAppointments;
+    }
+
+
 
     public static void timeListener(ComboBox<String> comboBox, ObservableList<String> items){
 

@@ -7,13 +7,11 @@ import applicationTools.CChoulesDevTools;
 
 import applicationTools.CChoulesJTools;
 import applicationTools.JDBTools;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +22,7 @@ import main.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
+import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -33,6 +32,12 @@ public class Login implements Initializable {
 
     @FXML public Label loginTitle;
     @FXML public Label usernameLabel;
+    @FXML public Label timeZoneDisplay;
+    @FXML public Label timeZoneLabel;
+    @FXML public Label languageLabel;
+    @FXML public Label devAnnouncementTxt;
+    @FXML public Label devAnnouncementTitle;
+    @FXML public ComboBox<String> languageComboBox;
     @FXML private TextField usernameInput;
     @FXML public Label passwordLabel;
     @FXML private TextField passwordInput;
@@ -47,8 +52,8 @@ public class Login implements Initializable {
     Stage stage;
 
 
-    //todo [c] transferred this method to MainWindow
-    private void loginMethod() throws IOException, InterruptedException {
+    //todo [c] transferred this method to PrimeWindow
+    private void loginMethod() throws IOException, InterruptedException  {
 
         // TODO [c] create or find a method to sanitize user input remember to implement this into any account creation as well.
         // TODO [c] Get login info from input.
@@ -74,7 +79,7 @@ public class Login implements Initializable {
 
         // TODO [c] create a DAO to access user date inside the SQL DB
         //Validates user input
-        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput);
+        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput, Main.currentUser);
 
         // TODO [c] create a incorrect password popup
         if (! loginValidated) {
@@ -85,18 +90,12 @@ public class Login implements Initializable {
             SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
             popup.loginFailedPopup();
 
-
-//
-
             CChoulesDevTools.println("SchedulingApplicationPrompt Now!");
         }
 
-
         if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in.");
-            User currentUser = new User(0, nameInput, "NoNoNo");
-            main.Main.loadMainWindowAndSetUser(currentUser);
+            main.Main.loadMainWindowAndSetUser(Main.currentUser);
         }
-
 
 //        //TODO [c] create home menu fxml
 //        //TODO [c] create load home menu on validation logic //Committing
@@ -132,14 +131,11 @@ public class Login implements Initializable {
 
         //showIncorrectPasswordPopup();
 
-
     }
 
     public void loginClick(ActionEvent actionEvent) throws IOException, InterruptedException {
         System.out.println("Executing loginClick method: ");
-        MainWindow newWindow = new MainWindow();
-        newWindow.loginMethod(usernameInput.getText(),passwordInput.getText(),loginButton);
-
+        loginMethod();
     }
 
     public void loginEnter(KeyEvent keyEvent) throws IOException, InterruptedException {
@@ -161,29 +157,37 @@ public class Login implements Initializable {
         darkModeButton.setText(Main.currentDarkMode.getDarkModeStateAsString());
 
         Main.loadLoginWithKeeper(usernameInput.getText(), passwordInput.getText());
+
+    }
+
+    public void changeLangComboSelect(ActionEvent actionEvent) {
+        setCurrentLangAndReload(languageComboBox);
     }
 
     public void exitClick(ActionEvent actionEvent) {
-        System.out.println("Executing exitClick");
+        CChoulesDevTools.println("Executing exitClick");
+        Platform.exit();
+        System.exit(0);
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        resourceBundle = Main.curMessBun;
 
         loadLocationField();
-        //setLoginLang(resourceBundle, url);
+        setLoginLang(resourceBundle, url);
         darkModeButton.setText(Main.currentDarkMode.getDarkModeStateAsString());
 
         usernameInput.setText(Main.loginKeeper.getUserName());
         passwordInput.setText(Main.loginKeeper.getUserPassword());
+        if (CChoulesDevTools.toolsState()){
+            usernameInput.setText("test");
+            passwordInput.setText("test");
+        }
+        loadLanguagesComboBox();
         Main.loginKeeper = new User(0, "","");
-
-//        if (CChoulesDevTools.toolsState()) {
-//            passwordInput.setText("test");
-//            usernameInput.setText("test");
-//        }
-
     }
 
     public void loadLocationField() {
@@ -193,26 +197,91 @@ public class Login implements Initializable {
 
         ZoneId zone = ZoneId.systemDefault();
 
-        loginLocationField.setText(String.valueOf(zone));
+    //TODO [] clean
+        if (Locale.getDefault().getDisplayCountry().equals("United States")) {
+            //loginLocationField.setText(Locale.getDefault().getDisplayCountry() + " of " + zone.getId());
+            loginLocationField.setText(zone.getId());
+        } else {
+            loginLocationField.setText(zone.getId());
+        }
+        timeZoneDisplay.setText(zone.getDisplayName(TextStyle.FULL, Locale.getDefault()));
+    }
 
+    public void loadLanguagesComboBox() {
+
+        //Reference//Main.curMessBun = ResourceBundle.getBundle("MessagesBundle", Main.frLocale);
+
+        languageComboBox.setValue(Main.defaultMessages.getLocale().getDisplayLanguage());
+
+        ResourceBundle defaultMessages = Main.curMessBun;
+
+        //Clear existing items in the combo box//Was a bug on reload
+        languageComboBox.getItems().clear();
+
+        //Using the languages set in Main add the values to the comboBox
+        for ( String locale : Main.supportedMessageBundles) {
+            try {
+                ResourceBundle bundle = ResourceBundle.getBundle(defaultMessages.getBaseBundleName(), Locale.forLanguageTag(locale));
+                String displayName = bundle.getLocale().getDisplayLanguage();
+                languageComboBox.getItems().add(displayName);
+            } catch (Exception e) {
+                //Ignore
+            }
+        }
+
+        //Set the default value to the current display language
+        languageComboBox.setValue(defaultMessages.getLocale().getDisplayLanguage());
+
+    }
+    public void setCurrentLangAndReload(ComboBox<String> langSelector) {
+        String languageName = langSelector.getValue();
+
+        for ( String lang : Main.supportedMessageBundles) {
+            try {
+                ResourceBundle bundle = ResourceBundle.getBundle(Main.defaultMessages.getBaseBundleName(), Locale.forLanguageTag(lang));
+                String displayName = bundle.getLocale().getDisplayLanguage();
+                if (displayName.equals(languageName)){
+                    Locale locale = new Locale(lang);
+                    CChoulesDevTools.println("Reloading With Lang: " + locale.getDisplayLanguage());
+                    Main.curMessBun = ResourceBundle.getBundle("MessagesBundle", locale);
+                    Main.loadLoginWithKeeper(usernameInput.getText(), passwordInput.getText());
+                    return;
+                }
+                languageComboBox.getItems().add(displayName);
+            } catch (Exception e) {
+                //Ignore exception
+            }
+
+        }
     }
 
     public void setLoginLang(ResourceBundle resourceBundle, URL url) {
 
         //defaultMessages = ResourceBundle.getBundle("MessagesBundle");
+        //Make Note: future projects : should have ui type before name for readability
+        //TODO [] Incomplete message bundles marked with : resourceBundle.getString("InCom")
 
+        resourceBundle = Main.curMessBun;
 
-        resourceBundle = ResourceBundle.getBundle("language/login", Locale.getDefault());
+        loginTitle.setText(resourceBundle.getString("Login") + ":");
 
+        usernameLabel.setText(resourceBundle.getString("Username") + ":");
+        passwordLabel.setText(resourceBundle.getString("Password") + ":");
+        locationLabel.setText(resourceBundle.getString("Location") + ":");
+        timeZoneLabel.setText(resourceBundle.getString("TimeZone") + ":");
 
-        loginTitle.setText(resourceBundle.getString("Login"));
-        usernameLabel.setText(resourceBundle.getString("Username"));
-        passwordLabel.setText(resourceBundle.getString("Password"));
-        locationLabel.setText(resourceBundle.getString("Location"));
+        darkModeLabel.setText(resourceBundle.getString("DarkMode") + ":");
+        languageLabel.setText(resourceBundle.getString("Language") + ":");
+
         loginButton.setText(resourceBundle.getString("Login"));
         exitButton.setText(resourceBundle.getString("Exit"));
+        exitButton.setText(resourceBundle.getString("Exit"));
 
-
+        devAnnouncementTxt.setText(resourceBundle.getString("LoginAnnouncementBody"));
+        devAnnouncementTitle.setText(resourceBundle.getString("LoginAnnouncementTitle"));
 
     }
+
+
 }
+

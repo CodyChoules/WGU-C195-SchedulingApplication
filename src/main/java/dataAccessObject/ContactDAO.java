@@ -43,13 +43,10 @@ public class ContactDAO {
             for (Contact contact : allContacts) {
                 CChoulesDevTools.println(contact.toString());
                 if (contact.getContactId() == contactId) {
-                    return contact; // Found the contact with the specified ID
+                    return contact;
                 }
             }
 
-            // If no contact is found with the specified ID, return null or throw an exception, depending on your requirements
             return null;
-
-
     }
 }

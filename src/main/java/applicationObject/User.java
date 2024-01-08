@@ -16,9 +16,9 @@ public class User extends ApplicationObject{
         this.userPassword = userPassword;
     }
 
-    public int getUserId() { return userId; }
+    public int getUserId() { return id; }
 
-    public String getUserName() { return userName; }
+    public String getUserName() { return name; }
 
     public String getUserPassword() { return userPassword; }
 

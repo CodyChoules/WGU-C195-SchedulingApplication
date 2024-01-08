@@ -2,6 +2,7 @@ package controller;
 
 import applicationObject.*;
 import applicationTools.CChoulesDevTools;
+import applicationTools.GeneralTools;
 import dataAccessObject.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +34,9 @@ public class ReportController {
     public TableView<totalsReport> customersGainedByMonthTable;
     public TableColumn<?, ?> customersGainedByMonthName;
     public TableColumn<?, ?> customersGainedByMonthNumber;
+
+    ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+
     //APPOINTMENT TOTALS TAB\\
     public Tab apTotalsTab;
     public TableView<totalsReport> AppointmentsByCountry;
@@ -96,7 +100,14 @@ public class ReportController {
     public void backToHomeAction(ActionEvent actionEvent) {
     }
 
-    public void apDataByContact(ActionEvent actionEvent) {
+    public void apDataByContactComboBox(ActionEvent actionEvent) throws SQLException {
+        //on selection of value limit table view
+        applicationObject.guiObject.Searcher.updateFromComboBox(contactScheduleContactBox.getValue(), allApTable);
+
+        if (contactScheduleContactBox.getValue().equals("All")){
+            allApTable.setItems(AppointmentDAO.getAllAppointments());
+        }
+
     }
 
     public void addTagToSearch(ActionEvent actionEvent) {
@@ -145,18 +156,26 @@ public class ReportController {
     public void initialize() throws SQLException {
         //Call populate Tables
         loadApByContactTable();
+
         loadTotalsReportTable(customersByCountryList(), customersByCountryTable, customerByCountryName, customerByCountryNumber);
         loadTotalsReportTable(customersByDivisionList(), customersByDivisionTable, customersByDivisionName, customersByDivisionNumber);
         loadTotalsReportTable(customersByMonthList(), customersGainedByMonthTable, customersGainedByMonthName, customersGainedByMonthNumber);
         loadTotalsReportTable(appointmentsByMonthList(), appointmentsByMonthTable, apTotalsByMonth, apTotalsMonthTotal);
         loadTotalsReportTable(appointmentsByTypeList(), appointmentsByTypeTable, apTotalsApTypeCol, apTotalsTypeTotalCol);
         //Call populate Combos
+        ObservableList<Contact> listOfContacts = ContactDAO.getAllContacts();
+        ObservableList<ApplicationObject> listOfApplicationObjects = FXCollections.observableArrayList();
+        listOfApplicationObjects.addAll(listOfContacts);
+        //Make Note: This is ridiculous there has to be a better way right?
 
+        GeneralTools.populateComboBoxWithObsNameSet(contactScheduleContactBox, listOfApplicationObjects, "All");
+        contactScheduleContactBox.setValue("All");
 
     }
 
+
     public void loadApByContactTable() throws SQLException {
-        ObservableList<Appointment> appointmentList = AppointmentDAO.getAllAppointments();
+        appointmentList = AppointmentDAO.getAllAppointments();
 
         apIdRp.setCellValueFactory(new PropertyValueFactory<>("apId"));
         apTitleRp.setCellValueFactory(new PropertyValueFactory<>("apTitle"));

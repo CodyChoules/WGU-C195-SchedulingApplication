@@ -1,0 +1,26 @@
+.soft{
+    -fx-background-color: #cccc;
+}
+
+.prime{
+    -fx-background-color: #ffff;
+}
+
+.accent{
+    -fx-background-color: #006D05;
+}
+
+.btn-prime{
+    -fx-text-fill: #202325;
+    -fx-background-color: #F8F9FA;
+}
+
+.btn-accent{
+    -fx-background-color: #63BFAC;
+    -fx-text-fill: #ffff;
+}
+
+.txt-prime{
+    -fx-text-fill: #202124;
+}
+

@@ -3,12 +3,14 @@ package controller;
 
 import applicationObject.Appointment;
 import applicationObject.Contact;
+import applicationObject.Customer;
 import applicationObject.guiObject.Searcher;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import applicationTools.LocalDateTimeApplicationTool;
 import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
+import dataAccessObject.CustomerDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import main.Main;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,6 +42,7 @@ public class AppointmentController {
     public Button removeAllApToBeDeleted;
 
 
+
     @FXML
     public void backToHomeAction(ActionEvent actionEvent) throws IOException {
 
@@ -46,29 +50,19 @@ public class AppointmentController {
     }
 
     // MAIN TABLE //
-    public TableView<applicationObject.Appointment> primaryApTable;
-    @FXML
-    public TableColumn<?, ?> apTitle;
-    @FXML
-    public TableColumn<?, ?> apType;
-    @FXML
-    public TableColumn<?, ?> apLocation;
-    @FXML
-    public TableColumn<?, ?> apId;
-    @FXML
-    public TableColumn<?, ?> apDescription;
-    @FXML
-    public TableColumn<?, ?> apStart;
-    @FXML
-    public TableColumn<?, ?> apEnd;
-    @FXML
-    public TableColumn<?, ?> apCustomerId;
-    @FXML
-    public TableColumn<?, ?> apContact;
-    @FXML
-    public TableColumn<?, ?> apContactId;
-    @FXML
-    public TableColumn<?, ?> apUserId;
+    @FXML public TableView<applicationObject.Appointment> primaryApTable;
+    @FXML public TableColumn<?, ?> apTitle;
+    @FXML public TableColumn<?, ?> apType;
+    @FXML public TableColumn<?, ?> apLocation;
+    @FXML public TableColumn<?, ?> apId;
+    @FXML public TableColumn<?, ?> apDescription;
+    @FXML public TableColumn<?, ?> apStart;
+    @FXML public TableColumn<?, ?> apEnd;
+    @FXML public TableColumn<?, ?> apCustomerName;
+    @FXML public TableColumn<?, ?> apCustomerId;
+    @FXML public TableColumn<?, ?> apContact;
+    @FXML public TableColumn<?, ?> apContactId;
+    @FXML public TableColumn<?, ?> apUserId;
 
     public void handleTableDoubleClick(MouseEvent mouseEvent) throws SQLException {
         //TODO [c] Test Double Click - success
@@ -86,6 +80,11 @@ public class AppointmentController {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             applicationObject.guiObject.Searcher.updateFromSearch(searchBar, primaryApTable);
         }
+    }
+
+    @FXML
+    public void searchAppointments(ActionEvent actionEvent) throws SQLException {
+        applicationObject.guiObject.Searcher.updateFromSearch(searchBar, primaryApTable);
     }
 
     //Radio Buttons//
@@ -227,6 +226,7 @@ public class AppointmentController {
             apContactUserIdAdd.setText(String.valueOf(selectedAp.getApUserId()));
             apContactAdd.setItems(contactNames);
             //add contact name . set value . selectedAp . getContactName
+            apCustomerAdd.setValue(selectedAp.getApCustomerName());
             apContactAdd.setValue(selectedAp.getApContactName());
             apDescriptionAdd.setText(String.valueOf(selectedAp.getApUserId()));
         }
@@ -238,30 +238,21 @@ public class AppointmentController {
     }
 
     //UPDATE APPOINTMENT TAB//
-    @FXML
-    public Tab updateApTab;
-    @FXML
-    public Tab addApTab;
-    @FXML
-    public TextField apTitleUpdate;
-    @FXML
-    public TextField apTypeUpdate;
-    @FXML
-    public TextField apLocationUpdate;
-    @FXML
-    public TextField apIdUpdate;
-    @FXML
-    public DatePicker apStartDateUpdate;
-    @FXML
-    public ComboBox<String> apStartTimeUpdate;
-    @FXML
-    public DatePicker apEndDateUpdate;
-    @FXML
-    public ComboBox<String> apEndTimeUpdate;
-    @FXML
-    public TextField apCustomerIdUpdate; //
-    @FXML
-    public ComboBox<String> apContactUpdate;
+    @FXML public Tab updateApTab;
+    @FXML public Tab addApTab;
+    @FXML public TextField apTitleUpdate;
+    @FXML public TextField apTypeUpdate;
+    @FXML public TextField apLocationUpdate;
+    @FXML public TextField apIdUpdate;
+    @FXML public DatePicker apStartDateUpdate;
+    @FXML public ComboBox<String> apStartTimeUpdate;
+    @FXML public DatePicker apEndDateUpdate;
+    @FXML public ComboBox<String> apEndTimeUpdate;
+    @FXML public TextField apCustomerIdUpdate; //
+    @FXML public ComboBox<String> apContactUpdate;
+    public ComboBox<String> apCustomerUpdate;
+
+
     // ^ TODO [c] rename this to IDK: apContactNameUpdate
     // ^ TODO [Extra] create an event to add or Edit selected Contact.
     @FXML
@@ -282,6 +273,18 @@ public class AppointmentController {
         //set apContactUserIdUpdate = contact.getId
         apContactUserIdUpdate.setText(String.valueOf(matchingContactId));
     }
+
+    public void apCustomerUpdateSelect(ActionEvent actionEvent) throws SQLException {
+        //TODO [] create a method to update customer ID field on selection of combo Box
+        CChoulesDevTools.println("Updating ID of customer selection");
+
+        //Name of selection = get selection
+        String nameOfCustomer = apCustomerUpdate.getValue();
+
+        int matchingCustomerId = CustomerDAO.findIdFromName(nameOfCustomer);
+        apCustomerIdUpdate.setText(String.valueOf(matchingCustomerId));
+    }
+    //Missing Skill take note that the Above methods would have been easier if i would have implemented Application Object sooner with ID and Name as extended variables. I also need to learn how to call an extended class as its parent class.
 
     @FXML
     public void makeApUpdate(ActionEvent actionEvent) throws SQLException {
@@ -329,30 +332,19 @@ public class AppointmentController {
     public TextArea apDescriptionUpdate;
 
     //ADD APPOINTMENT TAB//
-    @FXML
-    public TextField apTitleAdd;
-    @FXML
-    public TextField apTypeAdd;
-    @FXML
-    public TextField apLocationAdd;
-    @FXML
-    public TextField apIdAdd;
-    @FXML
-    public DatePicker apStartDateAdd;
-    @FXML
-    public ComboBox<String> apStartTimeAdd;
-    @FXML
-    public DatePicker apEndDateAdd;
-    @FXML
-    public ComboBox<String> apEndTimeAdd;
-    @FXML
-    public TextField apCustomerIdAdd;
-    @FXML
-    public ComboBox<String> apContactAdd;
-    @FXML
-    public TextField apContactUserIdAdd;
-    @FXML
-    public Button apMakeAdd;
+    @FXML public TextField apTitleAdd;
+    @FXML public TextField apTypeAdd;
+    @FXML public TextField apLocationAdd;
+    @FXML public TextField apIdAdd;
+    @FXML public DatePicker apStartDateAdd;
+    @FXML public ComboBox<String> apStartTimeAdd;
+    @FXML public DatePicker apEndDateAdd;
+    @FXML public ComboBox<String> apEndTimeAdd;
+    @FXML public ComboBox<String>  apCustomerAdd;
+    @FXML public TextField apCustomerIdAdd;
+    @FXML public ComboBox<String> apContactAdd;
+    @FXML public TextField apContactUserIdAdd;
+    @FXML public Button apMakeAdd;
 
     @FXML
     public void commitAdd(ActionEvent actionEvent) throws SQLException {
@@ -381,7 +373,7 @@ public class AppointmentController {
                 apEndEdited,
                 Integer.parseInt(apCustomerIdAdd.getText()),
                 Integer.parseInt(apContactUserIdAdd.getText()),
-                Integer.parseInt(apDescriptionAdd.getText())
+                Main.currentUser.getUserId()
         );
 
         try {
@@ -393,6 +385,30 @@ public class AppointmentController {
             CChoulesDevTools.println(e.toString());
         }
 
+
+    }
+
+    @FXML
+    public void apContactAddSelect(ActionEvent actionEvent) throws SQLException {
+        //TODO [c] create a method to update contact ID field on selection of combo Box
+        CChoulesDevTools.println("Updating ID of contact selection");
+
+        //Name of selection = get selection
+        String nameOfContact = apContactAdd.getValue();
+        //create new contact = contactDAO find contact with name of selection
+        int matchingContactId = ContactDAO.findContactIdFromName(nameOfContact);
+        //set apContactUserIdUpdate = contact.getId
+        apContactUserIdAdd.setText(String.valueOf(matchingContactId));
+    }
+    public void apCustomerAddSelect(ActionEvent actionEvent) throws SQLException {
+
+        CChoulesDevTools.println("Updating ID of customer selection");
+
+        //Name of selection = get selection
+        String nameOfCustomer = apCustomerAdd.getValue();
+
+        int matchingCustomerId = CustomerDAO.findIdFromName(nameOfCustomer);
+        apCustomerIdAdd.setText(String.valueOf(matchingCustomerId));
 
     }
 
@@ -509,6 +525,8 @@ public class AppointmentController {
         //CONTACT LIST//
         ObservableList<applicationObject.Contact> contactList = ContactDAO.getAllContacts();
 
+
+        //TODO [] morph these into methods.
         CChoulesDevTools.println("Updating Contact names");
         List<ComboBox<String>> comboBoxNameList = Arrays.asList(
                 apContactUpdate,
@@ -521,6 +539,24 @@ public class AppointmentController {
             //apContactUpdate.setItems(contactNames);
         }
 
+        ObservableList<applicationObject.Customer> customerList = CustomerDAO.getAllCustomers();
+
+        CChoulesDevTools.println("Updating Contact names");
+        List<ComboBox<String>> customerComboBoxNameList = Arrays.asList(
+                apCustomerUpdate,
+                apCustomerAdd);
+        for (ComboBox<String> comboBox : customerComboBoxNameList) {
+            ObservableList<String> contactNames = customerList.stream()
+                    .map(Customer::getCustomerName)
+                    .collect(Collectors.collectingAndThen(
+                            Collectors.toList(),
+                            FXCollections::observableArrayList)
+                    );
+            Searcher.nameListener(comboBox, contactNames);
+        }
+
+
+
         //Name of selection = get selection
         String nameOfContact = apContactUpdate.getValue();
         //create new contact = contactDAO find contact with name of selection
@@ -530,6 +566,11 @@ public class AppointmentController {
 
         //ADD CONTACT NAME//
 
+
+
+    }
+
+    private static void updateComboBox(){
 
 
     }
@@ -567,6 +608,7 @@ public class AppointmentController {
         apContact.setCellValueFactory(new PropertyValueFactory<>("apContactName"));
     //TODO [c] Solved: how does the PropertyValueFactory decide where to access the list name? Perhaps it is better to access the contactName through the appointment applicationObj instead. -Found -> its set by primaryApTable.setItems Decided to update appointment class to include a getApContactName
 
+        apCustomerName.setCellValueFactory(new PropertyValueFactory<>("apCustomerName"));
         apContactId.setCellValueFactory(new PropertyValueFactory<>("apContactId"));
         apUserId.setCellValueFactory(new PropertyValueFactory<>("apUserId"));
     // TODO [Extra] Make a comment on how frustrating PropertyValueFactory values are.

@@ -28,9 +28,9 @@
           <children>
             <VBox prefHeight="716.0" prefWidth="1371.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane prefHeight="32.0" prefWidth="212.0">
+                  <AnchorPane prefHeight="32.0" prefWidth="212.0" styleClass="prime2">
                      <children>
-                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToHomeAction" prefHeight="26.0" prefWidth="103.0" text="Back To Home" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
+                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToHomeAction" prefHeight="26.0" prefWidth="103.0" text="Refresh Page" visible="false" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
                         <Label layoutX="-21.0" layoutY="-1.0" text="APPOINTMENTS" underline="true" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>
                               <Font name="System Bold" size="22.0" />
@@ -45,11 +45,12 @@
                             <TableColumn fx:id="apType" minWidth="6.0" prefWidth="70.0" text="Type" />
                             <TableColumn fx:id="apLocation" prefWidth="93.0" text="Location" />
                             <TableColumn fx:id="apId" prefWidth="59.0" text="ID" />
-                            <TableColumn fx:id="apDescription" prefWidth="399.0" text="Description" />
-                            <TableColumn fx:id="apStart" prefWidth="129.0" text="Start Time &amp; Date" />
-                            <TableColumn fx:id="apEnd" prefWidth="107.0" text="End Time &amp; Date" />
-                            <TableColumn fx:id="apCustomerId" prefWidth="90.0" text="CustomerID" />
-                            <TableColumn fx:id="apContact" prefWidth="63.0" text="Contact" />
+                            <TableColumn fx:id="apDescription" prefWidth="376.0001525878906" text="Description" />
+                            <TableColumn fx:id="apStart" prefWidth="134.39996337890625" text="Start Time &amp; Date" />
+                            <TableColumn fx:id="apEnd" prefWidth="128.0" text="End Time &amp; Date" />
+                        <TableColumn fx:id="apCustomerName" prefWidth="101.5999755859375" text="Customer" />
+                            <TableColumn fx:id="apCustomerId" prefWidth="71.199951171875" text="CustomerID" />
+                            <TableColumn fx:id="apContact" prefWidth="84.800048828125" text="Contact" />
                             <TableColumn fx:id="apContactId" prefWidth="73.0" text="Contact ID" />
                             <TableColumn fx:id="apUserId" prefWidth="86.0" resizable="false" text="User ID" />
                         </columns>
@@ -64,7 +65,7 @@
                         <HBox>
                            <children>
                               <TextField fx:id="searchBar" onKeyPressed="#searchBarEnter" prefHeight="25.0" prefWidth="405.0" promptText="Search By Title" />
-                              <Button mnemonicParsing="false" onAction="#seearchAppointments" text="Search" />
+                              <Button mnemonicParsing="false" onAction="#searchAppointments" text="Search" />
                            </children>
                         </HBox>
                           <RadioButton fx:id="apWeekRadial" mnemonicParsing="false" onAction="#apWeekSelected" text="Week">
@@ -85,9 +86,9 @@
 <!--                   UPDATE APPOINTMENT TAB      -->
                       <Tab fx:id="updateApTab" text="Update Appointments {alt 1}">
                         <content>
-                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0" styleClass="border-prime">
                                  <children>
-                                    <GridPane alignment="CENTER" layoutX="89.0" layoutY="11.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="950.0" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="11.0">
+                                    <GridPane alignment="CENTER" layoutX="89.0" layoutY="11.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="126.0" prefWidth="955.0" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="11.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -95,6 +96,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="11.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -143,20 +145,23 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdUpdate" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdUpdate" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <ComboBox fx:id="apContactUpdate" editable="true" onAction="#apContactUpdateSelect" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                          <ComboBox fx:id="apContactUpdate" editable="true" onAction="#apContactUpdateSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdUpdate" editable="false" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                          <TextField fx:id="apContactUserIdUpdate" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
                                           </TextField>
                                             <Button fx:id="apMakeUpdateButton" mnemonicParsing="false" onAction="#makeApUpdate" prefHeight="13.0" prefWidth="158.0" style="-fx-border-color: orange;" text="Update Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                                           <Label text="Appointment Title:" GridPane.halignment="RIGHT">
@@ -223,30 +228,21 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Label text="Customer Id:" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
+                                          <Label text="Appointment Customer:" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
                                           <Label text="Appointment Contact:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Label text="Contact User ID:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
+                                          <ComboBox fx:id="apCustomerUpdate" editable="true" onAction="#apCustomerUpdateSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </Label>
+                                          </ComboBox>
                                        </children>
                                     </GridPane>
                                     <TextArea fx:id="apDescriptionUpdate" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
@@ -258,9 +254,11 @@
 <!--                  ADD APPOINTMENT TAB       -->
                       <Tab fx:id="addApTab" text="Add Appointments {alt 2}">
                         <content>
-                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="1371.0">
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="1371.0">
                                  <children>
-                                    <GridPane alignment="CENTER" layoutX="89.0" layoutY="11.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="950.0" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="11.0">
+                                    <TextArea fx:id="apDescriptionAdd" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutY="135.0" prefHeight="43.0" prefWidth="86.0" text="Appointment Description:" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" />
+                                    <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="126.0" prefWidth="955.0" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="11.0">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -268,6 +266,7 @@
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="11.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -316,20 +315,23 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdAdd" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <TextField fx:id="apCustomerIdAdd" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <ComboBox fx:id="apContactAdd" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                          <ComboBox fx:id="apContactAdd" editable="true" onAction="#apContactAddSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdAdd" editable="false" prefHeight="36.0" prefWidth="158.0" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                          <TextField fx:id="apContactUserIdAdd" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
                                           </TextField>
                                           <Label text="Appointment Title:" GridPane.halignment="RIGHT">
                                              <padding>
@@ -395,35 +397,24 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Label text="Customer Id:" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
+                                          <Label text="Appointment Customer:" GridPane.columnIndex="4" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
                                           <Label text="Appointment Contact:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Label text="Contact User ID:" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
-                                             </padding>
+                                          <ComboBox fx:id="apCustomerAdd" editable="true" onAction="#apCustomerAddSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
                                              <GridPane.margin>
-                                                <Insets top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </Label>
+                                          </ComboBox>
                                           <Button fx:id="apMakeAdd" mnemonicParsing="false" onAction="#commitAdd" prefWidth="1111.0" style="-fx-border-color: green;" text="Add Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                                        </children>
                                     </GridPane>
-                                    <TextArea fx:id="apDescriptionAdd" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutY="135.0" prefHeight="43.0" prefWidth="86.0" text="Appointment Description:" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                         </content>

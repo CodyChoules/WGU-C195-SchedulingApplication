@@ -4,6 +4,7 @@ import applicationTools.CChoulesDevTools;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.Main;
 
 public class SchedulingApplicationPrompt {
     // create a alert
@@ -11,9 +12,9 @@ public class SchedulingApplicationPrompt {
 
     public void loginFailedPopup(){
         prompt.setAlertType(Alert.AlertType.WARNING);
-        prompt.setHeaderText("Login Failed");
-        prompt.setContentText("The username or password is incorrect. Please try again.");
-        prompt.setTitle("Login Failed");
+        prompt.setHeaderText(Main.curMessBun.getString("LoginFailed"));
+        prompt.setContentText(Main.curMessBun.getString("IncorrectPasswordPrompt"));
+        prompt.setTitle(Main.curMessBun.getString("LoginFailed"));
         CChoulesDevTools.println(prompt.getTitle().toString());
 
         prompt.show();
@@ -31,9 +32,9 @@ public class SchedulingApplicationPrompt {
         alertStage.initStyle(stageStyle);
 
 
-        prompt.setHeaderText("Login Failed");
-        prompt.setContentText("The username or password is incorrect. Please try again.");
-        prompt.setTitle("Login Failed");
+        prompt.setHeaderText(Main.curMessBun.getString("LoginFailed"));
+        prompt.setContentText(Main.curMessBun.getString("IncorrectPasswordPrompt"));
+        prompt.setTitle(Main.curMessBun.getString("LoginFailed"));
 
         //Show the alert
         prompt.show();
