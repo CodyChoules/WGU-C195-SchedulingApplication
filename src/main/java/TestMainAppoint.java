@@ -1,8 +1,10 @@
+import applicationObject.User;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import controller.AppointmentController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import main.Main;
 
 import java.io.IOException;
 
@@ -13,26 +15,8 @@ public class TestMainAppoint extends Application {
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();
 
-//        //Set Parent root of scene then title & size
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/windows/mainWindow.fxml")));
-//
-//        primaryStage.setTitle("main.Main Menu");
-//
-//        CChoulesDevTools.redecorateStage(primaryStage);
-//
-//        Scene scene = new Scene(root,530,315);
-//
-//
-//        CChoulesDevTools.setWindowCenteredOnCursor(scene,primaryStage);
-//
-//        primaryStage.setScene(scene);
-//
-//
-//        primaryStage.show();
-//
-//        CChoulesDevTools.applyDevStyleToScene(scene);
-//
-//        CChoulesDevTools.println("Stage & Scene Set");
+        Main.currentUser = new User(1, "Test", "NoNoNo");
+
         mainStage = primaryStage;
 
         try {

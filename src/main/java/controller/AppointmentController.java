@@ -4,10 +4,12 @@ package controller;
 import applicationObject.Appointment;
 import applicationObject.Contact;
 import applicationObject.Customer;
+import applicationObject.guiObject.SchedulingApplicationPrompt;
 import applicationObject.guiObject.Searcher;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import applicationTools.LocalDateTimeApplicationTool;
+import controller.trash.subViewController.Home;
 import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
 import dataAccessObject.CustomerDAO;
@@ -287,7 +289,7 @@ public class AppointmentController {
     //Missing Skill take note that the Above methods would have been easier if i would have implemented Application Object sooner with ID and Name as extended variables. I also need to learn how to call an extended class as its parent class.
 
     @FXML
-    public void makeApUpdate(ActionEvent actionEvent) throws SQLException {
+    public void commitApUpdate(ActionEvent actionEvent) throws SQLException {
 
         CChoulesDevTools.println("Updating selected Appointment.");
 
@@ -305,7 +307,7 @@ public class AppointmentController {
             return;
         }
 
-        Appointment userEditOfAp = new Appointment(
+        Appointment userEditedAp = new Appointment(
                 apTitleUpdate.getText(),
                 apTypeUpdate.getText(),
                 apLocationUpdate.getText(),
@@ -315,15 +317,37 @@ public class AppointmentController {
                 apEndEdited,
                 Integer.parseInt(apCustomerIdUpdate.getText()),
                 Integer.parseInt(apContactUserIdUpdate.getText()),
-                Integer.parseInt(apContactUserIdUpdate.getText())
+                Main.currentUser.getUserId()
         );
 
-        try {
-            AppointmentDAO.updateAppointment(userEditOfAp, JDBTools.getConnection());
-            tableLoadFromDB();
-        } catch (SQLException e) {
-            CChoulesDevTools.println(e.toString());
+        String popupContent = "The following rules have been broken:";
+        if (userEditedAp.isInBusinessHours() && userEditedAp.isWithinOneDay()) {
+            try {
+                //TODO [c] create a an addAppointment method to AppointmentDAO
+                CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
+                AppointmentDAO.updateAppointment(userEditedAp, JDBTools.getConnection());
+                tableLoadFromDB();
+
+            } catch (SQLException e) {
+                CChoulesDevTools.println(e.toString());
+            }
+            return;
         }
+
+        if (!userEditedAp.isInBusinessHours()){
+            popupContent = popupContent +
+                    "\n -Appointment must be within business hours";
+        }
+
+        if (!userEditedAp.isWithinOneDay()){
+            popupContent = popupContent +
+                    "\n -Appointment cannot go over night";
+        }
+
+
+        SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+
+        popup.outOfBusinessHoursPopup(popupContent);
 
 
     }
@@ -348,9 +372,10 @@ public class AppointmentController {
 
     @FXML
     public void commitAdd(ActionEvent actionEvent) throws SQLException {
-        //Question [] another example of repeating code how do I not extend the functionality of 'makeApUpdate' to this method replacing the object references & adding a few adjustments.
+        //Question [] another example of repeating code how do I not extend the functionality of 'commitApUpdate' to this method replacing the object references & adding a few adjustments.
         //TODO [c] Create a commit add method that add ap to db
         //TODO [c] bug on add ap appointment added then bugged. Bug fixed.
+
         CChoulesDevTools.println("Adding Appointment.");
 
         LocalDateTime apStartEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apStartDateAdd.getEditor().getText(), apStartTimeAdd.getValue());
@@ -375,16 +400,34 @@ public class AppointmentController {
                 Integer.parseInt(apContactUserIdAdd.getText()),
                 Main.currentUser.getUserId()
         );
+        String popupContent = "The following rules have been broken:";
+        if (userAddedAp.isInBusinessHours() && userAddedAp.isWithinOneDay()) {
+            try {
+                //TODO [c] create a an addAppointment method to AppointmentDAO
+                CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
+                AppointmentDAO.addAppointment(userAddedAp, JDBTools.getConnection());
+                tableLoadFromDB();
 
-        try {
-            //TODO [c] create a an addAppointment method to AppointmentDAO
-            AppointmentDAO.addAppointment(userAddedAp, JDBTools.getConnection());
-            tableLoadFromDB();
-            //TODO [c] try to create a table load method outside of initialize to deal with bug a1
-        } catch (SQLException e) {
-            CChoulesDevTools.println(e.toString());
+            } catch (SQLException e) {
+                CChoulesDevTools.println(e.toString());
+            }
+            return;
         }
 
+        if (!userAddedAp.isInBusinessHours()){
+            popupContent = popupContent +
+                    "\n -Appointment must be within business hours";
+        }
+
+        if (!userAddedAp.isWithinOneDay()){
+            popupContent = popupContent +
+                    "\n -Appointment cannot go over night";
+        }
+
+
+        SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+
+        popup.outOfBusinessHoursPopup(popupContent);
 
     }
 
@@ -436,6 +479,27 @@ public class AppointmentController {
     @FXML public Button addApToDelete;
     //TODO [c] add to delete method -> on double click while delete tab to add to delete table.
     @FXML public void deleteAppointments(ActionEvent actionEvent) throws SQLException {
+
+        SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+
+        //Appointment_ID and type
+
+        String promptContent = "Are you sure you would like to delete the following Appointments:" +
+                "\nTitle : " +
+                "ID : " +
+                "Type ";
+
+        for (Appointment appointment:toBeDeletedApList){
+            promptContent = promptContent +
+                    "\n" +
+                    appointment.getApTitle() +
+                    " : " +
+                    appointment.getApId() +
+                    " : " +
+                    appointment.getApType();
+        }
+
+        if (prompt.deleteConformationPrompt(promptContent))
         for (Appointment appointment:toBeDeletedApList){
             AppointmentDAO.deleteAppointment(appointment.getApId(), JDBTools.getConnection());
 
@@ -444,6 +508,7 @@ public class AppointmentController {
         delApTable.setItems(toBeDeletedApList);
         tableLoadFromDB();
     }
+
     
     public void addApToBeDeleted(Appointment apToBeDeleted){
         if (toBeDeletedApList.contains(apToBeDeleted)){

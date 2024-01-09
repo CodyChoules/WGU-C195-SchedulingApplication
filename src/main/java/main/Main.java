@@ -48,23 +48,47 @@ public class Main extends Application {
         primeStage.show(); }
     public static void openSceneAsTabAndGo(String fxName, TabPane tabPane) throws Exception {
         String fxmlToDisplay = GeneralTools.capitalizeAndAddSpaces(fxName);
-        Tab newTab = createTab(fxmlToDisplay, fxName);
+        Tab newTab = createTab(fxmlToDisplay, fxName, tabPane);
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
     }
-    private static Tab createTab(String tabTitle, String fxName) throws Exception {
+    private static Tab createTab(String tabTitle, String fxName, TabPane tabPane) throws Exception {
         Tab tab = new Tab(tabTitle);
 
-        // Load the FXML file
+        //Load the FXML file
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(
                 "/views/" + fxName + ".fxml"));
         Parent root = loader.load();
 
-        // Set the loaded content to the tab
+        //Set the loaded content to the tab
         tab.setContent(root);
         tab.isClosable();
+        //TabPane tabPane = tab.getTabPane();
+        //Set event handler for tab selection
+
+        tab.selectedProperty().addListener(
+                (observable, wasSelected, isSelected) -> {
+                    if (isSelected) {
+                        //Refresh the content of the selected tab
+                        try {
+                            refreshTab(tab, fxName);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
 
         return tab;
+    }
+    private static void refreshTab(Tab tab, String fxName) throws IOException {
+        CChoulesDevTools.println("Refreshing content for tab: " + tab.getText());
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource(
+                "/views/" + fxName + ".fxml"));
+        Parent root = loader.load();
+        tab.setContent(root);
+
+        //TODO  [Extra] This defeats The purpose of tabs as It refreshes The user input as well. I am running out of time and this is out of scope but we should alter this so that it calls a refresh method in the tab controller to refresh only the data from the dataBase in things like combo boxes and tables.
     }
 
     //USER\\

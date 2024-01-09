@@ -64,7 +64,52 @@
                                     <Insets />
                                  </opaqueInsets>
                               </VBox>
-                              <AnchorPane layoutX="151.2" layoutY="-7.0" prefHeight="966.0" prefWidth="974.0" styleClass="prime2" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-7.0" />
+                              <AnchorPane layoutX="155.0" prefHeight="966.0" prefWidth="974.0" styleClass="prime2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <GridPane layoutX="264.0" layoutY="155.0" prefHeight="91.0" prefWidth="401.0" AnchorPane.leftAnchor="264.0" AnchorPane.rightAnchor="264.80000000000007">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Current Time At Company HQ:" GridPane.halignment="RIGHT">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Current Time At Your Location:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Bussness Hours At Your Location:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="timeValueCurrentAtHQ" text="Time Value Missing" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="timeValueCurrentLocal" text="Time Value Missing" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label fx:id="timeValueHoursLocal" text="Time Value Missing" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children></AnchorPane>
                            </children>
                         </AnchorPane>
                             </children>

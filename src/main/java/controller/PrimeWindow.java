@@ -1,18 +1,21 @@
 package controller;
 
 
+import applicationObject.Appointment;
 import applicationObject.User;
-import dataAccessObject.UserDAO;
+import applicationObject.guiObject.SchedulingApplicationPrompt;
+import applicationTools.ApplicationTimeTool;
 import applicationTools.CChoulesDevTools;
-import applicationTools.CChoulesJTools;
 import applicationTools.JDBTools;
+import dataAccessObject.AppointmentDAO;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
@@ -21,12 +24,41 @@ import main.Main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class PrimeWindow {
 
 
     @FXML public TabPane tabPane;
     @FXML public AnchorPane anchorPane;
+    @FXML public Label timeValueCurrentAtHQ;
+    @FXML public Label timeValueCurrentLocal;
+    @FXML public Label timeValueHoursLocal;
+
+    public void setTimeValues() {
+
+//        ArrayList<Label> timers = new ArrayList<Label>(Arrays.asList(
+//                timeValueCurrentAtHQ,
+//                timeValueCurrentLocal,
+//                timeValueHoursLocal
+//        ));
+//
+//        for (Label label : timers) {
+//            ApplicationTimeTool.setLabelToClock(label);
+//        }
+
+        ApplicationTimeTool.setLabelToHQClock(timeValueCurrentAtHQ);
+        ApplicationTimeTool.setLabelToClock(timeValueCurrentLocal);
+        timeValueHoursLocal.setText(
+                ApplicationTimeTool.getStartOfHoursAsLocalAsString()
+                + " to " +
+                ApplicationTimeTool.getEndOfHoursAsLocalAsString());
+
+
+    }
+
+
     Stage stage;
 
 
@@ -80,4 +112,71 @@ public class PrimeWindow {
         Platform.exit();
         System.exit(0);
     }
+
+    public ObservableList<Appointment> checkForUpcomingAppointments() throws SQLException {
+        //Get all AppointmentsDAO
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
+
+        //Create Empty list of upcoming appointments
+        ObservableList<Appointment> upcomingList = FXCollections.observableArrayList();
+
+        //Get the current date and time
+        LocalDateTime now = LocalDateTime.now();
+
+        //For each Appointment.getStartTime is after now & is before now
+        // & Appointment.getUserId == currentUser.id add appointment to upcoming list
+        for (Appointment appointment : allAppointments) {
+            LocalDateTime startTime = appointment.getApStart();
+            int userId = appointment.getApUserId(); // Assuming getUserId() returns the user ID
+
+            // Check if the appointment is upcoming and belongs to the current user
+            if (startTime.isAfter(now) && userId == Main.currentUser.getId()) {
+                upcomingList.add(appointment);
+            }
+        }
+
+        //return upcoming list
+        return upcomingList;
+
+    }
+
+    public void initialize() throws SQLException {
+        setTimeValues();
+
+        ObservableList<Appointment> upAp = checkForUpcomingAppointments();
+
+        CChoulesDevTools.println(upAp.toString());
+        if (!upAp.isEmpty()){
+            SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+
+            CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
+
+
+            String promptContent = "You have the following upcoming Appointments within 15 min." +
+                    "\nTitle : " +
+                    "ID : " +
+                    "Type : " +
+                    "Time";
+
+            for (Appointment appointment: upAp){
+                promptContent = promptContent +
+                        "\n" +
+                        appointment.getApTitle() +
+                        " : " +
+                        appointment.getApId() +
+                        " : " +
+                        appointment.getApType() +
+                        " : " +
+                        appointment.getApStart().format(ApplicationTimeTool.formatFullReadable());
+            }
+
+            prompt.upcomingApPopup(promptContent);
+
+
+        }
+
+        //Check for upcoming appointments.
+    }
+
+
 }

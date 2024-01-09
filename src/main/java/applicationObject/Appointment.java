@@ -1,5 +1,6 @@
 package applicationObject;
 
+import applicationTools.ApplicationTimeTool;
 import applicationTools.CChoulesDevTools;
 import dataAccessObject.ContactDAO;
 import dataAccessObject.CustomerDAO;
@@ -153,6 +154,24 @@ public class Appointment extends ApplicationObject{
         CChoulesDevTools.println("Found name of Contact: " + nameOfContact);
         return nameOfContact;
     }
+
+    //i added this here just so it reads well when calling
+    public boolean isInBusinessHours(){
+
+        boolean end = ApplicationTimeTool.isBusinessHours(this.apEnd);
+        boolean start = ApplicationTimeTool.isBusinessHours(this.apStart);
+
+        return (end && start);
+    }
+    public boolean isWithinOneDay(){
+
+        boolean sameDay = (this.apStart.getDayOfYear() == this.apEnd.getDayOfYear());
+        boolean sameYear = (this.apStart.getYear() == this.apEnd.getYear());
+
+        return (sameDay && sameYear);
+    }
+
+
 
 
 

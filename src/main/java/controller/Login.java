@@ -1,6 +1,7 @@
 package controller;
 
 import applicationObject.User;
+import applicationObject.guiObject.SchedulingApplicationPrompt;
 import dataAccessObject.UserDAO;
 
 import applicationTools.CChoulesDevTools;
@@ -116,7 +117,7 @@ public class Login implements Initializable {
 //            Parent root = loader.load();
 //
 //            //TODO [Extra] Complete dark mode pass through from this scene to home
-////            controller.Home mp = loader.getController();
+////            controller.trash.subViewController.Home mp = loader.getController();
 ////        //passing the css settings
 ////        mp.passCss(cssPath, darkModeOn);
 //

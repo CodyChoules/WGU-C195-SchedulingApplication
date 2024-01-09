@@ -120,7 +120,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="apIdUpdate" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                          <TextField fx:id="apIdUpdate" disable="true" editable="false" prefHeight="27.0" prefWidth="144.0" promptText="ID #" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -145,25 +145,17 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdUpdate" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
+                                          <ComboBox fx:id="apCustomerUpdate" editable="true" onAction="#apCustomerUpdateSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </TextField>
+                                          </ComboBox>
                                           <ComboBox fx:id="apContactUpdate" editable="true" onAction="#apContactUpdateSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdUpdate" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </GridPane.margin>
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
-                                          </TextField>
-                                            <Button fx:id="apMakeUpdateButton" mnemonicParsing="false" onAction="#makeApUpdate" prefHeight="13.0" prefWidth="158.0" style="-fx-border-color: orange;" text="Update Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                            <Button fx:id="apMakeUpdateButton" mnemonicParsing="false" onAction="#commitApUpdate" prefHeight="13.0" prefWidth="158.0" style="-fx-border-color: orange;" text="Update Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                                           <Label text="Appointment Title:" GridPane.halignment="RIGHT">
                                              <padding>
                                                 <Insets bottom="2.0" left="2.0" right="5.0" top="2.0" />
@@ -238,11 +230,19 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <ComboBox fx:id="apCustomerUpdate" editable="true" onAction="#apCustomerUpdateSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
+                                          <TextField fx:id="apCustomerIdUpdate" disable="true" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </ComboBox>
+                                          </TextField>
+                                          <TextField fx:id="apContactUserIdUpdate" disable="true" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </GridPane.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </TextField>
                                        </children>
                                     </GridPane>
                                     <TextArea fx:id="apDescriptionUpdate" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
@@ -290,7 +290,7 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </TextField>
-                                          <TextField fx:id="apIdAdd" editable="false" prefHeight="33.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                          <TextField fx:id="apIdAdd" disable="true" editable="false" prefHeight="33.0" prefWidth="222.0" promptText="ID #" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
@@ -315,17 +315,18 @@
                                                 <Insets top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apCustomerIdAdd" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
+                                          <ComboBox fx:id="apCustomerAdd" editable="true" onAction="#apCustomerAddSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </TextField>
+                                          </ComboBox>
                                           <ComboBox fx:id="apContactAdd" editable="true" onAction="#apContactAddSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </ComboBox>
-                                          <TextField fx:id="apContactUserIdAdd" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                          <Button fx:id="apMakeAdd" mnemonicParsing="false" onAction="#commitAdd" prefWidth="1111.0" style="-fx-border-color: green;" text="Add Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          <TextField fx:id="apContactUserIdAdd" disable="true" editable="false" prefHeight="27.0" prefWidth="96.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
@@ -407,12 +408,11 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <ComboBox fx:id="apCustomerAdd" editable="true" onAction="#apCustomerAddSelect" prefWidth="158.0" promptText="Name" GridPane.columnIndex="5">
+                                          <TextField fx:id="apCustomerIdAdd" disable="true" editable="false" prefHeight="27.0" prefWidth="193.0" promptText="ID #" GridPane.columnIndex="6" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </GridPane.margin>
-                                          </ComboBox>
-                                          <Button fx:id="apMakeAdd" mnemonicParsing="false" onAction="#commitAdd" prefWidth="1111.0" style="-fx-border-color: green;" text="Add Appointment" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                          </TextField>
                                        </children>
                                     </GridPane>
                                  </children>

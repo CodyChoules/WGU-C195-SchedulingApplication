@@ -72,7 +72,7 @@ public class AppointmentDAO {
                 /*8*/"User_ID=?, " +
                 /*9*/"Contact_ID=?, " +
                 /*10*/"Last_Update=?, " +
-                /*11*/"Last_Updated_By=?, " +
+                /*11*/"Last_Updated_By=? " +
                 /*12*/"WHERE Appointment_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 

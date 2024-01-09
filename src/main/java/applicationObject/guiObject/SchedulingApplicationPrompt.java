@@ -1,7 +1,8 @@
-package controller;
+package applicationObject.guiObject;
 
 import applicationTools.CChoulesDevTools;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import main.Main;
@@ -18,6 +19,43 @@ public class SchedulingApplicationPrompt {
         CChoulesDevTools.println(prompt.getTitle().toString());
 
         prompt.show();
+    }
+
+    public void outOfBusinessHoursPopup(String content){
+        prompt.setAlertType(Alert.AlertType.WARNING);
+        prompt.setHeaderText("Inappropriate appointment time.");
+        prompt.setContentText(content);
+        prompt.setTitle("Inappropriate appointment time");
+        CChoulesDevTools.println(prompt.getTitle());
+
+        prompt.show();
+    }
+
+    public void upcomingApPopup(String content){
+        prompt.setAlertType(Alert.AlertType.WARNING);
+        prompt.setHeaderText("Upcoming Appointments.");
+        prompt.setContentText(content);
+        prompt.setTitle("Upcoming Appointments.");
+        CChoulesDevTools.println(prompt.getTitle());
+
+        prompt.show();
+    }
+
+    public boolean deleteConformationPrompt(String content){
+
+        prompt.setAlertType(Alert.AlertType.CONFIRMATION);
+        prompt.setHeaderText("Delete Conformation");
+        prompt.setContentText(content);
+        prompt.setTitle("Delete Conformation");
+        CChoulesDevTools.println(prompt.getTitle());
+
+        prompt.showAndWait();
+
+        if (prompt.getResult() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // TODO [Extra] create an new login prompt with the ability to change style with the chosen settings.

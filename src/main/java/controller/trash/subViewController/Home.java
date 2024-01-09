@@ -1,4 +1,4 @@
-package controller;
+package controller.trash.subViewController;
 
 import applicationTools.CChoulesDevTools;
 import javafx.event.ActionEvent;
@@ -81,7 +81,7 @@ public class Home {
 
         Parent root = loader.load();
 
-        controller.Home mp = loader.getController();
+        Home mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);
@@ -109,7 +109,7 @@ public class Home {
 
         Parent root = loader.load();
 
-        controller.Home mp = loader.getController();
+        Home mp = loader.getController();
 
 //        //passing the css settings
 //        mp.passCss(cssPath, darkModeOn);
