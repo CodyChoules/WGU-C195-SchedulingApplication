@@ -13,3 +13,54 @@ This package contains all of the controllers.
   @ MainWindow.openAppointments  //TODO [c] tabPain is not working (NullPointerException) possibly due to implementing "<Include>" into my fxml. If I wish to continue the intended project structure I may have combined all fxml & controllers into 1 controller & 1 fxml. Really do not like this and am frustrated that FXML does not appear to have an intuitive way to reverence fx:id values from parent fxml object when using include. If this was the case can i could open tabs, windows, or any other fxml object using purpose built fxml files to set up more versatile scenes.
                            // - Solution - sure enough after hours of research and trial the only solution appears to be removing the <include> fxml functionality and creating 1 big fxml file.I wish that I could find a way to have the included fxml inherit the parent fxml fx:id.
                            //Missing Skill This will now require me to create a unified fxml & controller class to keep the original intention and avoid avoid a sapir-whorf like tool constraint.
+
+
+//        //TODO [c] create home menu fxml
+//        //TODO [c] create load home menu on validation logic //Committing
+//        if (loginValidated) {
+//
+//
+//            //Home.loadHomeFXML(stage, loginButton, getClass());
+//
+//            //TODO [Extra] was attempting to make a a clean method for loading scenes shown below, did not work properly but may revit the idea.
+//            //Home.loadHomeFXML(loginButton, getClass());
+//
+//            CChoulesDevTools.println("Loading mainWindow.fxml");
+//
+//            //Note: this is incorrect I keep doing this bellow:
+//            //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/windows/mainWindow.fxml"));
+//
+//            Parent root = loader.load();
+//
+//            //TODO [Extra] Complete dark mode pass through from this scene to home
+////            controller.trash.subViewController.Home mp = loader.getController();
+////        //passing the css settings
+////        mp.passCss(cssPath, darkModeOn);
+//
+//            stage = (Stage) loginButton.getScene().getWindow();
+//            Scene scene = new Scene(root);
+//
+//            CChoulesDevTools.applyDevStyleToScene(scene);
+//
+//            stage.setScene(scene);
+//            stage.show();
+//        }
+
+        //showIncorrectPasswordPopup();
+
+                    // TODO [c] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
+                    // TODO [c] create an class to store popups settings for this application -SchedulingApplicationPrompt
+                    //showIncorrectPasswordPopup();
+
+                            //Missing Skill,
+                            //Skill Found: DAO Use Case:
+                            // Need to create a Data Access Object(DAO).
+                            //DAOs are abstractions used to access persistent mechanisms
+                            //such as Data Bases. Focused often on CRUD (Create, Read,
+                            // Update, Delete) operations on data entities.
+
+                            // TODO [c] create a dataAccessObject package
+
+                            // TODO [c] create a DAO to access user date inside the SQL DB
+                            //Validates user input

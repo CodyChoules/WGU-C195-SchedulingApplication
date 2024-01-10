@@ -50,6 +50,38 @@ public class AppointmentDAO {
 
         return appointmentsObservableList;
     }
+    public static ObservableList<applicationObject.Appointment> getAllAppointmentsByCustomer(int customerID) throws SQLException {
+
+        String sqlQuery = "SELECT * from client_schedule.appointments WHERE Customer_ID=" + customerID;
+
+        ObservableList<Appointment> appointmentsObservableList = FXCollections.observableArrayList();
+
+        JDBTools.openConnection();
+
+        PreparedStatement preparedStatement = applicationTools.JDBTools.getConnection().prepareStatement(sqlQuery);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+
+            //Note: This order is not the same as front end but consistent with data base
+            int apID = resultSet.getInt("Appointment_ID");
+            String apTitle = resultSet.getString("Title");
+            String apDescription = resultSet.getString("Description");
+            String apLocation = resultSet.getString("Location");
+            String apType = resultSet.getString("Type");
+            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start"));
+            LocalDateTime apEnd = JDBTools.convertFromUTC(resultSet.getTimestamp("End"));;
+            int apCustomerID = resultSet.getInt("Customer_ID");
+            int apUserID = resultSet.getInt("User_ID");
+            int apContactID = resultSet.getInt("Contact_ID");
+
+            //Note: appointment now follows front end order
+            Appointment appointment = new Appointment(apTitle, apType, apLocation, apID, apDescription, apStart, apEnd, apCustomerID, apContactID, apUserID);
+            appointmentsObservableList.add(appointment);
+        }
+
+        return appointmentsObservableList;
+    }
 
     public static int deleteAppointment(int appointmentId, Connection connection) throws SQLException {
         String query = "DELETE FROM appointments WHERE Appointment_ID=?";

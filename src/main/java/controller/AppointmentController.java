@@ -116,6 +116,7 @@ public class AppointmentController {
             return;
         }
 
+        //Try Lambda
         allApList.forEach(appointment -> {
             if (appointment.getApEnd().isAfter(timeWindowStart)
                 &&  appointment.getApStart().isBefore(timeWindowEnd)) {
@@ -307,6 +308,8 @@ public class AppointmentController {
             return;
         }
 
+
+
         Appointment userEditedAp = new Appointment(
                 apTitleUpdate.getText(),
                 apTypeUpdate.getText(),
@@ -320,8 +323,15 @@ public class AppointmentController {
                 Main.currentUser.getUserId()
         );
 
-        String popupContent = "The following rules have been broken:";
-        if (userEditedAp.isInBusinessHours() && userEditedAp.isWithinOneDay()) {
+
+        if (userEditedAp.isInBusinessHours()
+                && userEditedAp.isWithinOneDay()
+                && userEditedAp.isNotOverlapping()
+                && userEditedAp.getApId() != 0
+                && userEditedAp.getApCustomerId() != 0
+                && userEditedAp.getApContactId() != 0
+
+        ) {
             try {
                 //TODO [c] create a an addAppointment method to AppointmentDAO
                 CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
@@ -331,17 +341,40 @@ public class AppointmentController {
             } catch (SQLException e) {
                 CChoulesDevTools.println(e.toString());
             }
+            //Finish method and return without popup
             return;
         }
 
+        String popupContent = "The following rules have been broken:";
+
         if (!userEditedAp.isInBusinessHours()){
             popupContent = popupContent +
-                    "\n -Appointment must be within business hours";
+                    "\n -Appointment must be within business hours.";
         }
 
         if (!userEditedAp.isWithinOneDay()){
             popupContent = popupContent +
-                    "\n -Appointment cannot go over night";
+                    "\n -Appointment cannot go over night.";
+        }
+
+        if (!userEditedAp.isNotOverlapping()){
+            popupContent = popupContent +
+                    "\n -Is overlapping with an existing appointment.";
+        }
+
+        if (userEditedAp.getApId() == 0){
+            popupContent = popupContent +
+                    "\n -No appointment ID : You must select an appointment when Updating an appointment.";
+        }
+
+        if (userEditedAp.getApCustomerId() == 0){
+            popupContent = popupContent +
+                    "\n -No Customer Selected.";
+        }
+
+        if (userEditedAp.getApCustomerId() == 0){
+            popupContent = popupContent +
+                    "\n -No Contact Selected.";
         }
 
 
@@ -401,9 +434,12 @@ public class AppointmentController {
                 Main.currentUser.getUserId()
         );
         String popupContent = "The following rules have been broken:";
-        if (userAddedAp.isInBusinessHours() && userAddedAp.isWithinOneDay()) {
+        if (userAddedAp.isInBusinessHours()
+                && userAddedAp.isWithinOneDay()
+                && userAddedAp.isNotOverlapping()
+        ) {
             try {
-                //TODO [c] create a an addAppointment method to AppointmentDAO
+                //TODO [c] create an addAppointment method to AppointmentDAO
                 CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
                 AppointmentDAO.addAppointment(userAddedAp, JDBTools.getConnection());
                 tableLoadFromDB();
@@ -423,7 +459,10 @@ public class AppointmentController {
             popupContent = popupContent +
                     "\n -Appointment cannot go over night";
         }
-
+        if (!userAddedAp.isNotOverlapping()){
+            popupContent = popupContent +
+                    "\n -Is overlapping with an existing appointment.";
+        }
 
         SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
 

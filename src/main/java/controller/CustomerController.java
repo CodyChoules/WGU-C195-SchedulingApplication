@@ -1,10 +1,13 @@
 package controller;
 
+import applicationObject.Appointment;
 import applicationObject.Country;
 import applicationObject.Customer;
+import applicationObject.guiObject.SchedulingApplicationPrompt;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import controller.trash.subViewController.Home;
+import dataAccessObject.AppointmentDAO;
 import dataAccessObject.CountryDAO;
 import dataAccessObject.CustomerDAO;
 import dataAccessObject.FirstLvlDivisionDAO;
@@ -189,13 +192,13 @@ public class CustomerController {
                 CRAddressField1.getText().isEmpty() ||
                 CRCountryDropDown1.getValue().isEmpty() ||
                 CRFirstLvlDivDropDown1.getValue().isEmpty() ||
-                CRPostalCodeField1.getText().isEmpty())
-        {
+                CRPostalCodeField1.getText().isEmpty()) {
             //TODO [] put alert to fill here
             return;
         }
 
-        int addDivisionId = FirstLvlDivisionDAO.getFLD_IdByName(CRFirstLvlDivDropDown1.getValue());;
+        int addDivisionId = FirstLvlDivisionDAO.getFLD_IdByName(CRFirstLvlDivDropDown1.getValue());
+        ;
 
         Customer addingCustomer = new Customer(
                 0,
@@ -220,13 +223,43 @@ public class CustomerController {
         tableLoadFromDB();
 
     }
-    public void CRDeleteListedCustomers(ActionEvent actionEvent) throws SQLException {
-        for (Customer customer : customersToDelete){
-            CustomerDAO.deleteCustomer(customer.getCustomerId(), JDBTools.getConnection());
+
+
+    public void deleteCustomersWithAlert() throws SQLException {
+
+        SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+
+        //Appointment_ID and type
+
+        String promptContent = "Are you sure you would like to delete the following customers:" +
+                "\nName : " +
+                "ID : " +
+                "Country ";
+
+        for (Customer appointment:customersToDelete){
+            promptContent = promptContent +
+                    "\n" +
+                    appointment.getCustomerName() +
+                    " : " +
+                    appointment.getCustomerId() +
+                    " : " +
+                    appointment.getCustomerCountryName();
         }
-        tableLoadFromDB();
+
+        if (prompt.deleteConformationPrompt(promptContent)){
+                for (Customer customer : customersToDelete){
+                    CustomerDAO.deleteCustomer(customer.getCustomerId(), JDBTools.getConnection());
+
+                }
+            }
+
         customersToDelete.clear();
         CRDeleteTable.setItems(customersToDelete);
+        tableLoadFromDB();
+    }
+
+    public void CRDeleteListedCustomers(ActionEvent actionEvent) throws SQLException {
+        deleteCustomersWithAlert();
     }
 
     @FXML public void CRSelectCustomerButton(ActionEvent actionEvent) {

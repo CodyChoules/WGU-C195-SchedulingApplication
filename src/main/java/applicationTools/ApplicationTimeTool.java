@@ -20,12 +20,21 @@ public class ApplicationTimeTool {
 
 
     //To get times\\  //was having trouble am doing som quick code to try again
-    private static final ZoneId easternTimeZone = ZoneId.of("America/New_York");
-    private static final LocalTime businessEndAtEastern = LocalTime.of(22, 0);
-    private static final LocalTime businessStartAtEastern = LocalTime.of(8, 0);
+    private static final ZoneId hqTimeZone = ZoneId.of("America/New_York"); //Not fully implemented!!! (not global)
+    private static final LocalTime businessEndAtEastern = LocalTime.of(22, 0);//Not fully implemented!!! (not global)
+    private static final LocalTime businessStartAtEastern = LocalTime.of(8, 0);//Not fully implemented!!! (not global)
+
+    public static ZonedDateTime getTimeAsHqTime(ZonedDateTime zonedDateTime){
+        return zonedDateTime.withZoneSameInstant(hqTimeZone);
+    }
+    public static ZonedDateTime getTimeAsHqTime(LocalDateTime localDateTime){
+        //Overloading to use localDateTime
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
+        return zonedDateTime.withZoneSameInstant(hqTimeZone);
+    }
 
     public static LocalTime getEndOfHoursAsLocal(){
-        ZonedDateTime currentDateTimeInEastern = ZonedDateTime.now(easternTimeZone);
+        ZonedDateTime currentDateTimeInEastern = ZonedDateTime.now(hqTimeZone);
         ZonedDateTime businessEndDateTimeInEastern = currentDateTimeInEastern.with(businessEndAtEastern);
         //// Convert
         ZonedDateTime businessEndDateTimeLocal = businessEndDateTimeInEastern.withZoneSameInstant(ZoneId.systemDefault());
@@ -37,7 +46,7 @@ public class ApplicationTimeTool {
         return formatWithAMPM(getEndOfHoursAsLocal());
     }
     public static LocalTime getStartOfHoursAsLocal(){
-        ZonedDateTime currentDateTimeInEastern = ZonedDateTime.now(easternTimeZone);
+        ZonedDateTime currentDateTimeInEastern = ZonedDateTime.now(hqTimeZone);
         ZonedDateTime businessStartDateTimeInEastern = currentDateTimeInEastern.with(businessStartAtEastern);
         //// Convert
         ZonedDateTime businessStartDateTimeLocal = businessStartDateTimeInEastern.withZoneSameInstant(ZoneId.systemDefault());
@@ -53,6 +62,8 @@ public class ApplicationTimeTool {
         return localTime.format(formatter);
     }
     //\\Above is redundant but I could not get this original object to work for the timers so I had to start over from the ground up//\\
+
+
 
 
 
@@ -83,20 +94,14 @@ public class ApplicationTimeTool {
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        LocalDateTime easternDateTime = localDateTime.atZone(ZoneId.systemDefault())
+        return localDateTime.atZone(ZoneId.systemDefault())
                 .withZoneSameInstant(ZoneId.of("America/New_York"))
                 .toLocalDateTime();
-
-        return easternDateTime;
-
     }
 
 
 
-    //what is the current time of buisness hours
-
-
-    private static String formatReadableDateTime(LocalDateTime dateTime) {
+    private static String formatReadableDateTimeToString(LocalDateTime dateTime) {
         // Define a custom date-time formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy h:mm a", Locale.ENGLISH);
 
@@ -104,26 +109,13 @@ public class ApplicationTimeTool {
         return dateTime.format(formatter);
     }
 
-    //Test Code
-    public static void main(String[] args) {
-
-        LocalDateTime currentBusinessTime = getCurrentBusinessTime();
-        CChoulesDevTools.println("Current Business Time: " + formatReadableDateTime(currentBusinessTime));
-        CChoulesDevTools.println("Is within business hours? " + isBusinessHours(currentBusinessTime));
-
-        LocalDateTime currentDateTime = LocalDateTime.now();
-
-        String formattedDateTime = formatReadableDateTime(currentDateTime);
-
-        CChoulesDevTools.println("Formatted Date and Time: " + formattedDateTime);
-    }
-
-    private Label dateTimeLabel = new Label();
 
     public static void setLabelToHQClock(Label label){
+        //Found an example of this and wanted to try it out even though it is out of scope
 
         int counter = 0;
 
+        //try Lambda
         Timeline clock = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> updateDateTimeHQ(label)),
                 new KeyFrame(Duration.seconds(1))
@@ -132,12 +124,10 @@ public class ApplicationTimeTool {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
-
     private static void updateDateTimeHQ(Label label) {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(getCurrentBusinessTime(),ZoneId.of("America/New_York"));
         label.setText(formatZonedDateTime(zonedDateTime));
     }
-
     public static void setLabelToClock(Label label){
 
         int counter = 0;
@@ -150,7 +140,6 @@ public class ApplicationTimeTool {
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
     }
-
     private static void updateDateTime(Label label) {
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
         label.setText(formatZonedDateTime(zonedDateTime));

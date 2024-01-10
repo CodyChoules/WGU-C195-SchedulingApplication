@@ -20,9 +20,14 @@ import javafx.stage.Stage;
 import main.Main;
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -54,12 +59,45 @@ public class Login implements Initializable {
 
 
     //todo [c] transferred this method to PrimeWindow
-    private void loginMethod() throws IOException, InterruptedException  {
+//    private void loginMethod() throws IOException, InterruptedException  {
+//
+//        //Get login info from input.
+//        String nameInput = CChoulesJTools.sanitizeInput( usernameInput.getText() );
+//        String passInput = CChoulesJTools.sanitizeInput( passwordInput.getText() );
+//
+//        // TODO [c] solve login on no input error.
+//        if (nameInput.isEmpty() || passInput.isEmpty()) {
+//            CChoulesDevTools.println("Input Values Found Empty, login attempt abandoned.");
+//            return;
+//        }
+//
+//        JDBTools.openConnection();
+//
+//        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput, Main.currentUser);
+//
+//        if (! loginValidated) {
+//            CChoulesDevTools.println("Input on Password or Username not found. Login attempt abandoned");
+//
+//            //showIncorrectPasswordPopup
+//            SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+//            popup.loginFailedPopup();
+//
+//            CChoulesDevTools.println("SchedulingApplicationPrompt Now!");
+//        }
+//
+//        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in.");
+//            main.Main.loadMainWindowAndSetUser(Main.currentUser);
+//        }
+//
+//
+//
+//    }
 
-        // TODO [c] create or find a method to sanitize user input remember to implement this into any account creation as well.
-        // TODO [c] Get login info from input.
-        String nameInput = CChoulesJTools.sanitizeInput( usernameInput.getText() );
-        String passInput = CChoulesJTools.sanitizeInput( passwordInput.getText() );
+
+    private void loginMethod() throws IOException, InterruptedException  {
+        // Get login info from input.
+        String nameInput = CChoulesJTools.sanitizeInput(usernameInput.getText());
+        String passInput = CChoulesJTools.sanitizeInput(passwordInput.getText());
 
         // TODO [c] solve login on no input error.
         if (nameInput.isEmpty() || passInput.isEmpty()) {
@@ -69,70 +107,53 @@ public class Login implements Initializable {
 
         JDBTools.openConnection();
 
-        //Missing Skill,
-        //Skill Found: DAO Use Case:
-        // Need to create a Data Access Object(DAO).
-        //DAOs are abstractions used to access persistent mechanisms
-        //such as Data Bases. Focused often on CRUD (Create, Read,
-        // Update, Delete) operations on data entities.
+        boolean loginValidated = UserDAO.validateUserLogin(nameInput, passInput, Main.currentUser);
 
-        // TODO [c] create a dataAccessObject package
+        // Log login attempt
+        logLoginAttempt(nameInput, loginValidated);
 
-        // TODO [c] create a DAO to access user date inside the SQL DB
-        //Validates user input
-        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput, Main.currentUser);
-
-        // TODO [c] create a incorrect password popup
-        if (! loginValidated) {
+        if (!loginValidated) {
             CChoulesDevTools.println("Input on Password or Username not found. Login attempt abandoned");
-            // TODO [c] schedulingApplicationPopup is not firing -The version of java alerts was out of date in the example I was looking at.
-            // TODO [c] create an class to store popups settings for this application -SchedulingApplicationPrompt
-            //showIncorrectPasswordPopup();
+
+            // showIncorrectPasswordPopup
             SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
             popup.loginFailedPopup();
 
             CChoulesDevTools.println("SchedulingApplicationPrompt Now!");
         }
 
-        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in.");
+        if (loginValidated) {
+            CChoulesDevTools.println("User input Validated, Logging in.");
             main.Main.loadMainWindowAndSetUser(Main.currentUser);
         }
-
-//        //TODO [c] create home menu fxml
-//        //TODO [c] create load home menu on validation logic //Committing
-//        if (loginValidated) {
-//
-//
-//            //Home.loadHomeFXML(stage, loginButton, getClass());
-//
-//            //TODO [Extra] was attempting to make a a clean method for loading scenes shown below, did not work properly but may revit the idea.
-//            //Home.loadHomeFXML(loginButton, getClass());
-//
-//            CChoulesDevTools.println("Loading mainWindow.fxml");
-//
-//            //Note: this is incorrect I keep doing this bellow:
-//            //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/windows/mainWindow.fxml"));
-//
-//            Parent root = loader.load();
-//
-//            //TODO [Extra] Complete dark mode pass through from this scene to home
-////            controller.trash.subViewController.Home mp = loader.getController();
-////        //passing the css settings
-////        mp.passCss(cssPath, darkModeOn);
-//
-//            stage = (Stage) loginButton.getScene().getWindow();
-//            Scene scene = new Scene(root);
-//
-//            CChoulesDevTools.applyDevStyleToScene(scene);
-//
-//            stage.setScene(scene);
-//            stage.show();
-//        }
-
-        //showIncorrectPasswordPopup();
-
     }
+
+    private void logLoginAttempt(String username, boolean loginSuccess) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("login_activity.txt", true))) {
+            //Get current date and time in UTC
+            LocalDateTime now = LocalDateTime.now();
+            ZonedDateTime nowZ = ZonedDateTime.now();
+            ZonedDateTime utcDateTime = nowZ.withZoneSameInstant(ZoneId.of("UTC"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("(VV): yyyy-MM-dd HH:mm:ss");
+            String formattedDateTimeUTC = utcDateTime.format(formatter);
+            String formattedDateTime = nowZ.format(formatter);
+
+            //Get user's time zone (you may adjust this based on your user's time zone handling)
+            ZoneId userTimeZone = ZoneId.systemDefault();
+
+            //Log the login attempt
+            String logEntry = String.format("Username: %s, Date-Time %s %s, Attempt's Time Zone: %s, Success: %s%n",
+                    username, formattedDateTimeUTC, formattedDateTime, userTimeZone, loginSuccess);
+            writer.write(logEntry);
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+        }
+    }
+    //  \\End of Test//
+
+
+
+
 
     public void loginClick(ActionEvent actionEvent) throws IOException, InterruptedException {
         System.out.println("Executing loginClick method: ");

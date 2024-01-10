@@ -2,11 +2,15 @@ package applicationObject;
 
 import applicationTools.ApplicationTimeTool;
 import applicationTools.CChoulesDevTools;
+import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
 import dataAccessObject.CustomerDAO;
+import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Appointment extends ApplicationObject{
     //Note: appointment = ap for naming
@@ -164,13 +168,43 @@ public class Appointment extends ApplicationObject{
         return (end && start);
     }
     public boolean isWithinOneDay(){
+        //This must use business hours
+        //This is important because some places will pass into two different local dates in the same HQ day
 
-        boolean sameDay = (this.apStart.getDayOfYear() == this.apEnd.getDayOfYear());
-        boolean sameYear = (this.apStart.getYear() == this.apEnd.getYear());
+        ZonedDateTime startZ = ApplicationTimeTool.getTimeAsHqTime(this.apStart);
+        ZonedDateTime endZ = ApplicationTimeTool.getTimeAsHqTime(this.apEnd);
+
+        boolean sameDay = (startZ.getDayOfYear() == endZ.getDayOfYear());
+        boolean sameYear = (startZ.getYear() == endZ.getYear());
 
         return (sameDay && sameYear);
     }
+    public boolean isNotOverlapping() throws SQLException {
 
+        ObservableList<Appointment> apListByCustomer = AppointmentDAO.getAllAppointmentsByCustomer(this.apCustomerID);
+
+        apListByCustomer.remove(this);
+
+        for (Appointment ap:
+                apListByCustomer) {
+
+        }
+
+        //Missing Skill IDE Selected atomic here when isOverlapping and I do not know why (something about "atomicity of operations")
+        AtomicBoolean isOverlapping = new AtomicBoolean(false);
+
+        //Trying Lambda
+        apListByCustomer.forEach(appointment -> {
+            //If the neither the appointment is before or after then is is during
+            if(!(this.getApEnd().isBefore(appointment.apStart) || appointment.apEnd.isBefore(this.getApStart()))){
+                //Missing Skill lambdas cannot return for the methods containing them
+                //return false;
+                isOverlapping.set(true);
+            }
+        });
+
+        return !isOverlapping.get();
+    }
 
 
 

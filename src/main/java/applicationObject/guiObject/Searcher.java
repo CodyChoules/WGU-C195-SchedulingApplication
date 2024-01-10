@@ -21,13 +21,21 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The `Searcher` class provides methods for handling search functionality in the scheduling application's GUI.
+ */
 public class Searcher {
 
-    //TODO [l] organize this code
+    /**
+     * Adds a listener to a ComboBox for handling name filtering and displaying suggestions in the dropdown.
+     *
+     * @param comboBox The ComboBox to which the listener is added.
+     * @param items    The list of items to be filtered.
+     */
     public static void nameListener(ComboBox<String> comboBox, ObservableList<String> items){
         //TODO [c] create a listener to add to all combo boxes for application GUI
 
-        //Fundamental JavaFX Bug Fix\\
+        //Fundamental JavaFX Bug Fix, comboBoxViewSkin does not properly work. Removing all key events using this seemed to work, Am not using as a lambda example\\
         ComboBoxListViewSkin<String> comboBoxListViewSkin = new ComboBoxListViewSkin<>(comboBox);
         comboBoxListViewSkin.getPopupContent().addEventFilter(KeyEvent.ANY, (event) -> {
             if( event.getCode() == KeyCode.SPACE ) {
@@ -36,7 +44,6 @@ public class Searcher {
         });
         comboBox.setSkin(comboBoxListViewSkin);
         //TODO [Extra] Take note of java 
-
 
         comboBox.setEditable(true);
         comboBox.setVisibleRowCount(5);
@@ -57,7 +64,6 @@ public class Searcher {
             });
         });
 
-
         //To check if the combo box is selected so that the drop down shows when focused.
         comboBox.getEditor().focusedProperty().addListener( (obs) -> {
             if (comboBox.focusedProperty().getValue()) {
@@ -68,19 +74,12 @@ public class Searcher {
                 }
         );
 
-        // Close the popup when Enter is pressed
-//        comboBox.getEditor().setOnKeyPressed(event -> {//bre ak
-////            if (event.getCode() == KeyCode.ENTER) {
-////                comboBox.hide();
-////            }
-//        });
-
-
-
         comboBox.setItems(filteredList);
-//        comboBox.setItems(items);
+
 
     }
+
+    //
 
     public static void exclusiveFDLOutputListUsingNameListener(ComboBox<String> comboBox, ObservableList<String> fdlItems, ComboBox<String> parentComboBoxCountry){
 
@@ -176,12 +175,6 @@ public class Searcher {
         if (foundAppointments.size() == 0){CChoulesDevTools.println("No contact found for " +
                 partialName);}
         return foundAppointments;
-    }
-
-
-
-    public static void timeListener(ComboBox<String> comboBox, ObservableList<String> items){
-
     }
 
     public static ObservableList<String> timeIntervalsList() {

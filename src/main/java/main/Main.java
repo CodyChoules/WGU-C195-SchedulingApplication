@@ -154,6 +154,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         CChoulesDevTools.toolsOn();
 
+        String rootFolder = System.getProperty("user.dir");
+        CChoulesDevTools.println("Root Folder: " + rootFolder);
+
         primeStage = primaryStage;
 
         openSceneAsWin("login");
@@ -188,4 +191,7 @@ public class Main extends Application {
         launch();
 
     }
+
+
+
 }
