@@ -223,7 +223,7 @@ public class Appointment extends ApplicationObject{
 
     /**
      * Checks if the appointment does not overlap with other appointments for the same customer.
-     *
+     *Lambda here is for iterating through the appointments to check for overlap.
      * @return True if the appointment does not overlap; false otherwise.
      * @throws SQLException If an SQL exception occurs during the database query.
      */
@@ -239,7 +239,12 @@ public class Appointment extends ApplicationObject{
         //Trying Lambda
         apListByCustomer.forEach(appointment -> {
             //If the neither the appointment is before or after then is is during
-            if(!(this.getApEnd().isBefore(appointment.apStart) || appointment.apEnd.isBefore(this.getApStart()))){
+            if(!(
+                    this.getApEnd().isBefore(appointment.apStart) ||
+                    this.getApEnd().isEqual(appointment.apStart) ||
+                    appointment.apEnd.isBefore(this.getApStart()) ||
+                    appointment.apEnd.isEqual(this.getApStart())
+            )){
                 //Missing Skill lambdas cannot return for the methods containing them
                 //return false;
                 //To avoid overlapping with itself
