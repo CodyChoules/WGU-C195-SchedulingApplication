@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="999.0" prefWidth="1371.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentController">
+<AnchorPane prefHeight="614.0" prefWidth="1371.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentController">
    <children>
       <AnchorPane prefHeight="672.0" prefWidth="1257.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
@@ -30,12 +30,13 @@
                <children>
                   <AnchorPane prefHeight="32.0" prefWidth="212.0" styleClass="prime2">
                      <children>
-                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backToHomeAction" prefHeight="26.0" prefWidth="103.0" text="Refresh Page" visible="false" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
+                          <Button fx:id="backToHomeFromAp" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"  prefHeight="26.0" prefWidth="103.0" text="Refresh Page" visible="false" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="5.0" />
                         <Label layoutX="-21.0" layoutY="-1.0" text="APPOINTMENTS" underline="true" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="3.0">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
                         </Label>
+                        <Label layoutX="175.0" layoutY="9.0" text="{Double-Click items in table to auto-populate selected feilds}" />
                      </children>
                   </AnchorPane>
 <!--                  TABLE PRIMARY       -->
@@ -247,6 +248,11 @@
                                     </GridPane>
                                     <TextArea fx:id="apDescriptionUpdate" layoutX="86.0" layoutY="141.0" maxHeight="1.7976931348623157E308" prefHeight="60.0" prefWidth="1275.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="141.0" />
                                     <Label alignment="CENTER" contentDisplay="CENTER" layoutY="135.0" prefHeight="43.0" prefWidth="86.0" text="Appointment Description:" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="0.0" />
+                                    <Label text="{Double-Click items in table to select an appointment to update}" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -415,6 +421,11 @@
                                           </TextField>
                                        </children>
                                     </GridPane>
+                                    <Label text="{Double-Click items in table to auto-populate these feilds}" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -444,9 +455,9 @@
                                     </TableView>
                                     <HBox alignment="TOP_CENTER" layoutX="386.0" layoutY="180.0" prefHeight="26.0" prefWidth="465.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                                        <children>
+                                            <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointments" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointments in delete list " />
                                           <Button fx:id="addApToDelete" mnemonicParsing="false" onAction="#addSelectionToDeletion" prefHeight="25.0" text="Add/Remove Selected Appointment to be Deleted {Double Click}" />
-                                            <Button fx:id="deleteAppointment" mnemonicParsing="false" onAction="#deleteAppointments" prefHeight="25.0" style="-fx-border-color: red;" text="Delete Appointment {alt + D, alt +Del}" />
-                                          <Button fx:id="removeAllApToBeDeleted" mnemonicParsing="false" onAction="#removeAllFromApToBeDeleted" prefHeight="25.0" text="Remove all from Appointments to be Deleted" />
+                                          <Button fx:id="removeAllApToBeDeleted" mnemonicParsing="false" onAction="#removeAllFromApToBeDeleted" prefHeight="25.0" text="Remove all from Appointments from delete list" />
                                        </children>
                                     </HBox>
                                  </children>

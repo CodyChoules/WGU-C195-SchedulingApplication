@@ -7,18 +7,30 @@ import javafx.scene.control.ComboBox;
 
 import java.util.ArrayList;
 
+/**
+ * Utility class for common tasks in java.
+ */
 public class GeneralTools {
 
-
+    /**
+     * Capitalizes the first letter of the given string.
+     * @param input The input string.
+     * @return The input string with the first letter capitalized.
+     */
     public static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
-            return input; // Return input as is if it's null or empty
+            return input; //return input as is if it's null or empty
         }
 
-        // Capitalize the first letter and concatenate with the rest of the string
+        //capitalize the first letter and concatenate with the rest of the string
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
+    /**
+     * Capitalizes the first letter of the given string and adds spaces before each subsequent capital letter.
+     * @param input The input string.
+     * @return The formatted string with spaces.
+     */
     public static String capitalizeAndAddSpaces(String input) {
         if (input == null || input.isEmpty()) {
             return input; //Return input as is if it's null or empty
@@ -36,6 +48,11 @@ public class GeneralTools {
         return result.toString();
     }
 
+    /**
+     * Populates a ComboBox with unique names from a list of ApplicationObjects.
+     * @param comboBox The ComboBox to be populated.
+     * @param list     The list of ApplicationObjects.
+     */
     public static void populateComboBoxWithObsNameSet(ComboBox<String> comboBox, ObservableList<ApplicationObject> list){
         ObservableList<String> listOfNames = FXCollections.observableArrayList();
         for (ApplicationObject apObj: list){
@@ -48,6 +65,13 @@ public class GeneralTools {
 
         comboBox.setItems(listOfNames);
     }
+    /**
+     * Populates a ComboBox with unique names from a list of ApplicationObjects
+     * This overloads to add an option for none or all for search purposes.
+     * @param comboBox           The ComboBox to be populated.
+     * @param list               The list of ApplicationObjects.
+     * @param allValueOption     The additional option to include in the ComboBox.
+     */
     public static void populateComboBoxWithObsNameSet(ComboBox<String> comboBox, ObservableList<ApplicationObject> list, String allValueOption){
         ObservableList<String> listOfNames = FXCollections.observableArrayList();
 

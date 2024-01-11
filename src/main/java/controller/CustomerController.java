@@ -28,7 +28,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Controller class for managing customer-related functionality.
+ * This class provides methods and controls for interacting with customer data in the application.
+ */
 public class CustomerController {
+
+    /**
+     * The main stage for the application. Used for page refresh.
+     */
     public static Stage mainStage; //This is for page refresh. May not work with tabs
     //CUSTOMER PRIMARY TABLE\\;
     @FXML public TableView<applicationObject.Customer> CRTable;
@@ -78,6 +86,12 @@ public class CustomerController {
 
 
     //TABLE METHODS\\
+    /**
+     * Handles the double-click event on the customer table.
+     * Depending on the selected tab.
+     * @param mouseEvent double-click event.
+     * @throws SQLException If an SQL exception occurs during database operations.
+     */
     public void handleTableDoubleClick(MouseEvent mouseEvent) throws SQLException {
         //TODO [c] Test Double Click - success
         if (mouseEvent.getClickCount() == 2) {
@@ -85,6 +99,10 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Performs actions based on the selected tab when a customer is selected in the table.
+     * Updates fields or adds customers to be deleted based on the selected tab.
+     */
     private void selectCustomer() {
         //If tab update is open
         if (editCustomerTab.isSelected()) {
@@ -133,6 +151,10 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Adds or removes a customer from the deletion list based on the selection in the table.
+     * @param tableView The TableView containing customer data.
+     */
     private void customerDeleterAddRemoveUsing(TableView<applicationObject.Customer> tableView) {
         applicationObject.Customer selectedObj = tableView.getSelectionModel().getSelectedItem();
         if (selectedObj == null) {
@@ -146,12 +168,20 @@ public class CustomerController {
         CRDeleteTable.setItems(customersToDelete);
     }
 
-
+    /**
+     * Clears the list of customers to be deleted and updates the deletion table.
+     * @param actionEvent The ActionEvent associated with the clear operation.
+     */
     @FXML public void CRClearDeleteTable(ActionEvent actionEvent) {
         customersToDelete.clear();
         CRDeleteTable.setItems(customersToDelete);
     }
 
+    /**
+     * Handles the save action for updating an existing customer.
+     * @param actionEvent The event triggered by the save action.
+     * @throws SQLException If a SQL exception occurs during the database operation.
+     */
     @FXML public void CRSaveCustomer(ActionEvent actionEvent) throws SQLException {
         if (CRNameField.getText().isEmpty() ||
                 CRPhoneNumberField.getText().isEmpty() ||
@@ -185,6 +215,12 @@ public class CustomerController {
         tableLoadFromDB();
 
     }
+
+    /**
+     * Handles the add action for creating a new customer.
+     * @param actionEvent The event triggered by the add action.
+     * @throws SQLException If a SQL exception occurs during the database operation.
+     */
     @FXML public void CRAddCustomer(ActionEvent actionEvent) throws SQLException {
         //Note 1 indicated that this object is in the add tab
         if (CRNameField1.getText().isEmpty() ||
@@ -224,7 +260,10 @@ public class CustomerController {
 
     }
 
-
+    /**
+     * Deletes the customers listed in the delete table with a confirmation prompt.
+     * @throws SQLException If a SQL exception occurs during the database operation.
+     */
     public void deleteCustomersWithAlert() throws SQLException {
 
         SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
@@ -258,20 +297,41 @@ public class CustomerController {
         tableLoadFromDB();
     }
 
+    /**
+     * Handles the action to delete the listed customers with a confirmation prompt.
+     * @param actionEvent The event triggered by the delete action.
+     * @throws SQLException If a SQL exception occurs during the database operation.
+     */
     public void CRDeleteListedCustomers(ActionEvent actionEvent) throws SQLException {
         deleteCustomersWithAlert();
     }
 
+    /**
+     * Handles the action when the Select Customer button is clicked.
+     * @param actionEvent The event triggered by the button click.
+     */
     @FXML public void CRSelectCustomerButton(ActionEvent actionEvent) {
     }
 
+    /**
+     * Handles the action when the Cancel button is clicked.
+     * @param actionEvent The event triggered by the button click.
+     */
     @FXML public void CRCancel(ActionEvent actionEvent) {
     }
 
+    /**
+     * Handles the action when the Delete button is clicked.
+     * @param actionEvent The event triggered by the button click.
+     */
     @FXML public void CRDelete(ActionEvent actionEvent) {
     }
 
-
+    /**
+     * Handles the action when the  Country DropDown is entered.
+     * @param actionEvent The event triggered by the dropdown enter action.
+     * @throws SQLException If a SQL exception occurs.
+     */
     @FXML public void CRCountryDropDownEnter(ActionEvent actionEvent) throws SQLException {
 
         CRFirstLvlDivDropDown.setItems(setFLD_ByCountry());
@@ -308,6 +368,10 @@ public class CustomerController {
         mainStage = stage;
     }
 
+    /**
+     * Initializes the customer controller.
+     * @throws SQLException If a SQL exception occurs during initialization.
+     */
     public void initialize() throws SQLException{
 
         tableLoadFromDB();
@@ -316,6 +380,11 @@ public class CustomerController {
 
     }
 
+    /**
+     * Sets the available First-Level Divisions based on the selected country.
+     * @return An observable list of FLD names available for the selected country.
+     * @throws SQLException If a database access error occurs.
+     */
     public ObservableList<String> setFLD_ByCountry() throws SQLException {
 
         //Get Country by name returns NO COUNTRY FOUND ON ID 0
@@ -341,6 +410,11 @@ public class CustomerController {
         return fdlAvailable;
     }
 
+    /**
+     * Initializes the combo boxes in the GUI by loading data from the database.
+     * Also sets up a listener to dynamically update FLD options based on the selected country.
+     * @throws SQLException If a SQL exception occurs.
+     */
     public void initialComboBoxLoadFromDB() throws SQLException {
 
         CRCountryDropDown.setItems(CountryDAO.getCountryNames());
@@ -383,7 +457,10 @@ public class CustomerController {
 
 
 
-
+    /**
+     * Loads customer data from the database and populates the customer table in the GUI.
+     * @throws SQLException If a SQL exception occurs.
+     */
     public void tableLoadFromDB() throws SQLException {
         ObservableList<applicationObject.Customer> customerList = CustomerDAO.getAllCustomers();
 
@@ -397,8 +474,13 @@ public class CustomerController {
 
         CRTable.setItems(customerList);//In the middle of setting up customers table
     }
-    public void deleteTableInitialize() throws SQLException {
 
+
+    /**
+     * Initializes the columns for the delete table in the Customer GUI.
+     * @throws SQLException If a SQL exception occurs.
+     */
+    public void deleteTableInitialize() throws SQLException {
 
         CRTableId1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         CRTableName1.setCellValueFactory(new PropertyValueFactory<>("customerName"));

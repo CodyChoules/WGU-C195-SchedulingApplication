@@ -15,6 +15,12 @@ import java.time.ZoneOffset;
 public class AppointmentDAO {
 
 
+
+    /**
+     * Retrieves all appointments from the database.
+     * @return ObservableList of all appointments.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<applicationObject.Appointment> getAllAppointments() throws SQLException {
 
         String sqlQuery = "SELECT * from client_schedule.appointments";
@@ -50,6 +56,12 @@ public class AppointmentDAO {
 
         return appointmentsObservableList;
     }
+    /**
+     * Retrieves all appointments for a specific customer from the database.
+     * @param customerID The ID of the customer for whom to retrieve appointments.
+     * @return ObservableList of appointments for the specified customer.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<applicationObject.Appointment> getAllAppointmentsByCustomer(int customerID) throws SQLException {
 
         String sqlQuery = "SELECT * from client_schedule.appointments WHERE Customer_ID=" + customerID;
@@ -83,6 +95,13 @@ public class AppointmentDAO {
         return appointmentsObservableList;
     }
 
+    /**
+     * Deletes an appointment from the database.
+     * @param appointmentId The ID of the appointment to delete.
+     * @param connection The database connection.
+     * @return The number of rows affected by the deletion.
+     * @throws SQLException If a SQL exception occurs during deletion.
+     */
     public static int deleteAppointment(int appointmentId, Connection connection) throws SQLException {
         String query = "DELETE FROM appointments WHERE Appointment_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -131,6 +150,13 @@ public class AppointmentDAO {
         return result;
     }
 
+    /**
+     * Adds a new appointment to the database.
+     * @param updatedAppointment The appointment to add.
+     * @param connection The database connection.
+     * @return The number of rows affected by the insertion.
+     * @throws SQLException If a SQL exception occurs during insertion.
+     */
     public static int addAppointment(Appointment updatedAppointment, Connection connection) throws SQLException {
         String query = "INSERT INTO appointments (" +
                 /*1*/"Title, " +

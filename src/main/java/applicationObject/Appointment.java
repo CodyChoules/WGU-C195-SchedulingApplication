@@ -1,6 +1,6 @@
 package applicationObject;
 
-import applicationTools.ApplicationTimeTool;
+import applicationTools.TimeTool;
 import applicationTools.CChoulesDevTools;
 import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
+/**
+ * Represents an appointment within the scheduling application.
+ * This is retrieved from appointments table in DB
+ * Note: appointment = ap for naming
+ */
 public class Appointment extends ApplicationObject{
     //Note: appointment = ap for naming
     private String apTitle;
@@ -25,6 +31,20 @@ public class Appointment extends ApplicationObject{
     public int apContactID;
     public int apUserID;
 
+    /**
+     * Appointment Constructor
+     *
+     * @param apTitle       title of the appointment
+     * @param apType        type/category of the appointment
+     * @param apLocation    location of the appointment
+     * @param apID          unique identifier for the appointment
+     * @param apDescription description of the appointment
+     * @param apStart       start date and time of the appointment
+     * @param apEnd         end date and time of the appointment
+     * @param apCustomerID  Id of the associated customer
+     * @param apContactID   Id of the associated contact
+     * @param apUserID      Id of the user associated with the appointment
+     */
     public Appointment(
                        String apTitle,
                        String apType,
@@ -134,7 +154,12 @@ public class Appointment extends ApplicationObject{
         this.apUserID = userID;
     }
 
-    //Getter method for contact name accessed from ContactDAO
+    /**
+     * Getter method for contact name accessed from ContactDAO.
+     *
+     * @return The name of the contact.
+     * @throws SQLException If an SQL exception occurs during the database query.
+     */
     public String getApContactName() throws SQLException {
         Contact contact = ContactDAO.findNameOfContactFromId(apContactID);
         //TODO [Extra] Be handle null  here.
@@ -147,6 +172,12 @@ public class Appointment extends ApplicationObject{
         return nameOfContact;
     }
 
+    /**
+     * Getter method for Customer name accessed from CustomerDAO.
+     *
+     * @return The name of the Customer.
+     * @throws SQLException If an SQL exception occurs during the database query.
+     */
     public String getApCustomerName() throws SQLException {
         Customer customer = CustomerDAO.findCustomerFromId(apCustomerID);
         //TODO [Extra] Be handle null  here.
@@ -159,36 +190,49 @@ public class Appointment extends ApplicationObject{
         return nameOfContact;
     }
 
-    //i added this here just so it reads well when calling
+//I added these remaining methods primarily so it reads well when calling.\\
+    /**
+     * Checks if the appointment is within business hours.
+     *
+     * @return True if the appointment is within business hours; false otherwise.
+     */
     public boolean isInBusinessHours(){
 
-        boolean end = ApplicationTimeTool.isBusinessHours(this.apEnd);
-        boolean start = ApplicationTimeTool.isBusinessHours(this.apStart);
+        boolean end = TimeTool.isBusinessHours(this.apEnd);
+        boolean start = TimeTool.isBusinessHours(this.apStart);
 
         return (end && start);
     }
+
+    /**
+     * Checks if the appointment is within one day.
+     *
+     * @return True if the appointment is within one day; false otherwise.
+     */
     public boolean isWithinOneDay(){
         //This must use business hours
         //This is important because some places will pass into two different local dates in the same HQ day
 
-        ZonedDateTime startZ = ApplicationTimeTool.getTimeAsHqTime(this.apStart);
-        ZonedDateTime endZ = ApplicationTimeTool.getTimeAsHqTime(this.apEnd);
+        ZonedDateTime startZ = TimeTool.getTimeAsHqTime(this.apStart);
+        ZonedDateTime endZ = TimeTool.getTimeAsHqTime(this.apEnd);
 
         boolean sameDay = (startZ.getDayOfYear() == endZ.getDayOfYear());
         boolean sameYear = (startZ.getYear() == endZ.getYear());
 
         return (sameDay && sameYear);
     }
+
+    /**
+     * Checks if the appointment does not overlap with other appointments for the same customer.
+     *
+     * @return True if the appointment does not overlap; false otherwise.
+     * @throws SQLException If an SQL exception occurs during the database query.
+     */
     public boolean isNotOverlapping() throws SQLException {
 
         ObservableList<Appointment> apListByCustomer = AppointmentDAO.getAllAppointmentsByCustomer(this.apCustomerID);
-
+        //To prevent overlap detection with itself
         apListByCustomer.remove(this);
-
-        for (Appointment ap:
-                apListByCustomer) {
-
-        }
 
         //Missing Skill IDE Selected atomic here when isOverlapping and I do not know why (something about "atomicity of operations")
         AtomicBoolean isOverlapping = new AtomicBoolean(false);
@@ -205,8 +249,5 @@ public class Appointment extends ApplicationObject{
 
         return !isOverlapping.get();
     }
-
-
-
 
 }

@@ -11,12 +11,20 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+/**
+ * Data Access Object (DAO) class for handling operations related to Country in the database.
+ */
 public class CountryDAO extends applicationObject.Country {
-    //TODO [l] TEST ME
+    //Constructor for CountryDAO
     public CountryDAO(int countryId, String countryName) {
         super(countryId, countryName);
     }
 
+    /**
+     * Retrieves all countries from the database.
+     * @return ObservableList of Country objects.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<Country> getAllCountries() throws SQLException {
         ObservableList<Country> countryObservableList = FXCollections.observableArrayList();
         String sql = "SELECT Country_ID, Country from countries";
@@ -44,6 +52,11 @@ public class CountryDAO extends applicationObject.Country {
         return countryObservableList;
     }
 
+    /**
+     * Retrieves the names of all countries from the database.
+     * @return ObservableList of country names.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<String> getCountryNames() throws SQLException {
         //Get all country Names
 
@@ -58,6 +71,12 @@ public class CountryDAO extends applicationObject.Country {
         return countryNames;
     }
 
+    /**
+     * Retrieves the names of all First Level Divisions (FDLs) for a given country from the database.
+     * @param countryName The name of the country.
+     * @return ObservableList of FDL names for the specified country.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<String> getFDLNamesByCountry(String countryName) throws SQLException {
         //FDL : First_Level_Division (Country or state)
 
@@ -73,6 +92,12 @@ public class CountryDAO extends applicationObject.Country {
         return fdlNames;
     }
 
+    /**
+     * Retrieves a Country object by its name.
+     * @param countryName The name of the country.
+     * @return The Country object found by the specified name.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static Country getCountryByName(String countryName) throws SQLException {
         ObservableList<Country> listOfCountries = CountryDAO.getAllCountries();
         Country foundCountry = new Country(0, "NO COUNTRY FOUND");

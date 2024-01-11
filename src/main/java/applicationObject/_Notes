@@ -30,3 +30,41 @@ This package is to create Java objects that are designed to be used within the s
     Mistake: It may not have been wise to abbreviate appointment with ap. May have been faster but has mad things difficult to refactor and less readable. Now the project has less consistent naming conventions as well.
 
     Mistake: I Should have recognized that I could have made a parent application object that initialized the object ID. I have some redundant code due to the difficulty refactoring fx but did implement this. Would have been better to implement this first.
+
+    JavaFX Bug (Combo Box):         @Searcher.Java Class nameListener()
+                                    //Fundamental JavaFX Bug Fix, comboBoxViewSkin does not properly work. Removing all key events using this seemed to work, Am not using as a lambda example\\
+                                    ComboBoxListViewSkin<String> comboBoxListViewSkin = new ComboBoxListViewSkin<>(comboBox);
+                                    comboBoxListViewSkin.getPopupContent().addEventFilter(KeyEvent.ANY, (event) -> {
+                                        if( event.getCode() == KeyCode.SPACE ) {
+                                            event.consume();
+                                        }
+                                    });
+                                    comboBox.setSkin(comboBoxListViewSkin);
+                                    //TODO [Extra] Take note of java
+
+    Discarded Code & missing skill:     public static void exclusiveFDLOutputListUsingNameListener(ComboBox<String> comboBox, ObservableList<String> fdlItems, ComboBox<String> parentComboBoxCountry){
+
+
+                                            comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                                                final TextField editor = comboBox.getEditor();
+                                                final String selectedCountry = parentComboBoxCountry.getSelectionModel().getSelectedItem();
+                                                try {
+                                                    final Country country = CountryDAO.getCountryByName(selectedCountry);
+                                                    Platform.runLater(() -> {
+                                                        if (selectedCountry == null || !selectedCountry.equals(editor.getText())) {
+                                                            final ObservableList<String> filteredList = country.getChildFDLNames();
+                                                            comboBox.setItems(filteredList);
+                                                        }
+                                                    });
+                                                } catch (SQLException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            });
+
+                                            nameListener(comboBox, comboBox.getItems());
+
+                                            //Question [] it would be nice to have the ability to input types and classes raw into methods so that it can be used with compatible. How do i do this without using if else on value input or direct code injection/manipulation(like set value factory)
+                                            //we need this to limit the FLD list for combo boxes so that the selection of a country only allows for corresponding FLDs
+
+
+                                        }

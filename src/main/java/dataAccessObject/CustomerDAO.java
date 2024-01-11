@@ -11,8 +11,16 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+/**
+ * Data Access Object (DAO) class for handling operations related to Customer in the database.
+ */
 public class CustomerDAO {
 
+    /**
+     *  Retrieves all customers from the database.
+     * @return ObservableList of Customer objects.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
 
         String query = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division, customers.Create_Date from customers INNER JOIN  first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
@@ -75,6 +83,13 @@ public class CustomerDAO {
 
     }
 
+    /**
+     * Deletes a customer from the database.
+     * @param customerId The ID of the customer to be deleted.
+     * @param connection  The database connection.
+     * @return The number of rows affected by the delete operation.
+     * @throws SQLException If a SQL exception occurs during data deletion.
+     */
     public static int deleteCustomer(int customerId, Connection connection) throws SQLException {
         String query = "DELETE FROM customers WHERE Customer_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -84,6 +99,13 @@ public class CustomerDAO {
         return result;
     }
 
+    /**
+     * Updates a customer in the database.
+     * @param updatedCustomer The updated Customer object.
+     * @param connection      The database connection.
+     * @return The number of rows affected by the update operation.
+     * @throws SQLException If a SQL exception occurs during data update.
+     */
     public static int updateCustomer(Customer updatedCustomer, Connection connection) throws SQLException {
         String query = "UPDATE customers SET " +
                 /*1*/"Customer_Name=?, " +
@@ -112,6 +134,14 @@ public class CustomerDAO {
         return result;
 
     }
+
+    /**
+     * Adds a new customer to the database.
+     * @param addedCustomer The Customer object to be added.
+     * @param connection    The database connection.
+     * @return The number of rows affected by the insert operation.
+     * @throws SQLException If a SQL exception occurs during data insertion.
+     */
     public static int addCustomer(Customer addedCustomer, Connection connection) throws SQLException {
         String query = "INSERT INTO customers (" +
                 /*1*/"Customer_Name, " +
@@ -144,6 +174,12 @@ public class CustomerDAO {
         return result;
     }
 
+    /**
+     * Finds the ID of a customer based on the customer name.
+     * @param customerName The name of the customer.
+     * @return The ID of the customer.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static int findIdFromName(String customerName) throws SQLException {
         PreparedStatement preparedStatement = JDBTools.getConnection().prepareStatement("SELECT * FROM customers WHERE Customer_Name = ?");
         preparedStatement.setString(1, customerName);
@@ -158,6 +194,12 @@ public class CustomerDAO {
     }
 
 
+    /**
+     * Finds a customer based on the customer ID.
+     * @param customerId The ID of the customer.
+     * @return The Customer object corresponding to the ID.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static Customer findCustomerFromId(int customerId) throws SQLException {
         ObservableList<Customer> allCustomers = getAllCustomers();
 

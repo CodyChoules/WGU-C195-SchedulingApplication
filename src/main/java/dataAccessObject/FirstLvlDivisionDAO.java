@@ -10,12 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
+/**
+ * Data Access Object (DAO) class for handling operations related to
+ * First Level Divisions in the database.
+ */
+public class FirstLvlDivisionDAO {
 
-    public FirstLvlDivisionDAO(int divisionId, String divisionName, int countryIdOfDivision, String countryNameOfDivision) {
-        super(divisionId, divisionName, countryIdOfDivision, countryNameOfDivision);
-    }
-
+    /**
+     * Retrieves all First Level Divisions from the database.
+     * @return ObservableList containing all First Level Divisions.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<FirstLvlDivision> getAllFirstLvlDivisions() throws SQLException {
         ObservableList<FirstLvlDivision> firstLvlDivisionsObservableList = FXCollections.observableArrayList();
         String sqlFLD = "SELECT * from first_level_divisions";
@@ -38,6 +43,11 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
         return firstLvlDivisionsObservableList;
     }
 
+    /**
+     * Retrieves the names of all First Level Divisions.
+     * @return ObservableList containing the names of all First Level Divisions.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<String> getFLD_Names() throws SQLException {
         //Get all First Level Division Names
 
@@ -51,6 +61,12 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
         return observableList;
     }
 
+    /**
+     * Retrieves the ID of a First Level Division by its name.
+     * @param name The name of the First Level Division.
+     * @return The ID of the First Level Division.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static int getFLD_IdByName(String name) throws SQLException {
 
 
@@ -65,6 +81,12 @@ public class FirstLvlDivisionDAO extends applicationObject.FirstLvlDivision {
         return 0;
     }
 
+    /**
+     * Retrieves the names of First Level Divisions by the country name.
+     * @param countryName The name of the country.
+     * @return ObservableList containing the names of First Level Divisions for the specified country.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<String> getFDL_NamesByCountry(String countryName) throws SQLException {
         //FDL : First_Level_Division (Country or state)
 

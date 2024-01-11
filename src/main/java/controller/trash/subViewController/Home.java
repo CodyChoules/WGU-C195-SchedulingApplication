@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+//To be deleted
 public class Home {
 
     //TODO [ip] review rubric

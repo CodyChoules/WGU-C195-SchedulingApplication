@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class for handling operations related to
+ * users in the database during login.
+ */
 public class UserDAO {
 
 
@@ -19,9 +23,11 @@ public class UserDAO {
 
     //TODO [c] create a method to validate login input.
     /**
-     * This method validates the login input.
-     * @param password
-     * @param username
+     * Validates the login input.
+     *
+     * @param username The username to validate.
+     * @param password The password to validate.
+     * @return True if the login input is valid, false otherwise.
      */
     public static boolean validateUserLogin(String username,String password){
         try {
@@ -86,6 +92,13 @@ public class UserDAO {
         return false;
 
     }
+    /**
+     * Validates the login input and sets the User object. This is an overload.
+     * @param username The username to validate.
+     * @param password The password to validate.
+     * @param user     The User object to set upon successful validation.
+     * @return True if the login input is valid, false otherwise.
+     */
     public static boolean validateUserLogin(String username,String password, User user){
         //overLoad method to set user along with validation
         try {

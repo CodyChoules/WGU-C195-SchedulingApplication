@@ -32,7 +32,9 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
+/**
+ * Login Controller for controlling the login window and authorizing user input.
+ */
 public class Login implements Initializable {
 
 
@@ -56,44 +58,13 @@ public class Login implements Initializable {
 
 
     Stage stage;
-
-
-    //todo [c] transferred this method to PrimeWindow
-//    private void loginMethod() throws IOException, InterruptedException  {
-//
-//        //Get login info from input.
-//        String nameInput = CChoulesJTools.sanitizeInput( usernameInput.getText() );
-//        String passInput = CChoulesJTools.sanitizeInput( passwordInput.getText() );
-//
-//        // TODO [c] solve login on no input error.
-//        if (nameInput.isEmpty() || passInput.isEmpty()) {
-//            CChoulesDevTools.println("Input Values Found Empty, login attempt abandoned.");
-//            return;
-//        }
-//
-//        JDBTools.openConnection();
-//
-//        boolean loginValidated = UserDAO.validateUserLogin(nameInput,passInput, Main.currentUser);
-//
-//        if (! loginValidated) {
-//            CChoulesDevTools.println("Input on Password or Username not found. Login attempt abandoned");
-//
-//            //showIncorrectPasswordPopup
-//            SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
-//            popup.loginFailedPopup();
-//
-//            CChoulesDevTools.println("SchedulingApplicationPrompt Now!");
-//        }
-//
-//        if (loginValidated){ CChoulesDevTools.println("User input Validated, Logging in.");
-//            main.Main.loadMainWindowAndSetUser(Main.currentUser);
-//        }
-//
-//
-//
-//    }
-
-
+    /**
+     * Handles the login process. Retrieves login information from input fields, sanitizes the input,
+     * and performs the necessary actions for login. If either the username or password is empty, the login
+     * attempt is abandoned, and an appropriate message is logged.
+     * @throws IOException           If an I/O error occurs.
+     * @throws InterruptedException  If the thread is interrupted.
+     */
     private void loginMethod() throws IOException, InterruptedException  {
         // Get login info from input.
         String nameInput = CChoulesJTools.sanitizeInput(usernameInput.getText());
@@ -128,6 +99,12 @@ public class Login implements Initializable {
         }
     }
 
+    /**
+     * Logs a login attempt, including the username, date-time information (both UTC and user's time zone),
+     * and whether the login was successful or not. The log entry is appended to the "login_activity.txt" file.
+     * @param username      The username associated with the login attempt.
+     * @param loginSuccess  A boolean indicating whether the login attempt was successful (true) or not (false).
+     */
     private void logLoginAttempt(String username, boolean loginSuccess) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("login_activity.txt", true))) {
             //Get current date and time in UTC
@@ -149,17 +126,24 @@ public class Login implements Initializable {
             e.printStackTrace(); // Handle the exception according to your needs
         }
     }
-    //  \\End of Test//
 
-
-
-
-
+    /**
+     * Handles the action when the login button is clicked. Invokes the loginMethod to process the login attempt.
+     * @param actionEvent          The action event triggered by clicking the login button.
+     * @throws IOException          If an I/O exception occurs while processing the login.
+     * @throws InterruptedException If the login process is interrupted.
+     */
     public void loginClick(ActionEvent actionEvent) throws IOException, InterruptedException {
         System.out.println("Executing loginClick method: ");
         loginMethod();
     }
 
+    /**
+     * Handles the action when the Enter key is pressed. Initiates the login process by calling loginMethod.
+     * @param keyEvent             The key event triggered by pressing the Enter key.
+     * @throws IOException          If an I/O exception occurs while processing the login.
+     * @throws InterruptedException If the login process is interrupted.
+     */
     public void loginEnter(KeyEvent keyEvent) throws IOException, InterruptedException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
 
@@ -170,6 +154,13 @@ public class Login implements Initializable {
         }
     }
 
+    /**
+     * Handles the action when the dark mode button is clicked.
+     * Toggles the dark mode setting, updates the button text,
+     * and reloads the login scene.
+     * @param actionEvent The action event triggered by clicking the dark mode button.
+     * @throws IOException If an I/O exception occurs while reloading the login scene.
+     */
     public void handleDarkButtonClick(ActionEvent actionEvent) throws IOException {
         CChoulesDevTools.println("Executing handleDarkButtonClick");
 
@@ -182,10 +173,20 @@ public class Login implements Initializable {
 
     }
 
+
+    /**
+     * Handles the action when a language is selected from the language combo box.
+     * Updates the current language setting & reloads the login scene.
+     * @param actionEvent The action event triggered by selecting a language from the combo box.
+     */
     public void changeLangComboSelect(ActionEvent actionEvent) {
         setCurrentLangAndReload(languageComboBox);
     }
 
+    /**
+     * Handles the action when the exit button is clicked. Exits the application.
+     * @param actionEvent The action event triggered by clicking the exit button.
+     */
     public void exitClick(ActionEvent actionEvent) {
         CChoulesDevTools.println("Executing exitClick");
         Platform.exit();
@@ -193,6 +194,15 @@ public class Login implements Initializable {
     }
 
 
+    /**
+     * Initializes the login scene with default values.
+     * Sets the resource bundle, loads the location field, sets the login
+     * language, updates the dark mode button text,
+     * & pre-fills the username and password inputs if in developer mode.
+     * Also resets the login keeper.
+     * @param url The URL to initialize the controller. Unused in this context.
+     * @param resourceBundle The resource bundle containing localized strings.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -212,6 +222,9 @@ public class Login implements Initializable {
         Main.loginKeeper = new User(0, "","");
     }
 
+    /**
+     * Loads the location field with information about the user's current locale and time zone.
+     */
     public void loadLocationField() {
 
         Locale locale = Locale.getDefault();
@@ -229,6 +242,9 @@ public class Login implements Initializable {
         timeZoneDisplay.setText(zone.getDisplayName(TextStyle.FULL, Locale.getDefault()));
     }
 
+    /**
+     * Loads available languages into the language combo box.
+     */
     public void loadLanguagesComboBox() {
 
         //Reference//Main.curMessBun = ResourceBundle.getBundle("MessagesBundle", Main.frLocale);
@@ -255,6 +271,12 @@ public class Login implements Initializable {
         languageComboBox.setValue(defaultMessages.getLocale().getDisplayLanguage());
 
     }
+    /**
+     * Sets the current language based on the selected value in the
+     * language selector combo box and reloads the login scene
+     * with the updated language.
+     * @param langSelector The combo box containing language options.
+     */
     public void setCurrentLangAndReload(ComboBox<String> langSelector) {
         String languageName = langSelector.getValue();
 
@@ -277,6 +299,11 @@ public class Login implements Initializable {
         }
     }
 
+    /**
+     * Sets the login scene language based on the provided in the current messages bundle.
+     * t updates labels, buttons, and other UI elements
+     * with the corresponding strings.
+     */
     public void setLoginLang(ResourceBundle resourceBundle, URL url) {
 
         //defaultMessages = ResourceBundle.getBundle("MessagesBundle");

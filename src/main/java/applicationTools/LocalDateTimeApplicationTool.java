@@ -2,22 +2,19 @@ package applicationTools;
 import java.time.LocalDateTime;
         import java.time.format.DateTimeFormatter;
 
+/**
+ * Utility class for handling LocalDateTime operations in JavaFX applications.
+ * TODO [] this was the first time class but I created a new one that does more, so this should be migrated to TimeTool
+ */
 public class LocalDateTimeApplicationTool {
-
-    public static void main(String[] args) { //For Testing
-
-        String dateString = "1-12/2023";
-        String timeString = "14:30";
-
-        LocalDateTime apStart = parseToLocalDateTime(dateString, timeString);
-
-        System.out.println("Parsed & Converted LocalDateTime: " + apStart);
-    }
-
+    /**
+     * Parses date and time strings and returns a LocalDateTime object.
+     * @param dateString The date string to be parsed.
+     * @param timeString The time string to be parsed.
+     * @return LocalDateTime object representing the parsed date and time, or null if parsing fails.
+     */
     public static LocalDateTime parseToLocalDateTime(String dateString, String timeString) {
         dateString = replaceSlash(dateString);
-        //TODO [c] create an if statement to call adjustDateFormat
-        // Found: we can use String.matches to check string format \\d{x,y} means string decimal of length x or y.
         if (dateString.matches("\\d{1,2}-\\d{1,2}-\\d{4}")) {
             dateString = adjustDateFormat(dateString);
         } else {
@@ -28,10 +25,14 @@ public class LocalDateTimeApplicationTool {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
+    /**
+     * Parses date and time strings for database storage.
+     * @param dateString The date string to be parsed.
+     * @param timeString The time string to be parsed.
+     * @return LocalDateTime object representing the parsed date and time, or null if parsing fails.
+     */
     public static LocalDateTime parseToLocalDateTimeForDB(String dateString, String timeString) {
         dateString = replaceSlash(dateString);
-        //TODO [c] create an if statement to call adjustDateFormat
-        // Found: we can use String.matches to check string format \\d{x,y} means string decimal of length x or y.
         if (dateString.matches("\\d{1,2}-\\d{1,2}-\\d{4}")) {
             dateString = adjustDateFormat(dateString);
         } else {
@@ -42,19 +43,23 @@ public class LocalDateTimeApplicationTool {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
-
+    /**
+     * Adjusts the date format to ensure consistent character format in the string
+     * @param dateString The original date string.
+     * @return The adjusted date string with leading zeros.
+     */
     private static String adjustDateFormat(String dateString) {
-        //TODO [c] find a way to format strings into date format
-        // -Found: Works but am unsure how this regex works research further to solidify understanding.
-        // -Research: "%02d" is a format specifier for an integer (d stands for decimal). It means that the integer should be formatted with at least 2 digits, and if it has fewer than 2 digits, leading zeros should be added. "%s" is any length string.
         String[] parts = dateString.split("-");
         return String.format("%02d-%02d-%s", Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), parts[2]);
     }
-
+    /**
+     * Replaces slashes with hyphens in the input string for transition from input.
+     * @param inputString The input string containing slashes.
+     * @return The input string with slashes replaced by hyphens.
+     */
     private static String replaceSlash(String inputString) {
         return inputString.replace('/', '-');
     }
-
 
 }
 

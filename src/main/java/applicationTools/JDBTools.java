@@ -6,6 +6,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+/**
+ * Utility class for managing JDBC connections and handling time conversions.
+ */
 public class JDBTools {
 
     private static final String protocol = "jdbc";
@@ -36,8 +39,6 @@ public class JDBTools {
             CChoulesDevTools.println("Connection to Data Base failed.");
         }
         return connection;
-        //TODO [c] how does this open and close connections as needed?
-        //Answer: utilize closeConnection()
     }
 
     /**
@@ -67,31 +68,35 @@ public class JDBTools {
 
     }
 
-    //for preparing statements
-    private static PreparedStatement preparedStatement;
-
-    public static void prepareStatement(Connection conn, String sqlStatement) throws SQLException {
-        preparedStatement = conn.prepareStatement(sqlStatement);
-    }
-
-    public static PreparedStatement getPreparedStatement() {
-
-        return preparedStatement;
-    }
-
+    /**
+     * Converts a Timestamp to LocalDateTime in UTC.
+     * TODO [] This should be refactored/relocated to TimeTool
+     * @param timestamp The input Timestamp.
+     * @return The corresponding LocalDateTime in UTC.
+     */
     public static LocalDateTime convertToUTC(Timestamp timestamp){
         ZonedDateTime zonedDateTime = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.systemDefault());
                 //convertToTimeZoneTime(timestamp);
         return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
+    /**
+     * Converts a LocalDateTime to UTC.
+     * TODO [] This should be refactored/relocated to TimeTool
+     * @param timestamp The input LocalDateTime.
+     * @return The corresponding LocalDateTime in UTC.
+     */
     public static LocalDateTime convertToUTC(LocalDateTime timestamp){
         ZonedDateTime zonedDateTime = ZonedDateTime.of(timestamp, ZoneId.systemDefault());
                 //convertToTimeZoneTime(timestamp);
         return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
-
+    /**
+     *  Converts a Timestamp from UTC to LocalDateTime.
+     *  TODO [] This should be refactored/relocated to TimeTool
+     * @param timestamp The input Timestamp in UTC.
+     * @return The corresponding LocalDateTime.
+     */
     public static LocalDateTime convertFromUTC(Timestamp timestamp){
-
         return ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC")).toOffsetDateTime().atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
 
     }

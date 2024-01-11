@@ -35,21 +35,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Controller class for managing appointments in the appointments tab of the project.
+ * Includes controls for the three sub tabs update, add, & delete Appointment Tabs
+ *
+ */
 public class AppointmentController {
     private static Stage mainStage; //This is for page refresh. May not work with tabs
-
-    // TOP BAR //
-    @FXML
-    public Button backToHomeFromAp;
-    public Button removeAllApToBeDeleted;
-
-
-
-    @FXML
-    public void backToHomeAction(ActionEvent actionEvent) throws IOException {
-
-        loadThisFXML(mainStage); //currently set to refresh page for testing
-    }
 
     // MAIN TABLE //
     @FXML public TableView<applicationObject.Appointment> primaryApTable;
@@ -66,6 +59,11 @@ public class AppointmentController {
     @FXML public TableColumn<?, ?> apContactId;
     @FXML public TableColumn<?, ?> apUserId;
 
+    /**
+     * Handles the double-click event on the main table.
+     * @param mouseEvent The MouseEvent triggered by the double-click event.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     public void handleTableDoubleClick(MouseEvent mouseEvent) throws SQLException {
         //TODO [c] Test Double Click - success
         if (mouseEvent.getClickCount() == 2) {
@@ -76,14 +74,22 @@ public class AppointmentController {
 // SEARCH BAR //
     @FXML
     public TextField searchBar;
-
+    /**
+     * Handles the Enter key event in the search bar, triggering a search when Enter is pressed.
+     * @param keyEvent  The KeyEvent triggered by the Enter key press.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     @FXML
     public void searchBarEnter(KeyEvent keyEvent) throws SQLException {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             applicationObject.guiObject.Searcher.updateFromSearch(searchBar, primaryApTable);
         }
     }
-
+    /**
+     * Searches the primary Appointment Table by title.
+     * @param actionEvent The ActionEvent triggered by the button click.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     @FXML
     public void searchAppointments(ActionEvent actionEvent) throws SQLException {
         applicationObject.guiObject.Searcher.updateFromSearch(searchBar, primaryApTable);
@@ -93,12 +99,14 @@ public class AppointmentController {
     LocalDateTime timeWindowStart = null;
     LocalDateTime timeWindowEnd = null;
 
-    @FXML
-    public ToggleGroup apRangeToggle;
+    @FXML public ToggleGroup apRangeToggle;
+    @FXML public RadioButton apWeekRadial;
 
-    @FXML
-    public RadioButton apWeekRadial;
-
+    /**
+     * Sets the time window of the primary table to week.
+     * @param actionEvent The ActionEvent triggered by the radio button selection.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     public void apWeekSelected(ActionEvent actionEvent) throws SQLException {
         //Question [] after trying a bunch of the minus options this seems to be working. Double check with professor.
         timeWindowStart = LocalDateTime.now().minusWeeks(1);
@@ -106,7 +114,11 @@ public class AppointmentController {
 
         constrictTimeFrame();
     }
-
+    /**
+     * Filters appointments based on the specified time window and updates the main table accordingly.
+     * Here I use a lambda to limit the time frame for each ap in allApList filtering those that don't.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     public void constrictTimeFrame() throws SQLException {
         ObservableList<Appointment> allApList = AppointmentDAO.getAllAppointments();
         ObservableList<Appointment> apWithinTime = FXCollections.observableArrayList();
@@ -126,9 +138,13 @@ public class AppointmentController {
         });
     }
 
-    @FXML
-    public RadioButton apMonthRadio;
+    @FXML public RadioButton apMonthRadio;
 
+    /**
+     * Sets the time window of the primary table to month.
+     * @param actionEvent The ActionEvent triggered by the radio button selection.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     public void apMonthSelected(ActionEvent actionEvent) throws SQLException {
         //Question [] after trying a bunch of the minus options this seems to be working. Double check with professor.
         timeWindowStart = LocalDateTime.now().minusMonths(1);
@@ -140,6 +156,11 @@ public class AppointmentController {
     @FXML
     public RadioButton apAllRadio;
 
+    /**
+     * Remove time window for primary table.
+     * @param actionEvent The ActionEvent triggered by the radio button selection.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     public void apAllSelected(ActionEvent actionEvent) throws SQLException {
         //Question [] after trying a bunch of the minus options this seems to be working. Double check with professor.
         timeWindowStart = null;
@@ -152,17 +173,19 @@ public class AppointmentController {
 //APPOINTMENT EDITOR//
     //TABLE SELECTION CONTROL//
 
-    // TODO [c] Implement selectAppointment() into table actionEvent
+    /**
+     * Handles the action when an appointment is selected in the table.
+     * Updates the fields in the corresponding tab update, add, or delete with the details of
+     * the selected appointment.
+     * @throws SQLException If an SQL-related error occurs.
+     */
     @FXML
     public void selectAppointment() throws SQLException {
-        ////If tab update is open {
         if (updateApTab.isSelected()) {
 
             //TODO [Extra] Create an update ap table method and implement it here like you did for delete table
             Appointment selectedAp = primaryApTable.getSelectionModel().getSelectedItem();
             if (selectedAp == null) {
-
-                ////get the DAO info for the corresponding object values (We have not set up otherDAO
                 return;
             }
 
@@ -171,14 +194,12 @@ public class AppointmentController {
             ObservableList<Contact> contactList = ContactDAO.getAllContacts();
             Contact selectedApContact = ContactDAO.findNameOfContactFromId(selectedAp.apContactID);
 
-
             //Found This' Importing Collectors and testing now Delete if fail
             //TODO [c] Create logic to convert contactList to names so they can be displayed in the selection box
             ObservableList<String> contactNames = contactList.stream()
                     .map(Contact::getContactName)
                     .collect(Collectors.collectingAndThen(Collectors.toList(), FXCollections::observableArrayList));
             //TODO [Extra] Redundant code above refine if you have time
-
 
             //TODO [c] fill update fields on selection of appointment
             assert selectedAp != null;
@@ -214,9 +235,7 @@ public class AppointmentController {
                     .map(Contact::getContactName)
                     .collect(Collectors.collectingAndThen(Collectors.toList(), FXCollections::observableArrayList));
 
-
             assert selectedAp != null;
-
             apTitleAdd.setText(selectedAp.getApTitle());
             apTypeAdd.setText(selectedAp.getApType());
             apLocationAdd.setText(selectedAp.getApLocation());
@@ -237,7 +256,6 @@ public class AppointmentController {
             Appointment selectedAp = primaryApTable.getSelectionModel().getSelectedItem();
             addApToBeDeleted(selectedAp);
         }
-        //  }
     }
 
     //UPDATE APPOINTMENT TAB//
@@ -254,18 +272,19 @@ public class AppointmentController {
     @FXML public TextField apCustomerIdUpdate; //
     @FXML public ComboBox<String> apContactUpdate;
     public ComboBox<String> apCustomerUpdate;
-
-
-    // ^ TODO [c] rename this to IDK: apContactNameUpdate
     // ^ TODO [Extra] create an event to add or Edit selected Contact.
-    @FXML
-    public TextField apContactUserIdUpdate;
-    // ^ Question [] is there a difference from 'user' and 'Contact'
-    @FXML
-    public Button apMakeUpdateButton;
 
-    @FXML
-    public void apContactUpdateSelect(ActionEvent actionEvent) throws SQLException {
+    @FXML public TextField apContactUserIdUpdate;
+
+    @FXML public Button apMakeUpdateButton;
+
+    /**
+     * Handles the action when a Contact is selected in the combo box for updating an appointment.
+     * Updates the contact ID field based on the selected contact's name.
+     * @param actionEvent Selecting a contact in the combo box.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void apContactUpdateSelect(ActionEvent actionEvent) throws SQLException {
         //TODO [c] create a method to update contact ID field on selection of combo Box
         CChoulesDevTools.println("Updating ID of contact selection");
 
@@ -276,8 +295,13 @@ public class AppointmentController {
         //set apContactUserIdUpdate = contact.getId
         apContactUserIdUpdate.setText(String.valueOf(matchingContactId));
     }
-
-    public void apCustomerUpdateSelect(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Handles the action when a  Customer is selected in the combo box for updating an appointment.
+     * Updates the customer ID field based on the selected customer's name.
+     * @param actionEvent Selecting a customer in the combo box.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void apCustomerUpdateSelect(ActionEvent actionEvent) throws SQLException {
         //TODO [] create a method to update customer ID field on selection of combo Box
         CChoulesDevTools.println("Updating ID of customer selection");
 
@@ -289,8 +313,13 @@ public class AppointmentController {
     }
     //Missing Skill take note that the Above methods would have been easier if i would have implemented Application Object sooner with ID and Name as extended variables. I also need to learn how to call an extended class as its parent class.
 
-    @FXML
-    public void commitApUpdate(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Handles the process of taking the fields edited by user then constructing an appointment object
+     * & replacing the existing object in the data base.
+     * @param actionEvent The action of committing an update of the edited appointment.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void commitApUpdate(ActionEvent actionEvent) throws SQLException {
 
         CChoulesDevTools.println("Updating selected Appointment.");
 
@@ -380,7 +409,7 @@ public class AppointmentController {
 
         SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
 
-        popup.outOfBusinessHoursPopup(popupContent);
+        popup.inappropriateAppointmentTimesPopup(popupContent);
 
 
     }
@@ -403,8 +432,13 @@ public class AppointmentController {
     @FXML public TextField apContactUserIdAdd;
     @FXML public Button apMakeAdd;
 
-    @FXML
-    public void commitAdd(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Handles the process of taking the fields edited by user then constructing an appointment object
+     * & adding the existing object in the data base.
+     * @param actionEvent The action of committing an update of the edited appointment.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void commitAdd(ActionEvent actionEvent) throws SQLException {
         //Question [] another example of repeating code how do I not extend the functionality of 'commitApUpdate' to this method replacing the object references & adding a few adjustments.
         //TODO [c] Create a commit add method that add ap to db
         //TODO [c] bug on add ap appointment added then bugged. Bug fixed.
@@ -466,12 +500,17 @@ public class AppointmentController {
 
         SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
 
-        popup.outOfBusinessHoursPopup(popupContent);
+        popup.inappropriateAppointmentTimesPopup(popupContent);
 
     }
 
-    @FXML
-    public void apContactAddSelect(ActionEvent actionEvent) throws SQLException {
+    /**
+     * Handles the action when a Contact is selected in the combo box for updating an appointment.
+     * Updates the contact ID field based on the selected contact's name.
+     * @param actionEvent Selecting a contact in the combo box.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void apContactAddSelect(ActionEvent actionEvent) throws SQLException {
         //TODO [c] create a method to update contact ID field on selection of combo Box
         CChoulesDevTools.println("Updating ID of contact selection");
 
@@ -482,7 +521,14 @@ public class AppointmentController {
         //set apContactUserIdUpdate = contact.getId
         apContactUserIdAdd.setText(String.valueOf(matchingContactId));
     }
-    public void apCustomerAddSelect(ActionEvent actionEvent) throws SQLException {
+
+    /**
+     * Handles the action when a Customer is selected in the combo box for updating an appointment.
+     * Updates the contact ID field based on the selected Customer's name.
+     * @param actionEvent Selecting a Customer in the combo box.
+     * @throws SQLException If an SQL-related error occurs.
+     */
+    @FXML public void apCustomerAddSelect(ActionEvent actionEvent) throws SQLException {
 
         CChoulesDevTools.println("Updating ID of customer selection");
 
@@ -494,9 +540,7 @@ public class AppointmentController {
 
     }
 
-
-    @FXML
-    public TextArea apDescriptionAdd;
+    @FXML public TextArea apDescriptionAdd;
 
 
     //DELETE APPOINTMENT TAB//
@@ -516,12 +560,18 @@ public class AppointmentController {
     @FXML public TableColumn<?, ?> delApContactId;
     @FXML public TableColumn<?, ?> delApUserId;
     @FXML public Button addApToDelete;
+    @FXML public Button removeAllApToBeDeleted;
     //TODO [c] add to delete method -> on double click while delete tab to add to delete table.
+
+    /**
+     * Handles the process of taking the list of Appointments to be deleted
+     * & deleting the matching appointments in the data base by ID.
+     * @param actionEvent The action of committing
+     * @throws SQLException If an SQL-related error occurs.
+     */
     @FXML public void deleteAppointments(ActionEvent actionEvent) throws SQLException {
 
         SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
-
-        //Appointment_ID and type
 
         String promptContent = "Are you sure you would like to delete the following Appointments:" +
                 "\nTitle : " +
@@ -548,8 +598,13 @@ public class AppointmentController {
         tableLoadFromDB();
     }
 
-    
-    public void addApToBeDeleted(Appointment apToBeDeleted){
+    /**
+     * Adds or removes an appointment to/from the list of appointments to be deleted.
+     * Updates the delete table accordingly.
+     *
+     * @param apToBeDeleted The appointment to be added or removed from the deletion list.
+     */
+    @FXML public void addApToBeDeleted(Appointment apToBeDeleted){
         if (toBeDeletedApList.contains(apToBeDeleted)){
             toBeDeletedApList.remove(apToBeDeleted);
         } else {
@@ -558,7 +613,10 @@ public class AppointmentController {
         updateDeleteTable();
     }
 
-    public void updateDeleteTable(){   
+    /**
+     * Updates the delete table with the appointments to be deleted.
+     */
+    public void updateDeleteTable(){
 
         delApId.setCellValueFactory(new PropertyValueFactory<>("apId"));
         delApTitle.setCellValueFactory(new PropertyValueFactory<>("apTitle"));
@@ -590,23 +648,41 @@ public class AppointmentController {
         }
     }
 
+    /**
+     * Removes all appointments from the list of appointments to be deleted.
+     * Updates the delete table accordingly.
+     * @param actionEvent The event triggered by removing all appointments.
+     */
     public void removeAllFromApToBeDeleted(ActionEvent actionEvent) {
         toBeDeletedApList.removeAll(toBeDeletedApList);
         delApTable.setItems(toBeDeletedApList);
     }
+
+    /**
+     * Adds the selected appointment from the primary table to the list of appointments to be deleted.
+     * @param actionEvent The event triggered by adding the selected appointment.
+     */
     public void addSelectionToDeletion(ActionEvent actionEvent) {
             addApToBeDeleted(primaryApTable.getSelectionModel().getSelectedItem());
     }
+
+    /**
+     * Adds the selected appointment from the delete table to the list of appointments to be deleted.
+     * @param actionEvent The event triggered by removing the selected appointment.
+     */
     public void removeSelectionToDeletion(ActionEvent actionEvent) {
             addApToBeDeleted(delApTable.getSelectionModel().getSelectedItem());
     }
 
-
-    @FXML
-    public Button deleteAppointment;
+    @FXML public Button deleteAppointment;
 
     //NON-SCENE ELEMENTS//
     //SCENE INITIALIZATION//
+    /**
+     * Initializes the AppointmentController.
+     * Loads data into tables and updates combo boxes with contact and customer names.
+     * @throws SQLException If a database access error occurs.
+     */
     public void initialize() throws SQLException {
 
         tableLoadFromDB();
@@ -674,25 +750,18 @@ public class AppointmentController {
 
     }
 
-    private static void updateComboBox(){
-
-
-    }
-
     //Table load//
-
+    /**
+     * Loads data from the database into the appointment table.
+     * Displays appointment details in the console.
+     * @throws SQLException If a database access error occurs.
+     */
     public void tableLoadFromDB() throws SQLException {
     //APPOINTMENT LIST//
     ObservableList<applicationObject.Appointment> appointmentList = AppointmentDAO.getAllAppointments();
 
 
-    //TODO [l] After you complete the applicationObject & DAO for Client Name include access to it here
-    // In addition change the contactName to CustomerController Name (CustomerController Name is important for meetings)
-//        String sqlQueryForContact = "SELECT * FROM client_schedule.appointments WHERE Contact_ID = ?";
-//
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//            preparedStatement.setInt(1, contactIdParameter);
-
+    //TODO [c] After you complete the applicationObject & DAO for Client Name include access to it hereIn addition change the contactName to CustomerController Name (CustomerController Name is important for meetings)
         apId.setCellValueFactory(new PropertyValueFactory<>("apId"));
         apTitle.setCellValueFactory(new PropertyValueFactory<>("apTitle"));
         apDescription.setCellValueFactory(new PropertyValueFactory<>("apDescription"));
@@ -706,18 +775,18 @@ public class AppointmentController {
     //TODO [c] same bug happened again refactoring apCustomerId to ...Id did not refactor here resulting in null value. This is from propertyValueFactory code injection from string alteration.
 
 
-    //TODO [Extra] When the appointment is add or updated check to see if the Id of contact matches what is in the data base to make sure the database has not been edited since the start of the edit.
+    //TODO [Extra] When the appointment is add or updated check to see if the Id of contact matches what is in the data base to make sure the database has not been edited since the start of the edit. This is for use with multiple users and is not in scope of project.
         apCustomerId.setCellValueFactory(new PropertyValueFactory<>("apCustomerId"));
     //ToDo [c] include contact name
         apContact.setCellValueFactory(new PropertyValueFactory<>("apContactName"));
-    //TODO [c] Solved: how does the PropertyValueFactory decide where to access the list name? Perhaps it is better to access the contactName through the appointment applicationObj instead. -Found -> its set by primaryApTable.setItems Decided to update appointment class to include a getApContactName
+    //TODO [c] Solved: how does the PropertyValueFactory decide where to access the list name? Perhaps it is better to access the contactName through the appointment applicationObj instead. -Found-> its set by primaryApTable.setItems Decided to update appointment class to include a getApContactName
 
         apCustomerName.setCellValueFactory(new PropertyValueFactory<>("apCustomerName"));
         apContactId.setCellValueFactory(new PropertyValueFactory<>("apContactId"));
         apUserId.setCellValueFactory(new PropertyValueFactory<>("apUserId"));
     // TODO [Extra] Make a comment on how frustrating PropertyValueFactory values are.
-    //  -we should not be using strings here, why javaFX? -And code injection with a string alteration? Are you kidding? I can't inject folders of code as local code to keep my code organized(at least no to my beginner level of knowledge) but JavaFX is making me work with this very insane way of calling methods?
-    //
+    //  -we should not be using strings here, why javaFX? -And code injection with a string alteration? Are you kidding? I can't inject folders of code as local code to keep my code organized(at least no to my beginner level of knowledge) like i do with "include" on other languages but JavaFX is making me work with this very insane way of calling methods that is not recognized by the IDE?
+
 
         primaryApTable.setItems(appointmentList);
         constrictTimeFrame();
@@ -737,35 +806,5 @@ public class AppointmentController {
             CChoulesDevTools.println("User ID: " + appointment.getApUserId() +"\n");
         }
     }
-
-    //FXML LOADER METHOD//
-    public static void loadThisFXML(Stage stage) throws IOException {
-
-        Home.testMethod();
-        //Home.loadHomeFXML(loginButton, getClass());
-
-        CChoulesDevTools.println("Loading AppointmentController.fxml");
-
-        //Note: this is incorrect I keep doing this bellow:
-        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(AppointmentController.class.getResource("/views/appointments.fxml"));
-
-
-        Parent root = loader.load();
-
-        AppointmentController mp = loader.getController();
-
-//        //passing the css settings
-//        mp.passCss(cssPath, darkModeOn);
-
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-        mainStage = stage;
-    }
-
-
 
 }

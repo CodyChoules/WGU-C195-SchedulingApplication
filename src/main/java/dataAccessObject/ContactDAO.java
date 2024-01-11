@@ -9,8 +9,16 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Data Access Object (DAO) class for handling operations related to contacts in the database.
+ */
 public class ContactDAO {
 
+    /**
+     * Retrieves all contacts from the database.
+     * @return ObservableList of Contact objects representing all contacts in the database.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static ObservableList<Contact> getAllContacts() throws SQLException {
         ObservableList<Contact> contactObservableList = FXCollections.observableArrayList();
         String sql = "SELECT * from contacts";
@@ -26,6 +34,12 @@ public class ContactDAO {
         return contactObservableList;
     }
 
+    /**
+     * Finds the contact ID from the given contact name.
+     * @param contactName The name of the contact.
+     * @return The contact ID corresponding to the given contact name.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static int findContactIdFromName(String contactName) throws SQLException {
         PreparedStatement preparedStatement = JDBTools.getConnection().prepareStatement("SELECT * FROM contacts WHERE Contact_Name = ?");
         preparedStatement.setString(1, contactName);
@@ -37,6 +51,12 @@ public class ContactDAO {
         return contactId;
     }
 
+    /**
+     * Finds the contact name from the given contact ID.
+     * @param contactId  The ID of the contact.
+     * @return The Contact object representing the contact with the given ID.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public static Contact findNameOfContactFromId(int contactId) throws SQLException {
             ObservableList<Contact> allContacts = getAllContacts();
 

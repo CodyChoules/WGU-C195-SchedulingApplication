@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The ReportController class manages the report tables of the application.
+ */
 public class ReportController {
-
-    private static Stage mainStage; //This is for page refresh. May not work with tabs
 
 
     //CUSTOMERS TAB\\
@@ -54,8 +55,9 @@ public class ReportController {
     }
 
 
-    //create a class to make object totals report
-
+    /**
+     * Inner class representing a totals report to be utilized by a report table
+     */
     public static class totalsReport {
         public String byWhat;
         public int howMany;
@@ -98,9 +100,12 @@ public class ReportController {
     public ComboBox<String> apHashTagSelection;
     public Tab rpCustomerByCountry;
 
-    public void backToHomeAction(ActionEvent actionEvent) {
-    }
-
+    /**
+     * Updates the table view based on the selected value from the contact combo box.
+     * If All is selected sets all appointments in the table view.
+     * @param actionEvent The action event of contact combo box.
+     * @throws SQLException If a SQL exception occurs during the data retrieval.
+     */
     public void apDataByContactComboBox(ActionEvent actionEvent) throws SQLException {
         //on selection of value limit table view
         applicationObject.guiObject.Searcher.updateFromComboBox(contactScheduleContactBox.getValue(), allApTable);
@@ -111,12 +116,23 @@ public class ReportController {
 
     }
 
+
+    /**
+     * Unused & finished
+     * @param actionEvent Unused
+     */
     public void addTagToSearch(ActionEvent actionEvent) {
     }
-
+    /**
+     * Unused & finished
+     * @param event Unused
+     */
     public void customerByCountry(Event event) {
     }
-
+    /**
+     * Unused & finished
+     * @param event Unused
+     */
     public void apTotalsTab(Event event) {
     }
 
@@ -124,7 +140,13 @@ public class ReportController {
 
     //BACK END METHODS\\
 
-    //FXML LOADER METHOD//
+    //||FXML LOADER METHOD||
+    /**
+     * Loads the FXML file for the ReportController and sets up the stage.
+     * This is used for testing.
+     * @param stage The stage to set up for the ReportController.
+     * @throws IOException If an I/O exception occurs during FXML loading.
+     */
     public static void loadThisFXML(Stage stage) throws IOException {
 
         Home.testMethod();
@@ -141,19 +163,17 @@ public class ReportController {
 
         ReportController mp = loader.getController();
 
-//        //passing the css settings
-//        mp.passCss(cssPath, darkModeOn);
-
-
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
-        mainStage = stage;
     }
 
 
-
+    /**
+     * Initializes the ReportController populating the tables and combo boxes.
+     * @throws SQLException If a SQL exception occurs during initialization.
+     */
     public void initialize() throws SQLException {
         //Call populate Tables
         loadApByContactTable();
@@ -174,7 +194,10 @@ public class ReportController {
 
     }
 
-
+    /**
+     * Loads data into the appointment table.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public void loadApByContactTable() throws SQLException {
         appointmentList = AppointmentDAO.getAllAppointments();
 
@@ -192,6 +215,13 @@ public class ReportController {
         allApTable.setItems(appointmentList); //Set the data to the table
     }
 
+    /**
+     * Loads data into a totals report table.
+     * @param totalsList The list of totals to be displayed in the table.
+     * @param theTable The table to populate with data.
+     * @param byWhat The column representing the 'by what' aspect in the table.
+     * @param howMany The column representing the 'how many' aspect in the table.
+     */
     public void loadTotalsReportTable(ObservableList<totalsReport> totalsList, TableView<totalsReport> theTable, TableColumn<?, ?> byWhat,TableColumn<?, ?> howMany) {
 
         //setting the values of the tables
@@ -201,6 +231,11 @@ public class ReportController {
         theTable.setItems(totalsList); //Set the data to the table
     }
 
+    /**
+     * Generates a list of totals for customers by country.
+     * @return The list of totals for customers by country
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public ObservableList<totalsReport> customersByCountryList() throws SQLException {
         //use this to load the customersByCountryTable
         //List of totals to be returned after totals are added
@@ -226,6 +261,11 @@ public class ReportController {
         return reportList;
     }
 
+    /**
+     * Generates a list of totals for customers by division.
+     * @return The list of totals for customers by division.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public ObservableList<totalsReport> customersByDivisionList() throws SQLException {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
@@ -288,7 +328,11 @@ public class ReportController {
         return reportList;
     }
 
-
+    /**
+     * Generates a list of totals for appointments by type.
+     * @return The list of totals for appointments by type.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public ObservableList<totalsReport> customersByMonthList() throws SQLException {
         //use this to load the customersByContactTable
         //List of totals to be returned after totals are added
@@ -340,6 +384,12 @@ public class ReportController {
         return reportList;
 
     }
+
+    /**
+     * Generates a list of totals for appointments by month.
+     * @return The list of totals for appointments by month.
+     * @throws SQLException If a SQL exception occurs during data retrieval.
+     */
     public ObservableList<totalsReport> appointmentsByMonthList() throws SQLException {
 
         ObservableList<totalsReport> reportList = FXCollections.observableArrayList();
@@ -389,16 +439,5 @@ public class ReportController {
         return reportList;
 
     }
-
-    //public void loadAp
-
-
-
-
-
-
-
-
-
 
 }

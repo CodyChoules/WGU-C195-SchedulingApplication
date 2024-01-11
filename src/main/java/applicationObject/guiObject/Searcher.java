@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+// Done
 
 /**
  * The `Searcher` class provides methods for handling search functionality in the scheduling application's GUI.
@@ -28,14 +29,19 @@ public class Searcher {
 
     /**
      * Adds a listener to a ComboBox for handling name filtering and displaying suggestions in the dropdown.
+     * I used a lambda expressions here to iterate the event filter through the key events,
+     *  establish a filtered list with all items true, and listen for new values for the filtered list to filter from.
      *
-     * @param comboBox The ComboBox to which the listener is added.
-     * @param items    The list of items to be filtered.
+     *
+     * @param comboBox  The ComboBox to which the listener is added.
+     * @param items     The list of items to be filtered.
      */
     public static void nameListener(ComboBox<String> comboBox, ObservableList<String> items){
-        //TODO [c] create a listener to add to all combo boxes for application GUI
 
-        //Fundamental JavaFX Bug Fix, comboBoxViewSkin does not properly work. Removing all key events using this seemed to work, Am not using as a lambda example\\
+
+        //Fundamental JavaFX Bug Fix, comboBoxViewSkin does not properly work. Removing all key events using this seemed to work\\
+        //This was referenced from this stack overflow thread:
+        //  https://stackoverflow.com/questions/55366919/how-to-prevent-closing-of-autocompletecombobox-popupmenu-on-whitespace-key-press
         ComboBoxListViewSkin<String> comboBoxListViewSkin = new ComboBoxListViewSkin<>(comboBox);
         comboBoxListViewSkin.getPopupContent().addEventFilter(KeyEvent.ANY, (event) -> {
             if( event.getCode() == KeyCode.SPACE ) {
@@ -43,12 +49,12 @@ public class Searcher {
             }
         });
         comboBox.setSkin(comboBoxListViewSkin);
-        //TODO [Extra] Take note of java 
+
 
         comboBox.setEditable(true);
         comboBox.setVisibleRowCount(5);
         FilteredList<String> filteredList = new FilteredList<String>(items, p -> true);
-        //FilteredList<String> unFilteredItems = new FilteredList<String>(items, p -> false);
+
 
         comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = comboBox.getEditor();
@@ -56,70 +62,51 @@ public class Searcher {
             Platform.runLater(() -> {
                 if (selected == null || !selected.equals(editor.getText())) {
                     filteredList.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
-                    //unFilteredItems.setPredicate(item -> item.toUpperCase().startsWith(newValue.toUpperCase()));
                     comboBox.setItems(filteredList);
                     comboBox.show();
-                    //TODO [l] bug trying to get dropdown to show all options (only shows one)
+                    //TODO [c] bug trying to get dropdown to show all options (only shows one)
+                    //Bug addressed at the top of the class
                 }
             });
         });
 
         //To check if the combo box is selected so that the drop down shows when focused.
-        comboBox.getEditor().focusedProperty().addListener( (obs) -> {
-            if (comboBox.focusedProperty().getValue()) {
+        comboBox.getEditor().focusedProperty().addListener((obs) -> {
+            if (comboBox.focusedProperty().getValue()){
                 comboBox.show();
             } else {
                 comboBox.hide();
             }
-                }
-        );
+        });
 
         comboBox.setItems(filteredList);
 
-
     }
 
-    //
+    /**
+     * Updates a TableView with search results based on the content of a search bar.
+     *
+     * @param searchBar     The search bar TextField.
+     * @param resultTable   The TableView to be updated.
+     * @throws SQLException If a SQL exception occurs during the database query.
+     */
+    public static void updateFromSearch(TextField searchBar, TableView<Appointment> resultTable) throws SQLException {
 
-    public static void exclusiveFDLOutputListUsingNameListener(ComboBox<String> comboBox, ObservableList<String> fdlItems, ComboBox<String> parentComboBoxCountry){
-
-
-        comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            final TextField editor = comboBox.getEditor();
-            final String selectedCountry = parentComboBoxCountry.getSelectionModel().getSelectedItem();
-            try {
-                final Country country = CountryDAO.getCountryByName(selectedCountry);
-                Platform.runLater(() -> {
-                    if (selectedCountry == null || !selectedCountry.equals(editor.getText())) {
-                        final ObservableList<String> filteredList = country.getChildFDLNames();
-                        comboBox.setItems(filteredList);
-                    }
-                });
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-
-        nameListener(comboBox, comboBox.getItems());
-
-        //Question [] it would be nice to have the ability to input types and classes raw into methods so that it can be used with compatible. How do i do this without using if else on value input or direct code injection/manipulation(like set value factory)
-        //we need this to limit the FLD list for combo boxes so that the selection of a country only allows for corresponding FLDs
-
-
-    }
-
-    public static void updateFromSearch(TextField searchBar,
-                                TableView<Appointment> resultTable)
-            throws SQLException {
         CChoulesDevTools.println("Searching in " + resultTable.getId());
 
         String searchFieldValue = searchBar.getText();
         //Creating a new list to display & replacing the table items with selected items
         ObservableList<Appointment> displayedAp = lookupAppointmentNameId(searchFieldValue);
         resultTable.setItems(displayedAp);
-
     }
 
+    /**
+     * Updates a TableView with search results based on the selected contact in a ComboBox.
+     *
+     * @param contact       The selected contact name.
+     * @param resultTable   The TableView to be updated.
+     * @throws SQLException If a SQL exception occurs during the database query.
+     */
     public static void updateFromComboBox(String contact,
     TableView<Appointment> resultTable) throws SQLException {
         CChoulesDevTools.println("Searching in " +
@@ -132,6 +119,25 @@ public class Searcher {
         resultTable.setItems(displayedAp);
     }
 
+    /**
+     *  Generates a time interval list of 15-minute increments.
+     *  This uses 24:00 display
+     * Todo [Extra] Would like to set this to PM & AM but am running out of time
+     * @return  The list of time intervals as strings.
+     */
+    public static ObservableList<String> timeIntervalsList() {
+        ObservableList<String> intervalsList = FXCollections.observableArrayList();
+        LocalTime startTime = LocalTime.of(0, 0);
+        for (int i = 0; i < 96; i++) {
+            intervalsList.add(startTime.format(DateTimeFormatter.ofPattern("HH:mm")));
+            startTime = startTime.plusMinutes(15);
+        }
+
+        CChoulesDevTools.println(intervalsList.toString());
+        return intervalsList;
+    }
+
+    //HELPER METHODS : PRIVATE\\
     private static ObservableList<Appointment> lookupAppointmentNameId (String partialName) throws SQLException {
         ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
@@ -157,6 +163,7 @@ public class Searcher {
                 partialName);}
         return foundAppointments;
     }
+
     private static ObservableList<Appointment> lookupAppointmentByContact (String partialName) throws SQLException {
         ObservableList<Appointment> foundAppointments = FXCollections.observableArrayList();
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
@@ -176,18 +183,5 @@ public class Searcher {
                 partialName);}
         return foundAppointments;
     }
-
-    public static ObservableList<String> timeIntervalsList() {
-        ObservableList<String> intervalsList = FXCollections.observableArrayList();
-        LocalTime startTime = LocalTime.of(0, 0);
-        for (int i = 0; i < 96; i++) {
-            intervalsList.add(startTime.format(DateTimeFormatter.ofPattern("HH:mm")));
-            startTime = startTime.plusMinutes(15);
-        }
-        CChoulesDevTools.println(intervalsList.toString());
-        return intervalsList;
-    }
-
-
 
 }

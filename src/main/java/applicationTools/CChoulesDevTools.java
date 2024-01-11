@@ -67,22 +67,37 @@ public class CChoulesDevTools {
     }
 
     private static boolean devStyleOn = false;
-    public boolean isDevStyleOn() { return devStyleOn; }
-    public void setDevStyleOn(boolean devStyle) { this.devStyleOn = devStyle; }
 
+    /**
+     * Checks if development style is currently enabled.
+     * Dev style is for ease of use while developing.
+     * @return True if development style is enabled; false otherwise.
+     */
+    public boolean isDevStyleOn() { return devStyleOn; }
+    /**
+     * enables or disables development style.
+     * Dev style is for ease of use while developing
+     * @param devStyle True to enable development style; false to disable.
+     */
+    public void setDevStyleOn(boolean devStyle) { devStyleOn = devStyle; }
+
+    /**
+     * Applies the development style to the given JavaFX scene if development style is enabled.
+     * Currently set to a popular git resource for dark mode java fx
+     * @param scene The JavaFX scene to which the development style will be applied.
+     */
     public static void applyDevStyleToScene(Scene scene) {
         if (devStyleOn) {
             scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
         }
     }
 
-
-    public static void applyDevStyleToStage(Stage stage){
-
-    }
-
-
     //Test for undecorated stage
+    /**
+     * Redecorates the provided JavaFX stage by removing window decorations and adding a custom-styled BorderPane.
+     * Testing not working.
+     * @param primaryStage The primary JavaFX stage to be redecorated.
+     */
     public static void redecorateStage(Stage primaryStage){
         //remove window decoration
         primaryStage.initStyle(StageStyle.UNDECORATED);

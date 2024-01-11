@@ -4,9 +4,8 @@ package controller;
 import applicationObject.Appointment;
 import applicationObject.User;
 import applicationObject.guiObject.SchedulingApplicationPrompt;
-import applicationTools.ApplicationTimeTool;
+import applicationTools.TimeTool;
 import applicationTools.CChoulesDevTools;
-import applicationTools.JDBTools;
 import dataAccessObject.AppointmentDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -26,7 +25,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-
+/**
+ * Controller class for the PrimeWindow FXML.
+ * It handles UI elements and actions related to the main application window including tabs, log out, & exit.
+ */
 public class PrimeWindow {
 
 
@@ -36,6 +38,11 @@ public class PrimeWindow {
     @FXML public Label timeValueCurrentLocal;
     @FXML public Label timeValueHoursLocal;
 
+    /**
+     * Sets the time values for the labels in the UI,
+     * including the current time at HQ, current local time,
+     * and the range of hours in the local time zone.
+     */
     public void setTimeValues() {
 
 //        ArrayList<Label> timers = new ArrayList<Label>(Arrays.asList(
@@ -45,74 +52,78 @@ public class PrimeWindow {
 //        ));
 //
 //        for (Label label : timers) {
-//            ApplicationTimeTool.setLabelToClock(label);
+//            TimeTool.setLabelToClock(label);
 //        }
 
-        ApplicationTimeTool.setLabelToHQClock(timeValueCurrentAtHQ);
-        ApplicationTimeTool.setLabelToClock(timeValueCurrentLocal);
+        TimeTool.setLabelToHQClock(timeValueCurrentAtHQ);
+        TimeTool.setLabelToClock(timeValueCurrentLocal);
         timeValueHoursLocal.setText(
-                ApplicationTimeTool.getStartOfHoursAsLocalAsString()
+                TimeTool.getStartOfHoursAsLocalAsString()
                 + " to " +
-                ApplicationTimeTool.getEndOfHoursAsLocalAsString());
+                TimeTool.getEndOfHoursAsLocalAsString());
 
 
     }
 
-
     Stage stage;
 
-
-
-    //HOME UI\\
+//HOME UI\\
     @FXML public Button openAppointmentsButton;
-
+    /**
+     * Opens the Appointments tab when the Appointments button is clicked.
+     * @param actionEvent event
+     * @throws Exception If an exception occurs during the loading of the Appointments tab.
+     */
     @FXML public void openAppointments(ActionEvent actionEvent) throws Exception {
         Main.loadAppointmentsAsTab(tabPane);
     }
 
     @FXML public Button openCustomersButton;
+    /**
+     * Opens the Customers tab when the Customers button is clicked.
+     * @param actionEvent event
+     * @throws Exception If an exception occurs during the loading of the Customers tab.
+     */
     public void openCustomer(ActionEvent actionEvent) throws Exception {
         Main.loadCustomersAsTab(tabPane);
     }
 
     @FXML public Button openReportsButton;
+    /**
+     * Opens the Customers tab when the Reports button is clicked.
+     * @param actionEvent event
+     * @throws Exception If an exception occurs during the loading of the Reports tab.
+     */
     public void openReports(ActionEvent actionEvent) throws Exception {
         Main.loadReportsAsTab(tabPane);
     }
     //<home
 
-    //TODO DELETE ME
-    public void handleActionToOpenTabWithFxml(ActionEvent event, URL fxmlUrl, TabPane tabPane){
-        try {
-            System.out.println("Button Clicked!");
-
-            //TODO [l] there were problems getting Resource from here
-            // Try again once everything is working on home.
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            AnchorPane subTestContent = loader.load();
-
-            Tab tab = new Tab();
-            tab.setText("This is a new tab");
-            tab.setContent(subTestContent);
-            //This tabPane ends up null no matter what I do.
-            tabPane.getTabs().add(tab);
-            tabPane.getSelectionModel().select(tab);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Logs out and opens login when the logout button is clicked.
+     * @param actionEvent event
+     * @throws IOException If an exception occurs during the loading of the login.
+     */
     public void logOutAction(ActionEvent actionEvent) throws IOException {
         Main.currentUser = Main.undefinedUser;
         Main.loginKeeper = new User (0, "", "");
         Main.loadLogin();
     }
 
+    /**
+     * Exits the when the logout button is clicked.
+     * @param actionEvent event
+     */
     public void exitApplicationActions(ActionEvent actionEvent) {
         Platform.exit();
         System.exit(0);
     }
 
+    /**
+     * Checks for upcoming appointments for the current user logs in.
+     * @return An observable list containing the upcoming appointments.
+     * @throws SQLException If an SQL exception occurs while retrieving appointments from the database.
+     */
     public ObservableList<Appointment> checkForUpcomingAppointments() throws SQLException {
         //Get all AppointmentsDAO
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAllAppointments();
@@ -140,6 +151,10 @@ public class PrimeWindow {
 
     }
 
+    /**
+     * Initializes the controller. Sets the time values and checks for upcoming appointments.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public void initialize() throws SQLException {
         setTimeValues();
 
@@ -167,7 +182,7 @@ public class PrimeWindow {
                         " : " +
                         appointment.getApType() +
                         " : " +
-                        appointment.getApStart().format(ApplicationTimeTool.formatFullReadable());
+                        appointment.getApStart().format(TimeTool.formatFullReadable());
             }
 
             prompt.upcomingApPopup(promptContent);
