@@ -183,14 +183,16 @@ public class CustomerController {
      * @throws SQLException If a SQL exception occurs during the database operation.
      */
     @FXML public void CRSaveCustomer(ActionEvent actionEvent) throws SQLException {
-        if (CRNameField.getText().isEmpty() ||
-                CRPhoneNumberField.getText().isEmpty() ||
-                CRAddressField.getText().isEmpty() ||
-                CRCountryDropDown.getValue().isEmpty() ||
-                CRFirstLvlDivDropDown.getValue().isEmpty() ||
-                CRPostalCodeField.getText().isEmpty())
+        if (CRNameField.getText().isBlank() ||
+                CRPhoneNumberField.getText().isBlank() ||
+                CRAddressField.getText().isBlank() ||
+                CRCountryDropDown.getValue().isBlank() ||
+                CRFirstLvlDivDropDown.getValue().isBlank() ||
+                CRPostalCodeField.getText().isBlank())
         {
-            //TODO [] put alert to fill here
+            String popupContent = " -Their must be a value in all Customer fields.";
+            SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+            popup.inappropriateInputPopup(popupContent);
             return;
         }
 
@@ -223,13 +225,17 @@ public class CustomerController {
      */
     @FXML public void CRAddCustomer(ActionEvent actionEvent) throws SQLException {
         //Note 1 indicated that this object is in the add tab
-        if (CRNameField1.getText().isEmpty() ||
-                CRPhoneNumberField1.getText().isEmpty() ||
-                CRAddressField1.getText().isEmpty() ||
-                CRCountryDropDown1.getValue().isEmpty() ||
-                CRFirstLvlDivDropDown1.getValue().isEmpty() ||
-                CRPostalCodeField1.getText().isEmpty()) {
-            //TODO [] put alert to fill here
+        if (CRNameField1.getText().isBlank() ||
+                CRPhoneNumberField1.getText().isBlank() ||
+                CRAddressField1.getText().isBlank() ||
+                CRCountryDropDown1.getValue().isBlank() ||
+                CRFirstLvlDivDropDown1.getValue().isBlank() ||
+                CRPostalCodeField1.getText().isBlank()) {
+
+                String popupContent = " -Their must be a value in all Customer fields.";
+                SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
+                popup.inappropriateInputPopup(popupContent);
+
             return;
         }
 
@@ -248,12 +254,16 @@ public class CustomerController {
                 LocalDateTime.now()
         );
 
+
+
         CChoulesDevTools.println("adding new customer: \n" +
                 addingCustomer.getCustomerName() + "\n" +
                 addingCustomer.getCreateDate() + "\n" +
                 addingCustomer.getCustomerId() + "\n" +
                 Timestamp.valueOf(addingCustomer.getCreateDate())
         );
+
+
 
         CustomerDAO.addCustomer(addingCustomer, JDBTools.getConnection());
         tableLoadFromDB();

@@ -9,7 +9,6 @@ import applicationObject.guiObject.Searcher;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
 import applicationTools.LocalDateTimeApplicationTool;
-import controller.trash.subViewController.Home;
 import dataAccessObject.AppointmentDAO;
 import dataAccessObject.ContactDAO;
 import dataAccessObject.CustomerDAO;
@@ -17,9 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -28,7 +24,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.Main;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -359,6 +354,7 @@ public class AppointmentController {
                 && userEditedAp.getApId() != 0
                 && userEditedAp.getApCustomerId() != 0
                 && userEditedAp.getApContactId() != 0
+                && userEditedAp.isComplete()
 
         ) {
             try {
@@ -405,11 +401,15 @@ public class AppointmentController {
             popupContent = popupContent +
                     "\n -No Contact Selected.";
         }
+        if (!userEditedAp.isComplete()){
+            popupContent = popupContent +
+                    "\n -Their must be a value in all appointment fields.";
+        }
 
 
         SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
 
-        popup.inappropriateAppointmentTimesPopup(popupContent);
+        popup.inappropriateInputPopup(popupContent);
 
 
     }
@@ -471,6 +471,7 @@ public class AppointmentController {
         if (userAddedAp.isInBusinessHours()
                 && userAddedAp.isWithinOneDay()
                 && userAddedAp.isNotOverlapping()
+                && userAddedAp.isComplete()
         ) {
             try {
                 //TODO [c] create an addAppointment method to AppointmentDAO
@@ -497,10 +498,14 @@ public class AppointmentController {
             popupContent = popupContent +
                     "\n -Is overlapping with an existing appointment.";
         }
+        if (!userAddedAp.isComplete()){
+            popupContent = popupContent +
+                    "\n -Their must be a value in all appointment feilds.";
+        }
 
         SchedulingApplicationPrompt popup = new SchedulingApplicationPrompt();
 
-        popup.inappropriateAppointmentTimesPopup(popupContent);
+        popup.inappropriateInputPopup(popupContent);
 
     }
 

@@ -21,10 +21,14 @@ public class Main extends Application {
     //Stage\\
     String cssPathForDev =
             "https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css";
-
     public static DarkModeTool currentDarkMode =
             new DarkModeTool(false, "dark_mode");
     public static Stage primeStage = null;
+
+    /**
+     * Applies CSS styles to the given scene based on the current dark mode.
+     * @param scene The scene to apply styles to.
+     */
     public static void applyCSS(Scene scene){
         CChoulesDevTools.println("setting style sheets");
         if (currentDarkMode.isDarkModeOn()) {
@@ -33,6 +37,11 @@ public class Main extends Application {
             scene.getStylesheets().clear();
         }
     }
+    /**
+     * Opens a new scene as a window.
+     * @param fxName The name of the FXML file to load.
+     * @throws IOException If an I/O error occurs during FXML loading.
+     */
     public static void openSceneAsWin(String fxName) throws IOException {
         CChoulesDevTools.println("Loading " + fxName + ".fxml from Main");
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(
@@ -46,12 +55,24 @@ public class Main extends Application {
         //CChoulesDevTools.applyDevStyleToScene(scene);
         primeStage.setScene(scene);
         primeStage.show(); }
+    /**
+     * Opens a new scene as a tab and switches to it.
+     * @param fxName   The name of the FXML file to load.
+     * @param tabPane  The TabPane to add the new tab to.
+     * @throws Exception If an exception occurs during FXML loading or tab creation.
+     */
     public static void openSceneAsTabAndGo(String fxName, TabPane tabPane) throws Exception {
         String fxmlToDisplay = GeneralTools.capitalizeAndAddSpaces(fxName);
         Tab newTab = createTab(fxmlToDisplay, fxName, tabPane);
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
     }
+    /**
+     * Opens a new scene as a tab.
+     * @param fxName   The name of the FXML file to load.
+     * @param tabPane  The TabPane to add the new tab to.
+     * @throws Exception If an exception occurs during FXML loading or tab creation.
+     */
     private static Tab createTab(String tabTitle, String fxName, TabPane tabPane) throws Exception {
         Tab tab = new Tab(tabTitle);
 
@@ -81,6 +102,13 @@ public class Main extends Application {
 
         return tab;
     }
+
+    /**
+     * Reloads a given tab. Currently done on switching tabs as well.
+     * @param tab The Tab.
+     * @param fxName The name of the FXML file to load.
+     * @throws IOException If an I/O error occurs during FXML loading.
+     */
     private static void refreshTab(Tab tab, String fxName) throws IOException {
         CChoulesDevTools.println("Refreshing content for tab: " + tab.getText());
         FXMLLoader loader = new FXMLLoader(Main.class.getResource(
@@ -92,23 +120,45 @@ public class Main extends Application {
     }
 
     //USER\\
+    /**
+     * Placeholder user with undefined values.
+     */
     public static final User undefinedUser = new User (0, "UndefinedUserName", "NoNoNo");
+    /**
+     * Current logged-in user.
+     */
     public static User currentUser = undefinedUser;
+    /**
+     * User used to keep track of login information on login refresh.
+     */
     public static User loginKeeper = new User (0, "", "");
+    /**
+     * Sets the current user.
+     * @param user The user to set.
+     */
     public static void setCurrentUser(User user){
         currentUser = user;
     }
 
     //MESSAGE BUNDLE\\
     Locale defaultLocale = Locale.getDefault();
-    Locale enLocale = new Locale("en"); //For manual Language Switching TODO []
+    Locale enLocale = new Locale("en"); //For manual Language Switching
     public static Locale frLocale = new Locale("fr"); //^
     public static ResourceBundle defaultMessages = ResourceBundle.getBundle("MessagesBundle");
+    /**
+     * Current message bundle being use during login.
+     */
     public static ResourceBundle curMessBun /*CurrentMessagesBundle*/ = defaultMessages;
     public static ArrayList<String> supportedMessageBundles = new ArrayList<String>(Arrays.asList("en", "fr"));
 
 
     //FXML LOADERS\\
+    // FXML LOADERS \\
+    /**
+     * Loads the main window and sets the current user.
+     * @param user The user to set as the current user.
+     * @throws IOException If an I/O error occurs during FXML loading.
+     */
     public static void loadMainWindowAndSetUser(User user) throws IOException {
         setCurrentUser(user);
         openSceneAsWin("primeWindow"); }
@@ -125,16 +175,30 @@ public class Main extends Application {
 
     public static void loadCustomersAsWin() throws IOException {
         openSceneAsWin("customers"); }
+    /**
+     * Loads the appointments tab.
+     * @param tabPane The TabPane to add the new tab to.
+     * @throws Exception If an exception occurs during FXML loading or tab creation.
+     */
     public static void loadCustomersAsTab(TabPane tabPane) throws Exception {
         openSceneAsTabAndGo("customers", tabPane);
     }
 
     public static void loadReportsAsWin() throws IOException {
         openSceneAsWin("reports"); }
+    /**
+     * Loads the Reports tab.
+     * @param tabPane The TabPane to add the new tab to.
+     * @throws Exception If an exception occurs during FXML loading or tab creation.
+     */
     public static void loadReportsAsTab(TabPane tabPane) throws Exception {
         openSceneAsTabAndGo("reports", tabPane);
     }
 
+    /**
+     * Loads the login window.
+     * @throws IOException If an I/O error occurs during FXML loading.
+     */
     public static void loadLogin() throws IOException {
 
         CChoulesDevTools.println("Loading Login.fxml");
@@ -142,6 +206,13 @@ public class Main extends Application {
         openSceneAsWin("login");
 
     }
+    /**
+     * Loads the login window with pre-set username and password.
+     * Designed for refreshing language or style.
+     * @param userName The login keeper for login.
+     * @param passWord The login keeper password for login.
+     * @throws IOException If an I/O error occurs during FXML loading.
+     */
     public static void loadLoginWithKeeper(String userName,String passWord) throws IOException {
 
         CChoulesDevTools.println("Loading Login.fxml");
@@ -152,7 +223,7 @@ public class Main extends Application {
 
     //MAIN START APPLICATION\\
     public void start(Stage primaryStage) throws Exception {
-        CChoulesDevTools.toolsOn();
+        CChoulesDevTools.toolsOff();
 
         String rootFolder = System.getProperty("user.dir");
         CChoulesDevTools.println("Root Folder: " + rootFolder);
@@ -160,24 +231,7 @@ public class Main extends Application {
         primeStage = primaryStage;
 
         openSceneAsWin("login");
-//        //Sets Parent root of scene then title & size
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/login.fxml")));
-//        primeStage.setTitle("main.Login Menu");
-//
-//        //TODO [Extra] test to decorate stage(remove if no solution found){Good chance to use git to add this feature}
-//        //CChoulesDevTools.redecorateStage(primaryStage);
-//
-//        Scene scene = new Scene(root);
-//
-//        //CChoulesDevTools.setWindowCenteredOnCursor(scene,primaryStage);
-//
-//        primeStage.setScene(scene);
-//
-//        primeStage.show();
-//
-//        CChoulesDevTools.applyDevStyleToScene(scene);
-//
-//        CChoulesDevTools.println("Stage & Scene Set");
+
 
         //TODO [c] test DB connection using JBDTools -completed
         JDBTools.openConnection();

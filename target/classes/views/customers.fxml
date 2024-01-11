@@ -33,7 +33,6 @@
         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
         </columnResizePolicy>
     </TableView>
-    <Button fx:id="CRCancel" layoutX="963.0" layoutY="2.0" mnemonicParsing="false" onAction="#CRCancel" text="Back to Home" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="4.0" />
     <Label layoutX="70.0" layoutY="27.0" text="CUSTOMER RECORDS" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <font>
           <Font name="System Bold" size="24.0" />
@@ -58,7 +57,7 @@
                               </rowConstraints>
                               <children>
                                   <TextField fx:id="CRNameField" GridPane.columnIndex="1" />
-                                  <TextField fx:id="CRIdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                  <TextField fx:id="CRIdField" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                   <TextField fx:id="CRPhoneNumberField" GridPane.columnIndex="3" />
                                   <Label text="Customer ID:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                       <GridPane.margin>
@@ -153,7 +152,7 @@
                         </rowConstraints>
                         <children>
                            <TextField fx:id="CRNameField1" GridPane.columnIndex="1" />
-                           <TextField fx:id="CRIdField1" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           <TextField fx:id="CRIdField1" disable="true" editable="false" promptText="Auto Generated on Add" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            <TextField fx:id="CRPhoneNumberField1" GridPane.columnIndex="3" />
                            <Label text="Customer ID:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                               <GridPane.margin>

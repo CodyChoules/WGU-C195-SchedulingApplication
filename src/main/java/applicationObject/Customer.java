@@ -1,5 +1,7 @@
 package applicationObject;
 
+import applicationTools.CChoulesDevTools;
+
 import java.time.LocalDateTime;
 
 /**
@@ -119,5 +121,28 @@ public class Customer extends ApplicationObject{
      */
     public String getCustomerCountryName() { return customerCountryName; }
     public void setCustomerCountryName(String customerDivisionName) { this.customerCountryName = customerDivisionName; }
+
+
+    public boolean isComplete() {
+        CChoulesDevTools.println(
+                this.customerId + "\n " +
+                        this.customerName + "\n " +
+                        this.customerAddress + "\n " +
+                        this.customerPostalCode + "\n " +
+                        this.customerPhoneNumber + "\n " +
+                        this.divisionId + "\n " +
+                        this.customerDivisionName + "\n " +
+                        this.customerCountryName
+        );
+
+        return
+                !this.customerName.isBlank() &&
+                !this.customerAddress.isBlank() &&
+                !this.customerPostalCode.isBlank() &&
+                !this.customerPhoneNumber.isBlank() &&
+                this.divisionId != 0 &&
+                !this.customerDivisionName.isBlank() &&
+                !this.customerCountryName.isBlank();
+    }
 
 }

@@ -11,3 +11,15 @@ Username: test, Date-Time (UTC): 2024-01-10 05:45:48 (America/Phoenix): 2024-01-
 Username: test, Date-Time (UTC): 2024-01-10 18:28:54 (America/Phoenix): 2024-01-10 11:28:54, Attempt's Time Zone: America/Phoenix, Success: true
 Username: test, Date-Time (UTC): 2024-01-10 23:09:36 (America/Phoenix): 2024-01-10 16:09:36, Attempt's Time Zone: America/Phoenix, Success: true
 Username: test, Date-Time (UTC): 2024-01-10 23:11:00 (America/Phoenix): 2024-01-10 16:11:00, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 02:47:40 (America/Phoenix): 2024-01-10 19:47:40, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 02:52:39 (America/Phoenix): 2024-01-10 19:52:39, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:03:27 (America/Phoenix): 2024-01-10 20:03:27, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:07:43 (America/Phoenix): 2024-01-10 20:07:43, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:10:30 (America/Phoenix): 2024-01-10 20:10:30, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:29:15 (America/Phoenix): 2024-01-10 20:29:15, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:30:51 (America/Phoenix): 2024-01-10 20:30:51, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:32:48 (America/Phoenix): 2024-01-10 20:32:48, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:35:50 (America/Phoenix): 2024-01-10 20:35:50, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:37:38 (America/Phoenix): 2024-01-10 20:37:38, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:52:46 (America/Phoenix): 2024-01-10 20:52:46, Attempt's Time Zone: America/Phoenix, Success: true
+Username: test, Date-Time (UTC): 2024-01-11 03:55:52 (America/Phoenix): 2024-01-10 20:55:52, Attempt's Time Zone: America/Phoenix, Success: true

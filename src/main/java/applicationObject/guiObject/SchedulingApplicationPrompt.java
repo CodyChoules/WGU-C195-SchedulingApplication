@@ -35,11 +35,11 @@ public class SchedulingApplicationPrompt {
      *
      * @param content lists illegal appointments
      */
-    public void inappropriateAppointmentTimesPopup(String content){
+    public void inappropriateInputPopup(String content){
         prompt.setAlertType(Alert.AlertType.WARNING);
-        prompt.setHeaderText("Inappropriate appointment time.");
+        prompt.setHeaderText("Inappropriate Input.");
         prompt.setContentText(content);
-        prompt.setTitle("Inappropriate appointment time");
+        prompt.setTitle("Inappropriate Input");
         CChoulesDevTools.println(prompt.getTitle());
 
         prompt.show();

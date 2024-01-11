@@ -33,7 +33,6 @@ public class Appointment extends ApplicationObject{
 
     /**
      * Appointment Constructor
-     *
      * @param apTitle       title of the appointment
      * @param apType        type/category of the appointment
      * @param apLocation    location of the appointment
@@ -243,11 +242,41 @@ public class Appointment extends ApplicationObject{
             if(!(this.getApEnd().isBefore(appointment.apStart) || appointment.apEnd.isBefore(this.getApStart()))){
                 //Missing Skill lambdas cannot return for the methods containing them
                 //return false;
-                isOverlapping.set(true);
+                //To avoid overlapping with itself
+                if (this.getApId() != appointment.getApId()) {
+                    isOverlapping.set(true);
+                }
             }
         });
 
         return !isOverlapping.get();
+    }
+
+    public boolean isComplete(){
+
+        CChoulesDevTools.println(
+                        this.apTitle + "\n " +
+                        this.apType + "\n " +
+                        this.apLocation + "\n " +
+                        this.apID + "\n " +
+                        this.apDescription + "\n " +
+                        this.apStart + "\n " +
+                        this.apEnd + "\n " +
+                        this.apCustomerID + "\n " +
+                        this.apContactID + "\n " +
+                        this.apUserID
+        );
+
+        return !this.apTitle.isBlank() &&
+                !this.apType.isBlank() &&
+                !this.apLocation.isBlank() &&
+                //this.apID != 0 &&
+                !this.apDescription.isBlank() &&
+                this.apStart != null &&
+                this.apEnd != null &&
+                this.apCustomerID != 0 &&
+                this.apContactID != 0 &&
+                this.apUserID != 0;
     }
 
 }
