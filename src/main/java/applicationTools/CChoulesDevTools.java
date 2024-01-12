@@ -30,7 +30,7 @@ public class CChoulesDevTools {
             int halfWidth = sceneWidth / 2;
             primaryStage.setX(mouseX - halfWidth);
             primaryStage.setY(mouseY - 10);
-            System.out.print("Centered stage on mouse with: " + sceneWidth + " / 2 = " + halfWidth + " ... \n");
+            CChoulesDevTools.println("Centered stage on mouse with: " + sceneWidth + " / 2 = " + halfWidth + " ... \n");
         }
     }
 
@@ -62,7 +62,7 @@ public class CChoulesDevTools {
      */
     public static void println(String string) {
         if (devToolsOn) {
-            System.out.println(string);
+            CChoulesDevTools.println(string);
         }
     }
 
@@ -82,13 +82,15 @@ public class CChoulesDevTools {
     public void setDevStyleOn(boolean devStyle) { devStyleOn = devStyle; }
 
     /**
-     * Applies the development style to the given JavaFX scene if development style is enabled.
-     * Currently set to a popular git resource for dark mode java fx
+     * Applies the development style to the given JavaFX scene if development style is enabled and dev tools are on.
+     * Currently set to a popular git resource for dark mode java fx.
      * @param scene The JavaFX scene to which the development style will be applied.
      */
     public static void applyDevStyleToScene(Scene scene) {
         if (devStyleOn) {
-            scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
+            if (devToolsOn) {
+                scene.getStylesheets().add("https://raw.githubusercontent.com/antoniopelusi/JavaFX-Dark-Theme/main/style.css");
+            }
         }
     }
 

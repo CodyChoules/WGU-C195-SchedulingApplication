@@ -72,7 +72,7 @@ public class UserDAO {
 //            }
 //
 //            if (rowCount>1){
-//                System.out.println("Potential fatal error or attack, Account duplicate found, contact IT or DataBase Technician");
+//                CChoulesDevTools.println("Potential fatal error or attack, Account duplicate found, contact IT or DataBase Technician");
 //                return false;
 //            }
 
@@ -144,6 +144,6 @@ public class UserDAO {
         return false;
 
     }
-    //TODO [c] Test this method in Login
+    //TODO [c] Test this method in LoginWindow
 
 }

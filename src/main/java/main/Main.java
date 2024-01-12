@@ -170,7 +170,7 @@ public class Main extends Application {
     public static void loadAppointmentsAsWin() throws IOException {
         openSceneAsWin("appointments"); }
     public static void loadAppointmentsAsTab(TabPane tabPane) throws Exception {
-        openSceneAsTabAndGo("appointments", tabPane);
+        openSceneAsTabAndGo("viewAppointments", tabPane);
     }
 
     public static void loadCustomersAsWin() throws IOException {
@@ -181,7 +181,7 @@ public class Main extends Application {
      * @throws Exception If an exception occurs during FXML loading or tab creation.
      */
     public static void loadCustomersAsTab(TabPane tabPane) throws Exception {
-        openSceneAsTabAndGo("customers", tabPane);
+        openSceneAsTabAndGo("viewCustomers", tabPane);
     }
 
     public static void loadReportsAsWin() throws IOException {
@@ -192,7 +192,7 @@ public class Main extends Application {
      * @throws Exception If an exception occurs during FXML loading or tab creation.
      */
     public static void loadReportsAsTab(TabPane tabPane) throws Exception {
-        openSceneAsTabAndGo("reports", tabPane);
+        openSceneAsTabAndGo("viewReports", tabPane);
     }
 
     /**
@@ -201,7 +201,7 @@ public class Main extends Application {
      */
     public static void loadLogin() throws IOException {
 
-        CChoulesDevTools.println("Loading Login.fxml");
+        CChoulesDevTools.println("Loading LoginWindow.fxml");
 
         openSceneAsWin("login");
 
@@ -215,7 +215,7 @@ public class Main extends Application {
      */
     public static void loadLoginWithKeeper(String userName,String passWord) throws IOException {
 
-        CChoulesDevTools.println("Loading Login.fxml");
+        CChoulesDevTools.println("Loading LoginWindow.fxml");
         loginKeeper = new User (0, userName, passWord);
         openSceneAsWin("login");
 
@@ -230,7 +230,7 @@ public class Main extends Application {
 
         primeStage = primaryStage;
 
-        openSceneAsWin("login");
+        openSceneAsWin("loginWindow");
 
 
         //TODO [c] test DB connection using JBDTools -completed

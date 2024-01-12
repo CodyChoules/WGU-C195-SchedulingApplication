@@ -25,12 +25,12 @@ public class Home {
       --create a test scaffold then prepare actions & structure below
       --structure
             login -c-> mainWindow { tabs:
-            -->AppointmentController {add brings up split pane}
-            -->CustomerController (Edit,Delete,Add New) -->Save
-            -->ReportController {subTabs:
+            -->ViewAppointments {add brings up split pane}
+            -->ViewCustomers (Edit,Delete,Add New) -->Save
+            -->ViewReports {subTabs:
                 -->Contact Schedule
                 -->Appointment Totals
-                -->CustomerController by Country
+                -->ViewCustomers by Country
             -->Exit
 
             -optional-> Logout
@@ -42,7 +42,7 @@ public class Home {
 
      TODO [Extra] logout button.
      TODO [l] exit button -remember to close connection.
-     TODO [l] Clean up Login class.
+     TODO [l] Clean up LoginWindow class.
      TODO [c] Complete appointment controller.
     */
 

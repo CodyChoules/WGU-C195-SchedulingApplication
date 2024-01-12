@@ -144,7 +144,7 @@ public class TimeTool {
      * @param dateTime The LocalDateTime to format.
      * @return The formatted string.
      */
-    private static String formatReadableDateTimeToString(LocalDateTime dateTime) {
+    public static String formatReadableDateTimeToString(LocalDateTime dateTime) {
         // Define a custom date-time formatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy h:mm a", Locale.ENGLISH);
 

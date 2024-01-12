@@ -122,6 +122,9 @@ public class Appointment extends ApplicationObject{
     public void setApStart(LocalDateTime apStart) {
         this.apStart = apStart;
     }
+    public String getApPrettyStart() {
+        return TimeTool.formatReadableDateTimeToString(this.apStart);
+    }
 
     //Getter and Setter methods for apEnd
     public LocalDateTime getApEnd() {
@@ -129,6 +132,9 @@ public class Appointment extends ApplicationObject{
     }
     public void setApEnd(LocalDateTime apEnd) {
         this.apEnd = apEnd;
+    }
+    public String getApPrettyEnd() {
+        return TimeTool.formatReadableDateTimeToString(this.apEnd);
     }
 
     //Getter and Setter methods for customerID
