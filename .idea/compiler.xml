@@ -9,8 +9,5 @@
         <module name="WGU-C195-SchedulingApplication" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="WGU-C195-SchedulingApplication" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>
