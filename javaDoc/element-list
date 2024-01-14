@@ -2,6 +2,5 @@ applicationObject
 applicationObject.guiObject
 applicationTools
 controller
-controller.trash.subViewController
 dataAccessObject
 main

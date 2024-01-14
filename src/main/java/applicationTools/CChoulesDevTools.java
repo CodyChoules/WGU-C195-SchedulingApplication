@@ -62,7 +62,7 @@ public class CChoulesDevTools {
      */
     public static void println(String string) {
         if (devToolsOn) {
-            CChoulesDevTools.println(string);
+            System.out.println(string);
         }
     }
 

@@ -3,7 +3,7 @@ package controller;
 import applicationObject.*;
 import applicationTools.CChoulesDevTools;
 import applicationTools.GeneralTools;
-import controller.trash.subViewController.Home;
+
 import dataAccessObject.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -118,19 +118,19 @@ public class ViewReports {
 
 
     /**
-     * Unused & finished
+     * Unused and finished
      * @param actionEvent Unused
      */
     public void addTagToSearch(ActionEvent actionEvent) {
     }
     /**
-     * Unused & finished
+     * Unused and finished
      * @param event Unused
      */
     public void customerByCountry(Event event) {
     }
     /**
-     * Unused & finished
+     * Unused and finished
      * @param event Unused
      */
     public void apTotalsTab(Event event) {
@@ -140,34 +140,34 @@ public class ViewReports {
 
     //BACK END METHODS\\
 
-    //||FXML LOADER METHOD||
-    /**
-     * Loads the FXML file for the ViewReports and sets up the stage.
-     * This is used for testing.
-     * @param stage The stage to set up for the ViewReports.
-     * @throws IOException If an I/O exception occurs during FXML loading.
-     */
-    public static void loadThisFXML(Stage stage) throws IOException {
-
-        Home.testMethod();
-        //Home.loadHomeFXML(loginButton, getClass());
-
-        CChoulesDevTools.println("Loading ViewReports.fxml");
-
-        //Note: this is incorrect I keep doing this bellow:
-        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(ViewReports.class.getResource("/views/viewReports.fxml"));
-
-
-        Parent root = loader.load();
-
-        ViewReports mp = loader.getController();
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-    }
+//    //||FXML LOADER METHOD||
+//    /**
+//     * Loads the FXML file for the ViewReports and sets up the stage.
+//     * This is used for testing.
+//     * @param stage The stage to set up for the ViewReports.
+//     * @throws IOException If an I/O exception occurs during FXML loading.
+//     */
+//    public static void loadThisFXML(Stage stage) throws IOException {
+//
+//        Home.testMethod();
+//        //Home.loadHomeFXML(loginButton, getClass());
+//
+//        CChoulesDevTools.println("Loading ViewReports.fxml");
+//
+//        //Note: this is incorrect I keep doing this bellow:
+//        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+//        FXMLLoader loader = new FXMLLoader(ViewReports.class.getResource("/views/viewReports.fxml"));
+//
+//
+//        Parent root = loader.load();
+//
+//        ViewReports mp = loader.getController();
+//
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//
+//    }
 
 
     /**

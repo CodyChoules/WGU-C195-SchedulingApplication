@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 /**
  * Controller class for the PrimeWindow FXML.
- * It handles UI elements and actions related to the main application window including tabs, log out, & exit.
+ * It handles UI elements and actions related to the main application window including tabs, log out, and exit.
  */
 public class PrimeWindow {
 

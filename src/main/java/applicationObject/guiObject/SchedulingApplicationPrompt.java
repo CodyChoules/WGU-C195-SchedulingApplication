@@ -9,7 +9,7 @@ import main.Main;
 //Done
 
 /**
- * A class that provides various methods for displaying custom prompts using JavaFX popups & prompts
+ * A class that provides various methods for displaying custom prompts using JavaFX popups and prompts
  * This must be instantiated as a new SchedulingApplicationPrompt
  */
 public class SchedulingApplicationPrompt {

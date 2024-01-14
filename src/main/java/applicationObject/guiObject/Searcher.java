@@ -122,7 +122,7 @@ public class Searcher {
     /**
      *  Generates a time interval list of 15-minute increments.
      *  This uses 24:00 display
-     * Todo [Extra] Would like to set this to PM & AM but am running out of time
+     * Todo Would like to set this to PM and AM but am running out of time
      * @return  The list of time intervals as strings.
      */
     public static ObservableList<String> timeIntervalsList() {

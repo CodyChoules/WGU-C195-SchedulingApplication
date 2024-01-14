@@ -33,8 +33,7 @@ import java.util.stream.Collectors;
 
 /**
  * Controller class for managing appointments in the appointments tab of the project.
- * Includes controls for the three sub tabs update, add, & delete Appointment Tabs
- *
+ * Includes controls for the three sub tabs update, add, and delete Appointment Tabs
  */
 public class ViewAppointments {
     private static Stage mainStage; //This is for page refresh. May not work with tabs
@@ -207,7 +206,7 @@ public class ViewAppointments {
             apEndDateUpdate.setValue(selectedAp.getApEnd().toLocalDate());
             apEndTimeUpdate.setValue(String.valueOf(selectedAp.getApEnd().toLocalTime()));
             // TODO [c] Bug on apCustomerIdUpdate fix me. -Found: fxml changed to apCustomerIdUpdateID11 on git commit IDK why -Tested: Fixed, frustrating that FX:ID variables do not warn of unreferenced fxml fx:id on variable.
-            // TODO [Extra] make a note of this. How fxml & Java make an environment where bugs are easy to make and difficult to detect, standing in direct contradiction to the highly abstracted, object oriented, and design constrained model that we use java for in the first place.
+            // TODO [Extra] make a note of this. How fxml and Java make an environment where bugs are easy to make and difficult to detect, standing in direct contradiction to the highly abstracted, object oriented, and design constrained model that we use java for in the first place.
             apCustomerIdUpdate.setText(String.valueOf(selectedAp.getApCustomerId()));
             apContactUserIdUpdate.setText(String.valueOf(selectedAp.getApUserId()));
             apContactUpdate.setItems(contactNames);
@@ -310,7 +309,7 @@ public class ViewAppointments {
 
     /**
      * Handles the process of taking the fields edited by user then constructing an appointment object
-     * & replacing the existing object in the data base.
+     * and replacing the existing object in the data base.
      * @param actionEvent The action of committing an update of the edited appointment.
      * @throws SQLException If an SQL-related error occurs.
      */
@@ -318,8 +317,8 @@ public class ViewAppointments {
 
         CChoulesDevTools.println("Updating selected Appointment.");
 
-        //TODO [c] replace selected appointment in the appointment list using ID with updated appointment. then update the DB. Or because there may be 2+ people updating to the database at the same time update the database object then reload the Appointment list. Tested: worked & prevented conflict with another instance of the application.
-        //TODO [c] Make a method to parse local date & time from strings to convert to LocalDateTime. This will be application wide so add to application tools. TESTED: works Implementation was more difficult than anticipated involving new String formatting methods.
+        //TODO [c] replace selected appointment in the appointment list using ID with updated appointment. then update the DB. Or because there may be 2+ people updating to the database at the same time update the database object then reload the Appointment list. Tested: worked and prevented conflict with another instance of the application.
+        //TODO [c] Make a method to parse local date and time from strings to convert to LocalDateTime. This will be application wide so add to application tools. TESTED: works Implementation was more difficult than anticipated involving new String formatting methods.
 
         LocalDateTime apStartEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apStartDateUpdate.getEditor().getText(), apStartTimeUpdate.getValue());
         CChoulesDevTools.println(apStartDateUpdate.getValue().toString());
@@ -350,6 +349,7 @@ public class ViewAppointments {
 
         if (userEditedAp.isInBusinessHours()
                 && userEditedAp.isWithinOneDay()
+                && userEditedAp.isStartBeforeEnd()
                 && userEditedAp.isNotOverlapping()
                 && userEditedAp.getApId() != 0
                 && userEditedAp.getApCustomerId() != 0
@@ -382,6 +382,10 @@ public class ViewAppointments {
                     "\n -Appointment cannot go over night.";
         }
 
+        if (!userEditedAp.isStartBeforeEnd()){
+            popupContent = popupContent +
+                    "\n -Is Starting after it Ends";
+        }
         if (!userEditedAp.isNotOverlapping()){
             popupContent = popupContent +
                     "\n -Is overlapping with an existing appointment.";
@@ -434,12 +438,12 @@ public class ViewAppointments {
 
     /**
      * Handles the process of taking the fields edited by user then constructing an appointment object
-     * & adding the existing object in the data base.
+     * and adding the existing object in the data base.
      * @param actionEvent The action of committing an update of the edited appointment.
      * @throws SQLException If an SQL-related error occurs.
      */
     @FXML public void commitAdd(ActionEvent actionEvent) throws SQLException {
-        //Question [] another example of repeating code how do I not extend the functionality of 'commitApUpdate' to this method replacing the object references & adding a few adjustments.
+        //Question [] another example of repeating code how do I not extend the functionality of 'commitApUpdate' to this method replacing the object references and adding a few adjustments.
         //TODO [c] Create a commit add method that add ap to db
         //TODO [c] bug on add ap appointment added then bugged. Bug fixed.
 
@@ -471,6 +475,7 @@ public class ViewAppointments {
         if (userAddedAp.isInBusinessHours()
                 && userAddedAp.isWithinOneDay()
                 && userAddedAp.isNotOverlapping()
+                && userAddedAp.isStartBeforeEnd()
                 && userAddedAp.isComplete()
         ) {
             try {
@@ -493,6 +498,10 @@ public class ViewAppointments {
         if (!userAddedAp.isWithinOneDay()){
             popupContent = popupContent +
                     "\n -Appointment cannot go over night";
+        }
+        if (!userAddedAp.isStartBeforeEnd()){
+            popupContent = popupContent +
+                    "\n -Is Starting after it Ends";
         }
         if (!userAddedAp.isNotOverlapping()){
             popupContent = popupContent +
@@ -570,7 +579,7 @@ public class ViewAppointments {
 
     /**
      * Handles the process of taking the list of Appointments to be deleted
-     * & deleting the matching appointments in the data base by ID.
+     * and deleting the matching appointments in the data base by ID.
      * @param actionEvent The action of committing
      * @throws SQLException If an SQL-related error occurs.
      */
@@ -766,7 +775,7 @@ public class ViewAppointments {
     ObservableList<applicationObject.Appointment> appointmentList = AppointmentDAO.getAllAppointments();
 
 
-    //TODO [c] After you complete the applicationObject & DAO for Client Name include access to it hereIn addition change the contactName to ViewCustomers Name (ViewCustomers Name is important for meetings)
+    //TODO [c] After you complete the applicationObject and DAO for Client Name include access to it hereIn addition change the contactName to ViewCustomers Name (ViewCustomers Name is important for meetings)
         apId.setCellValueFactory(new PropertyValueFactory<>("apId"));
         apTitle.setCellValueFactory(new PropertyValueFactory<>("apTitle"));
         apDescription.setCellValueFactory(new PropertyValueFactory<>("apDescription"));

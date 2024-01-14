@@ -4,6 +4,7 @@ import applicationObject.Contact;
 import applicationObject.Customer;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
+import applicationTools.TimeGetterTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -55,6 +56,12 @@ public class CustomerDAO {
                 createDate = null;
             }
 
+            String createString = resultSet.getString("Create_Date");
+
+            //For some reason Time Stamp doesn't fall apart here
+            LocalDateTime customerCreate = Timestamp.valueOf(createString).toLocalDateTime();
+            LocalDateTime customerCreateHQ = TimeGetterTool.convertUtcToEasternTime(customerCreate);
+
             String countryName = "No Country Found";
             while (resultSetCountry.next()) {
                 countryName = resultSetCountry.getString("Country");
@@ -70,7 +77,7 @@ public class CustomerDAO {
                             divisionId,
                             divisionName,
                             countryName,
-                            createDate
+                    customerCreateHQ
             );
 
             customersObservableList.add(customer);
@@ -85,17 +92,27 @@ public class CustomerDAO {
 
     /**
      * Deletes a customer from the database.
+     * Also Deletes Appointments connected to said Customer.
      * @param customerId The ID of the customer to be deleted.
      * @param connection  The database connection.
      * @return The number of rows affected by the delete operation.
      * @throws SQLException If a SQL exception occurs during data deletion.
      */
     public static int deleteCustomer(int customerId, Connection connection) throws SQLException {
+
+
+        //Deletes Child Rows. before Parent is deleted
+        String childQuery = "DELETE FROM appointments WHERE Customer_ID=?";
+        PreparedStatement childPreparedStatement = connection.prepareStatement(childQuery);
+        childPreparedStatement.setInt(1, customerId);
+        childPreparedStatement.executeUpdate();
+
         String query = "DELETE FROM customers WHERE Customer_ID=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, customerId);
         int result = preparedStatement.executeUpdate();
         preparedStatement.close();
+        childPreparedStatement.close();
         return result;
     }
 
@@ -123,7 +140,10 @@ public class CustomerDAO {
         preparedStatement.setString(3, updatedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, updatedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, updatedCustomer.getCustomerDivisionId());
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+
+        LocalDateTime utcNow = TimeGetterTool.convertLocalToUtcTime(LocalDateTime.now());
+
+        preparedStatement.setString(6, utcNow.toString());
         preparedStatement.setString(7, main.Main.currentUser.getUserName());
         preparedStatement.setInt(8, updatedCustomer.getCustomerId());
 
@@ -161,8 +181,11 @@ public class CustomerDAO {
         preparedStatement.setString(3, addedCustomer.getCustomerPostalCode());
         preparedStatement.setString(4, addedCustomer.getCustomerPhoneNumber());
         preparedStatement.setInt(5, addedCustomer.getCustomerDivisionId());
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
-        preparedStatement.setTimestamp(7, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+
+        LocalDateTime utcNow = TimeGetterTool.convertLocalToUtcTime(LocalDateTime.now());
+
+        preparedStatement.setString(6, utcNow.toString());
+        preparedStatement.setString(7, utcNow.toString());
         preparedStatement.setString(8, main.Main.currentUser.getUserName());
         preparedStatement.setString(9, main.Main.currentUser.getUserName());
 

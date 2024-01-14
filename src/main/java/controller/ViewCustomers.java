@@ -5,7 +5,7 @@ import applicationObject.Customer;
 import applicationObject.guiObject.SchedulingApplicationPrompt;
 import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
-import controller.trash.subViewController.Home;
+
 import dataAccessObject.CountryDAO;
 import dataAccessObject.CustomerDAO;
 import dataAccessObject.FirstLvlDivisionDAO;
@@ -335,46 +335,46 @@ public class ViewCustomers {
     @FXML public void CRDelete(ActionEvent actionEvent) {
     }
 
-    /**
-     * Handles the action when the  Country DropDown is entered.
-     * @param actionEvent The event triggered by the dropdown enter action.
-     * @throws SQLException If a SQL exception occurs.
-     */
-    @FXML public void CRCountryDropDownEnter(ActionEvent actionEvent) throws SQLException {
-
-        CRFirstLvlDivDropDown.setItems(setFLD_ByCountry());
-//        Searcher.nameListener(CRFirstLvlDivDropDown, setFLD_ByCountry());
-    }
-
-    //FXML LOADER METHOD//
-    public static void loadThisFXML(Stage stage) throws IOException {
-
-        Home.testMethod();
-        //Home.loadHomeFXML(loginButton, getClass());
-
-        CChoulesDevTools.println("Loading customers.fxml");
-
-        //Note: this is incorrect I keep doing this bellow:
-        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
-        FXMLLoader loader = new FXMLLoader(ViewCustomers.class.getResource("/views/viewCustomers.fxml"));
-
-
-        Parent root = loader.load();
-
-        ViewCustomers mp = loader.getController();
-
-//        //passing the css settings
-//        mp.passCss(cssPath, darkModeOn);
-
-
-
-        Scene scene = new Scene(root);
-        stage.setMaximized(true);
-        stage.setScene(scene);
-        stage.show();
-
-        mainStage = stage;
-    }
+//    /**
+//     * Handles the action when the  Country DropDown is entered.
+//     * @param actionEvent The event triggered by the dropdown enter action.
+//     * @throws SQLException If a SQL exception occurs.
+//     */
+//    @FXML public void CRCountryDropDownEnter(ActionEvent actionEvent) throws SQLException {
+//
+//        CRFirstLvlDivDropDown.setItems(setFLD_ByCountry());
+////        Searcher.nameListener(CRFirstLvlDivDropDown, setFLD_ByCountry());
+//    }
+//
+//    //FXML LOADER METHOD//
+//    public static void loadThisFXML(Stage stage) throws IOException {
+//
+//        Home.testMethod();
+//        //Home.loadHomeFXML(loginButton, getClass());
+//
+//        CChoulesDevTools.println("Loading customers.fxml");
+//
+//        //Note: this is incorrect I keep doing this bellow:
+//        //FXMLLoader loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/controller/HomeMenu.fxml")));
+//        FXMLLoader loader = new FXMLLoader(ViewCustomers.class.getResource("/views/viewCustomers.fxml"));
+//
+//
+//        Parent root = loader.load();
+//
+//        ViewCustomers mp = loader.getController();
+//
+////        //passing the css settings
+////        mp.passCss(cssPath, darkModeOn);
+//
+//
+//
+//        Scene scene = new Scene(root);
+//        stage.setMaximized(true);
+//        stage.setScene(scene);
+//        stage.show();
+//
+//        mainStage = stage;
+//    }
 
     /**
      * Initializes the customer controller.
@@ -427,6 +427,9 @@ public class ViewCustomers {
 
         CRCountryDropDown.setItems(CountryDAO.getCountryNames());
         CRFirstLvlDivDropDown.setItems(FirstLvlDivisionDAO.getFLD_Names());
+        CRCountryDropDown1.setItems(CountryDAO.getCountryNames()); //Added
+        CRFirstLvlDivDropDown1.setItems(FirstLvlDivisionDAO.getFLD_Names()); //Added
+
         //TODO [Extra] implement searcher while still limiting FLD_Names to Countries DAO 
 
 //        Searcher.nameListener(CRFirstLvlDivDropDown, FirstLvlDivisionDAO.getFLD_Names());

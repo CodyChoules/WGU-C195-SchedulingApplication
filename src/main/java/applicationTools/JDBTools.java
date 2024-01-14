@@ -90,15 +90,15 @@ public class JDBTools {
                 //convertToTimeZoneTime(timestamp);
         return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
     }
-    /**
-     *  Converts a Timestamp from UTC to LocalDateTime.
-     *  TODO [] This should be refactored/relocated to TimeTool
-     * @param timestamp The input Timestamp in UTC.
-     * @return The corresponding LocalDateTime.
-     */
-    public static LocalDateTime convertFromUTC(Timestamp timestamp){
-        return ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC")).toOffsetDateTime().atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
-
-    }
+//    /**
+//     *  Converts a Timestamp from UTC to LocalDateTime.
+//     *  TODO [] This should be refactored/relocated to TimeTool
+//     * @param timestamp The input Timestamp in UTC.
+//     * @return The corresponding LocalDateTime.
+//     */
+////    public static LocalDateTime convertFromUTC(Timestamp timestamp){
+////        return ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneId.of("UTC")).toOffsetDateTime().atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+////
+////    }
 
 }

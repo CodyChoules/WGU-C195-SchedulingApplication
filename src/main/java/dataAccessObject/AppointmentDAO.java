@@ -2,7 +2,9 @@ package dataAccessObject;
 
 
 import applicationObject.Appointment;
+import applicationTools.CChoulesDevTools;
 import applicationTools.JDBTools;
+import applicationTools.TimeGetterTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -40,13 +42,21 @@ public class AppointmentDAO {
             String apDescription = resultSet.getString("Description");
             String apLocation = resultSet.getString("Location");
             String apType = resultSet.getString("Type");
-            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start"));
-            LocalDateTime apEnd = JDBTools.convertFromUTC(resultSet.getTimestamp("End"));;
+            String startString = resultSet.getString("Start");
+            String endString = resultSet.getString("End");
+            //LocalDateTime apStart = resultSet.getTimestamp("Start").toLocalDateTime();
+            //to local date time is shifting my timestamp 2.5 hours down. Now 2.75, must be a db problem getting time string does not do this.
+            //The 2.5 time shift makes no sense as I am testing it is -9 zone so it should be shifting 9 not 2
+            //LocalDateTime apEnd = resultSet.getTimestamp("End").toLocalDateTime();
             int apCustomerID = resultSet.getInt("Customer_ID");
             int apUserID = resultSet.getInt("User_ID");
             int apContactID = resultSet.getInt("Contact_ID");
 
-
+            //For some reason Time Stamp doesn't fall apart here
+            LocalDateTime apStart = Timestamp.valueOf(startString).toLocalDateTime();
+            LocalDateTime apEnd = Timestamp.valueOf(endString).toLocalDateTime();
+            apStart = TimeGetterTool.convertUtcToLocalTime(apStart);
+            apEnd = TimeGetterTool.convertUtcToLocalTime(apEnd);
 
 
             //Note: appointment now follows front end order
@@ -81,11 +91,14 @@ public class AppointmentDAO {
             String apDescription = resultSet.getString("Description");
             String apLocation = resultSet.getString("Location");
             String apType = resultSet.getString("Type");
-            LocalDateTime apStart = JDBTools.convertFromUTC(resultSet.getTimestamp("Start"));
-            LocalDateTime apEnd = JDBTools.convertFromUTC(resultSet.getTimestamp("End"));;
+            LocalDateTime apStart = resultSet.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime apEnd = resultSet.getTimestamp("End").toLocalDateTime();;
             int apCustomerID = resultSet.getInt("Customer_ID");
             int apUserID = resultSet.getInt("User_ID");
             int apContactID = resultSet.getInt("Contact_ID");
+
+            apStart = TimeGetterTool.convertUtcToLocalTime(apStart);
+            apEnd = TimeGetterTool.convertUtcToLocalTime(apEnd);
 
             //Note: appointment now follows front end order
             Appointment appointment = new Appointment(apTitle, apType, apLocation, apID, apDescription, apStart, apEnd, apCustomerID, apContactID, apUserID);
@@ -131,19 +144,39 @@ public class AppointmentDAO {
         preparedStatement.setString(2, updatedAppointment.getApDescription());
         preparedStatement.setString(3, updatedAppointment.getApLocation());
         preparedStatement.setString(4, updatedAppointment.getApType());
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.ofInstant(Instant.from(updatedAppointment.getApStart().atZone(ZoneId.systemDefault())), ZoneId.of("Z"))));
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApEnd())));
+
+        LocalDateTime apStart = updatedAppointment.getApStart();
+        apStart = TimeGetterTool.convertLocalToUtcTime(apStart);
+        LocalDateTime apEnd = updatedAppointment.getApEnd();
+        apEnd = TimeGetterTool.convertLocalToUtcTime(apEnd);
+
+        preparedStatement.setString(5,apStart.toString());
+        preparedStatement.setString(6,apEnd.toString());
         preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
         preparedStatement.setInt(8, updatedAppointment.getApUserId());
         preparedStatement.setInt(9, updatedAppointment.getApContactId());
 
+        LocalDateTime utcUpDate = TimeGetterTool.convertLocalToUtcTime(LocalDateTime.now());
 
-
-        preparedStatement.setTimestamp(10, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+        preparedStatement.setTimestamp(10, Timestamp.valueOf(utcUpDate));
         preparedStatement.setString(11, main.Main.currentUser.getUserName());
         preparedStatement.setInt(12, updatedAppointment.getApId());
 
         int result = preparedStatement.executeUpdate();
+
+        CChoulesDevTools.toolsOn();
+
+        TimeGetterTool.devToolPrint();
+
+        CChoulesDevTools.println("start " + updatedAppointment.getApStart().toLocalTime() + "-to->" + apStart.toLocalTime());
+        CChoulesDevTools.println("E n d " + updatedAppointment.getApEnd().toLocalTime() + "-to->" + apEnd.toLocalTime());
+        CChoulesDevTools.println("creat " + LocalDateTime.now().toLocalTime() + "-to->" + utcUpDate.toLocalTime());
+        CChoulesDevTools.println("start as string " + apEnd.toString());
+
+
+
+
+        CChoulesDevTools.toolsOff();
 
         //Closing to not tie up DB Resources
         preparedStatement.close();
@@ -181,13 +214,23 @@ public class AppointmentDAO {
         preparedStatement.setString(2, updatedAppointment.getApDescription());
         preparedStatement.setString(3, updatedAppointment.getApLocation());
         preparedStatement.setString(4, updatedAppointment.getApType());
-        preparedStatement.setTimestamp(5, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApStart())));
-        preparedStatement.setTimestamp(6, Timestamp.valueOf(JDBTools.convertToUTC(updatedAppointment.getApEnd())));
+
+        LocalDateTime apStart = updatedAppointment.getApStart();
+        apStart = TimeGetterTool.convertLocalToUtcTime(apStart);
+        LocalDateTime apEnd = updatedAppointment.getApEnd();
+        apEnd = TimeGetterTool.convertLocalToUtcTime(apEnd);
+
+        preparedStatement.setString(5, apStart.toString());
+        preparedStatement.setString(6, apEnd.toString());
         preparedStatement.setInt(7, updatedAppointment.getApCustomerId());
         preparedStatement.setInt(8, updatedAppointment.getApUserId());
         preparedStatement.setInt(9, updatedAppointment.getApContactId());
-        preparedStatement.setTimestamp(10, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
-        preparedStatement.setTimestamp(11, Timestamp.valueOf(JDBTools.convertToUTC(LocalDateTime.now())));
+
+        LocalDateTime utcCreateDate = TimeGetterTool.convertLocalToUtcTime(LocalDateTime.now());
+
+
+        preparedStatement.setString(10, utcCreateDate.toString());
+        preparedStatement.setString(11, utcCreateDate.toString());
         preparedStatement.setString(12, main.Main.currentUser.getUserName());
         preparedStatement.setString(13, main.Main.currentUser.getUserName());
 

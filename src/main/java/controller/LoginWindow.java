@@ -178,7 +178,7 @@ public class LoginWindow implements Initializable {
 
     /**
      * Handles the action when a language is selected from the language combo box.
-     * Updates the current language setting & reloads the login scene.
+     * Updates the current language setting and reloads the login scene.
      * @param actionEvent The action event triggered by selecting a language from the combo box.
      */
     public void changeLangComboSelect(ActionEvent actionEvent) {
@@ -200,7 +200,7 @@ public class LoginWindow implements Initializable {
      * Initializes the login scene with default values.
      * Sets the resource bundle, loads the location field, sets the login
      * language, updates the dark mode button text,
-     * & pre-fills the username and password inputs if in developer mode.
+     * and pre-fills the username and password inputs if in developer mode.
      * Also resets the login keeper.
      * @param url The URL to initialize the controller. Unused in this context.
      * @param resourceBundle The resource bundle containing localized strings.
@@ -301,6 +301,8 @@ public class LoginWindow implements Initializable {
      * Sets the login scene language based on the provided in the current messages bundle.
      * t updates labels, buttons, and other UI elements
      * with the corresponding strings.
+     * @param resourceBundle The ResourceBundle containing language strings.
+     * @param url The URL representing the location of the messages bundle.
      */
     public void setLoginLang(ResourceBundle resourceBundle, URL url) {
 

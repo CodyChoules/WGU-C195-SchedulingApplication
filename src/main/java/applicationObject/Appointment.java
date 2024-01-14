@@ -227,6 +227,14 @@ public class Appointment extends ApplicationObject{
         return (sameDay && sameYear);
     }
 
+    public boolean isStartBeforeEnd(){
+        if (this.getApStart().isAfter(this.getApEnd())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Checks if the appointment does not overlap with other appointments for the same customer.
      *Lambda here is for iterating through the appointments to check for overlap.
@@ -237,7 +245,8 @@ public class Appointment extends ApplicationObject{
 
         ObservableList<Appointment> apListByCustomer = AppointmentDAO.getAllAppointmentsByCustomer(this.apCustomerID);
         //To prevent overlap detection with itself
-        apListByCustomer.remove(this);
+        apListByCustomer.remove(this); //Original solution //Leaving For Redundancy
+        apListByCustomer.removeIf(appointment -> this.apID == appointment.apID);//suggested by IDE
 
         //Missing Skill IDE Selected atomic here when isOverlapping and I do not know why (something about "atomicity of operations")
         AtomicBoolean isOverlapping = new AtomicBoolean(false);

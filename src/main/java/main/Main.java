@@ -203,7 +203,7 @@ public class Main extends Application {
 
         CChoulesDevTools.println("Loading LoginWindow.fxml");
 
-        openSceneAsWin("login");
+        openSceneAsWin("LoginWindow");
 
     }
     /**
@@ -217,13 +217,13 @@ public class Main extends Application {
 
         CChoulesDevTools.println("Loading LoginWindow.fxml");
         loginKeeper = new User (0, userName, passWord);
-        openSceneAsWin("login");
+        openSceneAsWin("LoginWindow");
 
     }
 
     //MAIN START APPLICATION\\
     public void start(Stage primaryStage) throws Exception {
-        CChoulesDevTools.toolsOff();
+        CChoulesDevTools.toolsOn();
 
         String rootFolder = System.getProperty("user.dir");
         CChoulesDevTools.println("Root Folder: " + rootFolder);

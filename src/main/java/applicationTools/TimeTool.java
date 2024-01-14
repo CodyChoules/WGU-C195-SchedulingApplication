@@ -112,9 +112,13 @@ public class TimeTool {
      */
     public static boolean isBusinessHours(LocalDateTime localDateTime) {
         //Convert to Eastern Time Zone
-        LocalDateTime easternDateTime = localDateTime.atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/New_York"))
-                .toLocalDateTime();
+        //LocalDateTime easternDateTime = localDateTime.atZone(ZoneId.systemDefault())
+          //      .withZoneSameInstant(ZoneId.of("America/New_York"))
+            //    .toLocalDateTime();
+
+        LocalDateTime thisTimeAtUTC = TimeGetterTool.convertLocalToUtcTime(localDateTime);
+
+        LocalDateTime thisTimeAtEast = TimeGetterTool.convertUtcToEasternTime(thisTimeAtUTC);
 
         //This is not used due to being open on weekends
 //        //check if the day is a weekday
@@ -124,7 +128,11 @@ public class TimeTool {
 //        }
 
         //check if the time is within business hours 8 to 22
-        LocalTime currentTime = easternDateTime.toLocalTime();
+        LocalTime currentTime = thisTimeAtEast.toLocalTime();
+        CChoulesDevTools.toolsOn();
+        CChoulesDevTools.println(currentTime.toString());
+        CChoulesDevTools.println(thisTimeAtUTC.toString());
+        CChoulesDevTools.println(businessStart.toString() + businessEnd.toString());
 
         return currentTime.isAfter(businessStart) && currentTime.isBefore(businessEnd);
     }
@@ -145,10 +153,9 @@ public class TimeTool {
      * @return The formatted string.
      */
     public static String formatReadableDateTimeToString(LocalDateTime dateTime) {
-        // Define a custom date-time formatter
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy h:mm a", Locale.ENGLISH);
 
-        // Format the LocalDateTime using the custom formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a MMM d, yyyy", Locale.ENGLISH);
+
         return dateTime.format(formatter);
     }
 
@@ -197,6 +204,8 @@ public class TimeTool {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm:ss a");
         return zonedDateTime.format(formatter);
     }
+
+
     /**
      * Gets a DateTimeFormatter for a full readable date-time format.
      * @return A DateTimeFormatter MM dd, yyyy hh:mm:ss a
