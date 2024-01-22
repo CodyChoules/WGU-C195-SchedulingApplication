@@ -134,7 +134,8 @@ public class TimeTool {
         CChoulesDevTools.println(thisTimeAtUTC.toString());
         CChoulesDevTools.println(businessStart.toString() + businessEnd.toString());
 
-        return currentTime.isAfter(businessStart) && currentTime.isBefore(businessEnd);
+        return (currentTime.isAfter(businessStart) || currentTime.equals(businessStart)) &&
+                (currentTime.isBefore(businessEnd) || currentTime.equals(businessEnd));
     }
 
     public static LocalDateTime getCurrentBusinessTime() {

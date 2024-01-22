@@ -215,3 +215,7 @@ The biggest issues are javaFX related. The combo box skin is still a little bugg
 > 
 > **Cody**: This is occurring because I am using & symbol in my comments causing an HTML error. Note for latter use: I may be able to convert in the command line options for creating JavaDocs which would allow me to continue using "&".  
 > For now I will refractor all " & " (with spaces on each side) to convert to " and ".
+> 
+ ### Additional:
+#### Appointments At Business start
+> **Cody**: Appointments counted as out of business hours when set at start or end exactly (example: 8:00 hq time) so I set the boolean to be in or on time frame of hq hours. 
