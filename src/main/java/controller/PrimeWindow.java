@@ -186,9 +186,12 @@ public class PrimeWindow {
             }
 
             prompt.upcomingApPopup(promptContent);
-
-
+        } else {
+            SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+            prompt.upcomingApPopup("You have no upcoming appointments");
         }
+
+
 
         //Check for upcoming appointments.
     }

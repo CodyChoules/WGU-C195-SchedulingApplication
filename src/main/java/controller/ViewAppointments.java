@@ -209,11 +209,12 @@ public class ViewAppointments {
             // TODO [Extra] make a note of this. How fxml and Java make an environment where bugs are easy to make and difficult to detect, standing in direct contradiction to the highly abstracted, object oriented, and design constrained model that we use java for in the first place.
             apCustomerIdUpdate.setText(String.valueOf(selectedAp.getApCustomerId()));
             apContactUserIdUpdate.setText(String.valueOf(selectedAp.getApUserId()));
-            apContactUpdate.setItems(contactNames);
+            //apContactUpdate.setItems(contactNames);
             //add contact name . set value . selectedAp . getContactName
-            apContactUpdate.setValue(selectedAp.getApContactName());
+            apContactUpdate.setValue(String.valueOf(selectedAp.getApContactName()));
             // TODO [c] make "contactName" in appointment obj getting it from Contact
             apDescriptionUpdate.setText(String.valueOf(selectedAp.getApUserId()));
+            apCustomerUpdate.setValue(String.valueOf(selectedAp.getApCustomerName()));
         }
         else if (addApTab.isSelected()) {
             //TODO [c] Logic for add tab repeated from update tab
@@ -240,10 +241,10 @@ public class ViewAppointments {
             apEndTimeAdd.setValue(String.valueOf(selectedAp.getApEnd().toLocalTime()));
             apCustomerIdAdd.setText(String.valueOf(selectedAp.getApCustomerId()));
             apContactUserIdAdd.setText(String.valueOf(selectedAp.getApUserId()));
-            apContactAdd.setItems(contactNames);
+            //apContactAdd.setItems(contactNames);
             //add contact name . set value . selectedAp . getContactName
-            apCustomerAdd.setValue(selectedAp.getApCustomerName());
-            apContactAdd.setValue(selectedAp.getApContactName());
+            apCustomerAdd.setValue(String.valueOf(selectedAp.getApCustomerName()));
+            apContactAdd.setValue(String.valueOf(selectedAp.getApContactName()));
             apDescriptionAdd.setText(String.valueOf(selectedAp.getApUserId()));
         }
         else if (delApTab.isSelected()) {
@@ -321,7 +322,13 @@ public class ViewAppointments {
         //TODO [c] Make a method to parse local date and time from strings to convert to LocalDateTime. This will be application wide so add to application tools. TESTED: works Implementation was more difficult than anticipated involving new String formatting methods.
 
         LocalDateTime apStartEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apStartDateUpdate.getEditor().getText(), apStartTimeUpdate.getValue());
-        CChoulesDevTools.println(apStartDateUpdate.getValue().toString());
+
+        try {
+            CChoulesDevTools.println(apStartDateUpdate.getValue().toString());
+        } catch (Exception ignored){
+
+        }
+
         LocalDateTime apEndEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apEndDateUpdate.getEditor().getText(), apEndTimeUpdate.getValue());
         //TODO [c] Find a Way to get the Field to parse to LocalDateTime -First error: Text '2020-05-28 12:00' could not be parsed at index 2- FOUND: utilize string Formatting tools in Java properly parse field input to MM-dd-yyyy
 
@@ -450,7 +457,11 @@ public class ViewAppointments {
         CChoulesDevTools.println("Adding Appointment.");
 
         LocalDateTime apStartEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apStartDateAdd.getEditor().getText(), apStartTimeAdd.getValue());
-        CChoulesDevTools.println(apStartDateAdd.getValue().toString());
+        try {
+            CChoulesDevTools.println(apStartDateAdd.getValue().toString());
+        } catch (Exception ignored){
+
+        }
         LocalDateTime apEndEdited = LocalDateTimeApplicationTool.parseToLocalDateTime(apEndDateAdd.getEditor().getText(), apEndTimeAdd.getValue());
 
         if (apEndEdited == null || apStartEdited == null) {

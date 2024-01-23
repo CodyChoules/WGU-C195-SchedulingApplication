@@ -116,6 +116,9 @@
 >   
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A2_1.png)
 >
+> **Cody**: Fixed:
+> 
+> > ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot1.jpg)
 
 #### A3a. Scheduling Functionality: Add, Update, and Delete
 
@@ -124,16 +127,36 @@
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3a_1.png)
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3a_2.png)
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3a_3.png)
+> 
+> > **Cody**: Fixed:
+> >```
+> > apCustomerIdUpdate.setText(String.valueOf(selectedAp.getApCustomerId()));            apContactUserIdUpdate.setText(String.valueOf(selectedAp.getApUserId()));
+> >            //apContactUpdate.setItems(contactNames);
+> >            //add contact name . set value . selectedAp . getContactName
+> >            apContactUpdate.setValue(String.valueOf(selectedAp.getApContactName()));
+> >            // TODO [c] make "contactName" in appointment obj getting it from Contact
+> >            apDescriptionUpdate.setText(String.valueOf(selectedAp.getApUserId()));
+> >            apCustomerUpdate.setValue(String.valueOf(selectedAp.getApCustomerName()));
+> >```
+ > ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot2.jpg)
+
 
 #### A3d. Input validation and logical error checks
 
 > The application provides an implementation of exception controls, including functionality for preventing invalid login credentials and appointments outside of business hours. Overlapping appointments are allowed to be scheduled. See the attached image Aspect_A3d_1.PNG.
 >
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3d_1.png)
-
+> 
+> **Cody**: I cannot replicate this error:
+> ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot3.jpg)
+> 
+> 
 #### A3e. Alerts
 
 > The submission includes a Java application. The alert displays all the appointments. The alert needs to display only the upcoming appointments in the next 15 minutes. See the sequence of images Aspect_A3e_1.PNG and Aspect_A3e_2.PNG.
 >
 > ![Image never given by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3e_1.png)
 > ![Image never given by reviewer](./READMEIMAGES/Attempt_2/Screenshot 2024-01-21 220620.jpg)
+> **Cody**: I cannot replicate this error:
+> ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot4.jpg)
+> 

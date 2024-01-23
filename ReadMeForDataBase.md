@@ -1,6 +1,6 @@
 # DataBase 
 
-This a summary of the proccess I went through to set up the DB (data base) on my machine.
+This a summary of the proccess I went through to set up the DB (data base) on my machine.__
 
 [Link To My Notion Notes On Setting Up a DB With IntelliJ](https://www.notion.so/Setting-up-Database-4db9b2cb499645dea5d581a81ec1314e?pvs=4)
 

@@ -223,7 +223,7 @@ public class Main extends Application {
 
     //MAIN START APPLICATION\\
     public void start(Stage primaryStage) throws Exception {
-        CChoulesDevTools.toolsOn();
+        CChoulesDevTools.toolsOff();
 
         String rootFolder = System.getProperty("user.dir");
         CChoulesDevTools.println("Root Folder: " + rootFolder);
