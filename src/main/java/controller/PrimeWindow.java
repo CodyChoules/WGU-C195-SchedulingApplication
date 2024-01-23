@@ -4,6 +4,7 @@ package controller;
 import applicationObject.Appointment;
 import applicationObject.User;
 import applicationObject.guiObject.SchedulingApplicationPrompt;
+import applicationTools.TimeGetterTool;
 import applicationTools.TimeTool;
 import applicationTools.CChoulesDevTools;
 import dataAccessObject.AppointmentDAO;
@@ -24,6 +25,7 @@ import main.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 /**
  * Controller class for the PrimeWindow FXML.
@@ -133,6 +135,7 @@ public class PrimeWindow {
 
         //Get the current date and time
         LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now2 = TimeGetterTool.currentTimeWithSystemDefault();
 
         //For each Appointment.getStartTime is after now & is before now
         // & Appointment.getUserId == currentUser.id add appointment to upcoming list
@@ -141,11 +144,17 @@ public class PrimeWindow {
             int userId = appointment.getApUserId(); // Assuming getUserId() returns the user ID
 
             // Check if the appointment is upcoming and belongs to the current user
-            if (startTime.isAfter(now) && userId == Main.currentUser.getId()) {
+            if (startTime.isAfter(now)
+                    //Removed due to the rubric not requiring User based input
+                    //&& userId == Main.currentUser.getId()
+            ) {
                 upcomingList.add(appointment);
             }
         }
 
+
+
+        upcomingList.removeIf(appointment -> appointment.getApStart().minus(Duration.ofMinutes(15)).isAfter(now) );
         //return upcoming list
         return upcomingList;
 
@@ -159,10 +168,10 @@ public class PrimeWindow {
         setTimeValues();
 
         ObservableList<Appointment> upAp = checkForUpcomingAppointments();
-
+        SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
         CChoulesDevTools.println(upAp.toString());
         if (!upAp.isEmpty()){
-            SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+
 
             CChoulesDevTools.println("User ID is: " + Main.currentUser.getUserId());
 
@@ -186,14 +195,12 @@ public class PrimeWindow {
             }
 
             prompt.upcomingApPopup(promptContent);
+            //TODO [] this is triggering a bug that opens the prompt twice. perhaps this is an issue with SchedulingApplicationPrompt()
+            // Could not find.
         } else {
-            SchedulingApplicationPrompt prompt = new SchedulingApplicationPrompt();
+
             prompt.upcomingApPopup("You have no upcoming appointments");
         }
-
-
-
-        //Check for upcoming appointments.
     }
 
 

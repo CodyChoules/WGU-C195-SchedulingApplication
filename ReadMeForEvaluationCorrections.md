@@ -171,6 +171,13 @@
 >
 > ![Image never given by reviewer](./READMEIMAGES/Attempt_2/Aspect_A3e_1.png)
 > ![Image never given by reviewer](./READMEIMAGES/Attempt_2/Screenshot 2024-01-21 220620.jpg)
-> **Cody**: I cannot replicate this error:
+> **Cody**: At first I could not replicate this error.
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot4.jpg)
+> Found a there was no code to check this so I added the below code to remove any appointments that were more than 5 min away. I still do not know why I could not replicate this error before this code was added.
+>
+> ```aidl
+>       upcomingList.removeIf(appointment -> appointment.getApStart().minus(Duration.ofMinutes(15)).isAfter(now) );
+>       //return upcoming list
+>       return upcomingList;
+>```
 > 
