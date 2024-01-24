@@ -149,6 +149,20 @@
 > 
 > **Cody**: I cannot replicate this error:
 > ![Image by reviewer](./READMEIMAGES/Attempt_2/Screenshot3.jpg)
+> Trying again on the virtual machine reveals issue with the DAO getting values based on customer ID switched to using Get All then removing non-matching:
+> 
+> ```aidl
+>    public static ObservableList<applicationObject.Appointment> getAllAppointmentsByCustomer(int customerID) throws SQLException {
+>
+>
+>        ObservableList<Appointment> appointmentsObservableList = getAllAppointments();
+>
+>        appointmentsObservableList.removeIf(appointment -> appointment.getApCustomerId() != customerID);
+>
+>        return appointmentsObservableList;
+>    }
+>```
+> 
 > 
 > 
 #### A3e. Alerts
