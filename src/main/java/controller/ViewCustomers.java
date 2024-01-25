@@ -393,11 +393,11 @@ public class ViewCustomers {
      * @return An observable list of FLD names available for the selected country.
      * @throws SQLException If a database access error occurs.
      */
-    public ObservableList<String> setFLD_ByCountry() throws SQLException {
+    public ObservableList<String> setFLD_ByCountry(String dropDownString) throws SQLException {
 
         //Get Country by name returns NO COUNTRY FOUND ON ID 0
-        Country country = CountryDAO.getCountryByName(CRCountryDropDown.getValue());
-        CChoulesDevTools.println(CRCountryDropDown.getValue());
+        Country country = CountryDAO.getCountryByName(dropDownString);
+        CChoulesDevTools.println(dropDownString);
         ObservableList<String> fdlAvailable = FXCollections.observableArrayList();
 
 
@@ -504,5 +504,12 @@ public class ViewCustomers {
     }
 
 
+    public void CountryDropDownAction(ActionEvent actionEvent) throws SQLException {
+        CRFirstLvlDivDropDown.setItems(setFLD_ByCountry(CRCountryDropDown.getValue()));
 
+    }
+
+    public void CountryDropDown1Action(ActionEvent actionEvent) throws SQLException {
+        CRFirstLvlDivDropDown1.setItems(setFLD_ByCountry(CRCountryDropDown1.getValue()));
+    }
 }

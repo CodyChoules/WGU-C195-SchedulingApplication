@@ -94,7 +94,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               </rowConstraints>
                               <children>
-                                  <ComboBox fx:id="CRCountryDropDown"  prefWidth="150.0" GridPane.columnIndex="1">
+                                  <ComboBox fx:id="CRCountryDropDown"  prefWidth="150.0" GridPane.columnIndex="1" onAction="#CountryDropDownAction">
                                       <GridPane.margin>
                                           <Insets right="5.0" />
                                       </GridPane.margin>
@@ -189,7 +189,7 @@
                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
-                           <ComboBox fx:id="CRCountryDropDown1"  prefWidth="150.0" GridPane.columnIndex="1">
+                           <ComboBox fx:id="CRCountryDropDown1"  prefWidth="150.0" GridPane.columnIndex="1" onAction="#CountryDropDown1Action">
                               <GridPane.margin>
                                  <Insets right="5.0" />
                               </GridPane.margin>

@@ -180,4 +180,23 @@
 >       //return upcoming list
 >       return upcomingList;
 >```
+
+
+##Evaluation Corrections 3:
+
+#### A2. Customer Record Functionalities
+
+> The submission includes Customer forms. The Country field does not filter the State/Province field. See the attached image, Aspect_A2_1.PNG. Task instructions state, "The first-level list should be filtered by the user’s selection of a country (e.g., when choosing U.S., filter so it only shows states)."
+> ![Image by reviewer](./READMEIMAGES/Attempt_2/Aspect_A2_1_Attempt3.png)
 > 
+> **Cody**: This was caused because I tested but never implemented setFLD_ByCountry() method in viewCustomers. Below is how I implemented it (I also had to modify it to be used for both add and update):
+> ```aidl
+>    public void CountryDropDownAction(ActionEvent actionEvent) throws SQLException {
+>        CRFirstLvlDivDropDown.setItems(setFLD_ByCountry(CRCountryDropDown.getValue()));
+>
+>    }
+>
+>    public void CountryDropDown1Action(ActionEvent actionEvent) throws SQLException {
+>        CRFirstLvlDivDropDown1.setItems(setFLD_ByCountry(CRCountryDropDown1.getValue()));
+>    }
+>```
